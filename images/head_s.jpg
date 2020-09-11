@@ -1,0 +1,25 @@
+RewriteEngine on
+RewriteBase /
+RewriteRule ^.*[-/]e(\d+)/?$ styleso/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]e(\d+)[-/].*$ styleso/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^e(\d+)[-/].*$ styleso/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]e(\d+)-.*$ styleso/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^e(\d+)-.*$ styleso/index\.php?id=$1&%{QUERY_STRING} [L]
+RewriteRule ^n(\d+)[-/].*[-/]e(\d+)-.*$ styleso/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^n(\d+)[-/]e(\d+)[-/].*$ styleso/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^e(\d+)[-/].*[-/]n(\d+)[-/].*$ styleso/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^e(\d+)[-/]n(\d+)[-/].*$ styleso/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]e(\d+)[-/]n(\d+)[-/].*$ styleso/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]e(\d+)[-/].*[-/]n(\d+)[-/].*$ styleso/index\.php?id=$2-$1&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]n(\d+)[-/].*[-/]e(\d+)[-/].*$ styleso/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^.*[-/]n(\d+)[-/]e(\d+)[-/].*$ styleso/index\.php?id=$1-$2&%{QUERY_STRING} [L]
+
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?/$1 [L,QSA]
+AddDefaultCharset utf-8
+
+# force ssl
+RewriteCond     %{SERVER_PORT} ^80$
+RewriteRule     ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]

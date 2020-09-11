@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine off
+</IfModule>
+AuthName "MySQLDumper"
+AuthType Basic
+AuthUserFile "/kunden/448833_59192/webseiten/xics/sqlDump/.htpasswd"
+require valid-user

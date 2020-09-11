@@ -1,0 +1,164 @@
+/* here you can put your own css to customize and override the theme */
+.user-profile-image-small{
+	width:32px;
+	height:32px;
+}
+.menu_separate_border{
+	border-top: 1px solid #3d4957;
+}
+.filterby label{
+	float:left;
+	padding:5px;
+	font-weight:bold;
+}
+.filterby .form-control{
+	/*width:auto;*/
+	float:left;
+	margin-left:10px;
+}
+.text-has-action {
+    border-bottom: 1px dashed #bbb;
+    padding-bottom: 2px;
+}
+.hide_column{
+	display: none !important;
+}
+.field_error{
+	border:1px solid #e73d4a !important;
+}
+.mime {
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    padding: 1px 0 4px 26px;
+}
+
+.mime-word {
+    background-image: url(../img/mime/word.png);
+}
+
+.mime-excel {
+    background-image: url(../img/mime/excel.png);
+}
+
+.mime-powerpoint {
+    background-image: url(../img/mime/powerpoint.png);
+}
+
+.mime-pdf {
+    background-image: url(../img/mime/pdf.png);
+}
+
+.mime-zip {
+    background-image: url(../img/mime/zip.png);
+}
+
+.mime-image {
+    background-image: url(../img/mime/image.png);
+}
+
+.mime-file {
+    background-image: url(../img/mime/file.png);
+}
+
+.mime-video {
+    background-image: url(../img/mime/video.png);
+}
+
+.mime-audio {
+    background-image: url(../img/mime/audio.png);
+}
+
+#addcommentbox{
+	display:none;
+}
+
+#assignmentproduct_inputbox .fa-check,#quotationproduct_inputbox .fa-check{
+	color:#090;
+}
+#assignmentproduct_inputbox .fa-close,#quotationproduct_inputbox .fa-close{
+	color:#F00;
+}
+
+.cpicker {
+    cursor: pointer;
+    border-radius: 2%;
+    float: left;
+    margin-right: 15px;
+    border-radius: 1px;
+}
+
+.cpicker-small {
+    width: 10px;
+    height: 10px;
+}
+
+.cpicker-big {
+    width: 20px;
+    height: 20px;
+}
+
+#pageloaddiv {
+	position: fixed;
+	top:0;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 100000;
+	background: url('../img/ajax-modal-loading.gif') no-repeat center center rgba(0, 0, 0, 0.38);
+}
+
+#FormAjaxDetail .modal-header{
+	color:#FFF;
+}
+#FormAjaxDetail .modal-header i{
+	color:#FFF;
+	cursor:pointer;
+}
+#FormAjaxDetail .eventClose{
+    float:right;
+}
+#FormAjaxDetail .eventClose div{
+	float:left;
+	padding:0px 10px;
+}
+#FormAjaxDetail .form-body i{
+	padding-right:10px;
+}
+
+.pac-container{
+	z-index:99999 !important;
+}
+
+
+/* CUSTOM FOR IF LOGO CHANGE */
+.page-header-fixed .page-container {
+	margin-top: 65px;
+}
+.page-header.navbar {
+	height:65px;
+	min-height:65px;
+}
+.page-header.navbar .top-menu .navbar-nav>li.dropdown {
+	height: 62px;
+}
+.page-header.navbar .top-menu .navbar-nav>li.dropdown-user .dropdown-toggle {
+	padding: 22px 8px 22px 8px;
+}
+.page-header.navbar .top-menu .navbar-nav>li.dropdown-notification>.dropdown-toggle {
+	padding: 22px 17px 22px 17px;
+}
+.page-header.navbar .top-menu .navbar-nav>li.dropdown>.dropdown-toggle>.badge {
+    top: 18px;
+    right: 28px;
+}
+
+.pace .pace-progress {
+	top: 65px;
+}
+.pace .pace-activity {
+	top: 65px;
+}
+.page-logo img{ width:100%; }
+/* END CUSTOM FOR IF LOGO CHANGE */
+
+.feeds .status{ color:#000 !important; }
