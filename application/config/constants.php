@@ -103,14 +103,20 @@ define('CUSTOMER_PROFILE_IMAGES_FOLDER',FCPATH . 'uploads/customer_profile_image
 //Quotation attachments
 define('QUOTATION_ATTACHMENTS_FOLDER',FCPATH . 'uploads/quotations/');
 
+//Lead Quotation attachments
+define('LEADQUOTATION_ATTACHMENTS_FOLDER',FCPATH . 'uploads/leadquotations/');
+
 //Assignment attachments
 define('ASSIGNMENT_ATTACHMENTS_FOLDER',FCPATH . 'uploads/assignments/');
+
+//Assignment provider attachments
+define('ASSIGNMENT_PROVIDER_ATTACHMENTS_FOLDER',FCPATH . 'uploads/assignments/provider/');
 
 //Assignment legitimations
 define('ASSIGNMENT_LEGITIMATIONS_FOLDER',FCPATH . 'uploads/legitimations/');
 
 //Lead Quotation attachments
-define('LEADQUOTATION_ATTACHMENTS_FOLDER',FCPATH . 'uploads/leadquotations/');
+// define('LEADQUOTATION_ATTACHMENTS_FOLDER',FCPATH . 'uploads/leadquotations/');
 
 //Ticket attachments
 define('TICKET_ATTACHMENTS_FOLDER',FCPATH . 'uploads/tickets/');
@@ -133,6 +139,8 @@ define('INFODOCUMENT_ATTACHMENTS_FOLDER',FCPATH . 'uploads/infodocuments/');
 //Hardware Assignment Position Document attachments
 define('HARDWARE_ASSIGNMENT_POSITION_DOCUMENTS_FOLDER',FCPATH . 'uploads/hardware_assignment_position_documents/');
 
+define('HARDWARE_BUDGET_DOCUMENT_FOLDER', FCPATH .'uploads/hardware_budget_document/');
+define('HARDWARE_BUDGET_DOCUMENT_USE_FOLDER', FCPATH .'uploads/hardware_budget_document_use/');
 // Employee Commissions for Salesman
 define('ECOMMISSION_SALESMAN_FIRST_POINTS', 1200);
 define('ECOMMISSION_SALESMAN_FIRST_CREDITS', 1500);
@@ -168,14 +176,14 @@ define('COMPANY_VAT','19');
 
 
 
+// echo ENVIRONMENT; die()
 
-
-// print_r(ENVIRONMENT); exit(0);
-/*if (ENVIRONMENT == 'production') {
+if (ENVIRONMENT == 'production') {
 	define('BASE_URL', 'https://www.xics.de/');
+} else if (ENVIRONMENT == 'development') {
+	// define('BASE_URL', 'http://testxics.serv2net.de/');
+	define('BASE_URL', 'http://localhost/xics_live_git/');
 } else {
-	define('BASE_URL', 'http://localhost:8080/xics/');
-}*/
-define('BASE_URL', 'https://www.xics.de/');
-// define('BASE_URL', 'http://localhost:8080/xics/'); // comment for live
+	define('BASE_URL', 'http://localhost:80/testxics.serv2net.de/');
+}
 define('URL_PROJECT_FILES_FOLDER', BASE_URL .'uploads/');
