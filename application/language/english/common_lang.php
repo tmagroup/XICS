@@ -179,6 +179,28 @@ $lang['page_comments'] = 'Comments';
 $lang['page_create_comment'] = 'Add Comment';
 $lang['page_edit_comment'] = 'Edit Comment';
 
+$lang['page_termination'] = 'Termination';
+$lang['page_create_termination'] = 'Create Termination';
+$lang['page_edit_termination'] = 'Edit Termination';
+$lang['page_import_termination'] = 'Import Termination';
+$lang['page_manage_termination'] = 'Manage Termination';
+
+$lang['page_fl_leadstatus'] = 'Lead Status';
+$lang['page_fl_salutation'] = 'Salutation';
+$lang['page_fl_company'] = 'Company Name';
+$lang['page_fl_name'] = 'Name';
+$lang['page_fl_position'] = 'Position';
+$lang['page_fl_street'] = 'Street';
+$lang['page_fl_zipcode'] = 'Zipcode';
+$lang['page_fl_city'] = 'City';
+$lang['page_fl_phone'] = 'Phone';
+$lang['page_fl_email'] = 'Email';
+$lang['page_fl_employment'] = 'Employment';
+$lang['page_fl_provider'] = 'Provider';
+$lang['page_fl_cards'] = 'Cards';
+$lang['page_fl_date'] = 'Date';
+$lang['page_fl_responsive_user'] = 'Responsive User';
+
 $lang['page_leadquotations'] = 'Lead Quotations';
 $lang['page_leadquotation'] = 'Lead Quotation';
 $lang['page_leadquotation_product'] = 'Lead Quotation Product';
@@ -343,8 +365,10 @@ $lang['page_fl_mobilnr'] = 'Mobile No.';
 $lang['page_fl_street'] = 'Street';
 $lang['page_fl_zipcode'] = 'Zipcode';
 $lang['page_fl_city'] = 'City';
+$lang['invoice_email'] = 'Invoice Email Function';
 $lang['page_fl_hotline'] = 'Hotline';
 $lang['page_fl_permission_type'] = 'Permission Type';
+
 $lang['page_fl_permission_type_radio_role'] = 'Role Wise (Default)';
 $lang['page_fl_permission_type_radio_user'] = 'User Wise (Custom)';
 $lang['page_lb_profile'] = 'Profile';
@@ -514,6 +538,8 @@ $lang['page_lb_tel'] = 'Tel';
 $lang['page_lb_fax'] = 'Fax';
 
 $lang['page_fl_slipnr'] = 'Slipnr';
+$lang['page_create_monitoring'] = 'Create Monitoring';
+$lang['page_refresh_monitoring'] = 'Sync';
 $lang['page_fl_date'] = 'Date';
 $lang['page_fl_period'] = 'Period';
 $lang['page_fl_pointsvalue'] = 'PointsValue';
@@ -577,6 +603,7 @@ $lang['page_fl_recommend'] = 'Recommend';
 $lang['page_fl_leadstatus'] = 'Leadstatus';
 $lang['page_fl_leadsource'] = 'Lead Source';
 $lang['page_fl_leadprovider'] = 'ProviderCompanyNr.';
+$lang['page_fl_provider_logo'] = 'Provider Logo';
 $lang['page_fl_companysize'] = 'Companysize';
 $lang['page_fl_provider'] = 'Provider';
 $lang['page_fl_product'] = 'Product';
@@ -882,8 +909,9 @@ $lang['page_dt_assignment_invoicenr'] = 'Invoice No';
 $lang['page_dt_assignment_description'] = 'Description';
 $lang['page_dt_assignment_netamount'] = 'Net Amount';
 $lang['page_dt_assignment_invoicefile'] = 'Invoice File';
-
+$lang['page_dt_assignment_invoicefilecsv'] = 'Invoice File Csv';
 //Permission buttons
+
 $lang['page_assignment_subscriptionlock'] = 'Assignment Subscriptionlock';
 $lang['page_assignment_subscriptionlock2'] = 'Assignment Cancel the subscription';
 $lang['page_assignment_optionbook'] = 'Assignment Option Book';
@@ -1096,6 +1124,15 @@ $lang['page_dt_rufnummer'] = 'Telephone number';
 $lang['page_dt_amount'] = 'Amount';
 $lang['page_dt_additionalcost'] = 'Additional cost';
 
+$lang['page_mn_mobilenr'] = 'Mobile Number';
+$lang['page_mn_simnr'] = 'Sim Number';
+// $lang['page_mn_target_number'] = 'Target Number';
+// $lang['page_mn_duration'] = 'Duration Sec';
+// $lang['page_mn_connection_type'] = 'Connection Type';
+// $lang['page_mn_beginning'] = 'Beginning';
+// $lang['page_mn_the_end'] = 'The end';
+// $lang['page_mn_in_amount'] = 'In Amount';
+
 $lang['page_monitoring_pdf_protocol'] = 'XICS MONITORING PROTOCOL';
 $lang['page_monitoring_pdf_otherremark'] = 'Other remark / action';
 $lang['page_monitoring_pdf_followingadditionalcost'] = 'The following additional costs for these numbers have arisen';
@@ -1131,8 +1168,6 @@ $lang['page_lb_delete_infodocument'] = 'Delete Document';
 $lang['page_lb_delete_infodocument_info'] = 'Are you sure you want to delete this document pdf?';
 /******************************************************************************************************************/
 
-$lang['page_mn_mobilenr'] = 'Mobile Number';
-$lang['page_mn_simnr'] = 'Sim Number';
 
 /******************************************************************************************************************/
 #Admin Manage History
@@ -1368,7 +1403,6 @@ $lang['documentsetting_deleted'] = 'Documentsetting Deleted';
 $lang['documentsetting_activated'] = 'Documentsetting Activated';
 $lang['documentsetting_deactivated'] = 'Documentsetting Deactivated';
 /******************************************************************************************************************/
-
 $lang['page_monitorinng_consulting_title'] = 'XICS MONITORING PROTOCOL';
 $lang['page_monitorinng_info'] = 'Vodafone Business Partner BVTcom GmbH - Industriestr.10 - 59192 Bergkamen';
 $lang['page_dt_consultant'] = 'Consultant';
@@ -1380,4 +1414,5 @@ $lang['page_dt_amount'] = 'Amount';
 $lang['page_dt_additional_cost'] = 'Additional cost';
 $lang['page_dt_unused_participants'] = 'Unused participants';
 $lang['page_dt_other_remark'] = 'Other remark / suggested action';
+
 ?>

@@ -121,9 +121,6 @@ $lang['page_import_ratelandline'] = 'Festnetz Tarife importieren';
 $lang['page_edit_ratelandline'] = 'Festnetz Tarife Bearbeiten';
 $lang['page_manage_ratelandline'] = 'Verwalten Festnetz Tarife';
 
-$lang['page_mn_mobilenr'] = 'Handynummer';
-$lang['page_mn_simnr'] = 'Sim Nummer';
-
 $lang['page_optionsmobile'] = 'Optionen Mobilfunk';
 $lang['page_optionmobile'] = 'Optionen Mobilfunk';
 $lang['page_create_optionmobile'] = 'Optionen Mobilfunk Anlegen';
@@ -181,6 +178,27 @@ $lang['page_leadtocustomer'] = 'Lead to Kunden';
 $lang['page_comments'] = 'Kommentare';
 $lang['page_create_comment'] = 'Kommentar Anlegen';
 $lang['page_edit_comment'] = 'Kommentar Bearbeiten';
+
+
+$lang['page_create_termination'] = 'Kündigung erstellen';
+$lang['page_import_termination'] = 'Kündigung importieren';
+$lang['page_manage_termination'] = 'Kündigung verwalten';
+
+$lang['page_fl_leadstatus'] = 'Lead-Status';
+$lang['page_fl_salutation'] = 'Anrede';
+$lang['page_fl_company'] = 'Name der Firma';
+$lang['page_fl_name'] = 'Name';
+$lang['page_fl_position'] = 'Position';
+$lang['page_fl_street'] = 'Straße';
+$lang['page_fl_zipcode'] = 'Postleitzahl';
+$lang['page_fl_city'] = 'Stadt';
+$lang['page_fl_phone'] = 'Telefon';
+$lang['page_fl_email'] = 'Email';
+$lang['page_fl_employment'] = 'Beschäftigung';
+$lang['page_fl_provider'] = 'Anbieterin';
+$lang['page_fl_cards'] = 'Karten';
+$lang['page_fl_date'] = 'Datum';
+$lang['page_fl_responsive_user'] = 'Responsive User';
 
 $lang['page_leadquotations'] = 'Lead-Angebote';
 $lang['page_leadquotation'] = 'Hauptangebot';
@@ -346,6 +364,7 @@ $lang['page_fl_mobilnr'] = 'Mobilnr';
 $lang['page_fl_street'] = 'Straße';
 $lang['page_fl_zipcode'] = 'PLZ';
 $lang['page_fl_city'] = 'Ort';
+$lang['invoice_email'] = 'Rechnungs-E-Mail-Funktion';
 $lang['page_fl_hotline'] = 'Hotline';
 $lang['page_fl_permission_type'] = 'Berechtigungen Art';
 $lang['page_fl_permission_type_radio_role'] = 'Rollen klug (Standard)';
@@ -516,6 +535,8 @@ $lang['page_lb_tel'] = 'Tel';
 $lang['page_lb_fax'] = 'Fax';
 
 $lang['page_fl_slipnr'] = 'Abrechnungsnr';
+$lang['page_create_monitoring'] = 'Überwachung erstellen';
+$lang['page_refresh_monitoring'] = 'Synchronisieren';
 $lang['page_fl_date'] = 'Datum';
 $lang['page_fl_period'] = 'Zeitraum';
 $lang['page_fl_pointsvalue'] = 'Punkte';
@@ -579,6 +600,7 @@ $lang['page_fl_recommend'] = 'Empfohlen/POS';
 $lang['page_fl_leadstatus'] = 'Leadstatus';
 $lang['page_fl_leadsource'] = 'Leadquelle';
 $lang['page_fl_leadprovider'] = 'Kundennr. Anbieter';
+$lang['page_fl_provider_logo'] = 'Anbieter Logo';
 $lang['page_fl_companysize'] = 'Firmengröße';
 $lang['page_fl_provider'] = 'Anbieter';
 $lang['page_fl_product'] = 'Produkt';
@@ -884,6 +906,7 @@ $lang['page_dt_assignment_invoicenr'] = 'Rechnungsnr';
 $lang['page_dt_assignment_description'] = 'Beschreibung';
 $lang['page_dt_assignment_netamount'] = 'Nettobetrag';
 $lang['page_dt_assignment_invoicefile'] = 'Rechnungen';
+$lang['page_dt_assignment_invoicefilecsv'] = 'Rechnungsdatei Csv';
 
 //Permission buttons
 $lang['page_assignment_subscriptionlock'] = 'Aufträge Abosperre';
@@ -1093,6 +1116,15 @@ $lang['page_lb_following_additional_cost'] = 'Folgende Rufnummern haben Mehrkost
 $lang['page_lb_cost_incurred_by'] = 'Kosten entstanden durch';
 $lang['page_lb_report_pdf'] = 'Bericht PDF';
 $lang['page_lb_protocolnr'] = 'Protokollnr.';
+
+$lang['page_mn_mobilenr'] = 'Handynummer';
+$lang['page_mn_simnr'] = 'Sim Nummer';
+// $lang['page_mn_target_number'] = 'Zielnummer';
+// $lang['page_mn_duration'] = 'Dauer Sec';
+// $lang['page_mn_connection_type'] = 'Verbindungstyp';
+// $lang['page_mn_beginning'] = 'Anfang';
+// $lang['page_mn_the_end'] = 'das Ende';
+// $lang['page_mn_in_amount'] = 'In Menge';
 
 $lang['page_dt_rufnummer'] = 'Rufnummer';
 $lang['page_dt_amount'] = 'Betrag';
@@ -1368,7 +1400,6 @@ $lang['documentsetting_deleted'] = 'Dokumenteinstellungen Gelöscht';
 $lang['documentsetting_activated'] = 'Dokumenteinstellungen Aktiviert';
 $lang['documentsetting_deactivated'] = 'Dokumenteinstellungen Deaktiviert';
 /******************************************************************************************************************/
-
 $lang['page_monitorinng_consulting_title'] = 'XICS MONITORING PROTOKOLL';
 $lang['page_monitorinng_info'] = 'Vodafone Geschäftspartner BVTcom GmbH - Industriestr.10 - 59192 Bergkamen';
 $lang['page_dt_consultant'] = 'Berater';
