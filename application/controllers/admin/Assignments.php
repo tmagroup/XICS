@@ -146,10 +146,10 @@ class Assignments extends Admin_controller
 
                 $response = $this->Assignment_model->update($post, $data['assignment']['assignmentnr']);
                 if (is_numeric($response) && $response>0) {
-
                     //History
                     $Action_data = array('actionname'=>'assignment', 'actionid'=>$response, 'actiontitle'=>'assignment_updated');
                     do_action_history($Action_data);
+                    handle_assignment_provider_logo_upload($data['assignment']['assignmentnr']);
 
                     set_alert('success', sprintf(lang('updated_successfully'),lang('page_assignment')));
                     redirect(site_url('admin/assignments/detail/' . $data['assignment']['assignmentnr']));
@@ -162,7 +162,7 @@ class Assignments extends Admin_controller
             else{
                 $response = $this->Assignment_model->add($post);
                 if (is_numeric($response) && $response>0) {
-
+                    handle_assignment_provider_logo_upload($response);
                     //History
                     $Action_data = array('actionname'=>'assignment', 'actionid'=>$response, 'actiontitle'=>'assignment_added');
                     do_action_history($Action_data);
@@ -260,22 +260,22 @@ class Assignments extends Admin_controller
         else{
             $data['title'] = lang('page_create_assignment');
         }
-
         $data['providerData'] = $this->select_record('tblprovider');
+
         $this->load->view('admin/assignments/assignment', $data);
     }
 
     /* Detail Assignment */
     public function detail($id='')
     {
-        if(!$GLOBALS['assignment_permission']['view'] && !$GLOBALS['assignment_permission']['view_own']){
-            access_denied('assignment');
-        }
+        // if(!$GLOBALS['assignment_permission']['view'] && !$GLOBALS['assignment_permission']['view_own']){
+        //     access_denied('assignment');
+        // }
 
         //******************** Initialise ********************/
         if($id>0){
             //Assignment
-            $data['assignment'] = (array) $this->Assignment_model->get($id,"tblassignments.*,tblprovider.image as provider, CONCAT(customer.name,' ',customer.surname) as customer, tblassignments.customer as customerid , CONCAT(responsible.name,' ',responsible.surname) as responsible, tblassignments.responsible as responsible_id, "
+            $data['assignment'] = (array) $this->Assignment_model->get($id,"tblassignments.*,tblprovider.image as provider,CONCAT(customer.name,' ',customer.surname) as customer, tblassignments.customer as customerid , CONCAT(responsible.name,' ',responsible.surname) as responsible, tblassignments.responsible as responsible_id, "
                     . " CONCAT(recommend.name,' ',recommend.surname) as recommend, "
                     . " tblassignments.recommend as recommendid, "
                     . " tblassignmentstatus.name as assignmentstatus, "
@@ -291,15 +291,11 @@ class Assignments extends Admin_controller
                     'tbldiscountlevels as newdiscountlevel'=>'newdiscountlevel.discountnr=tblassignments.newdiscountlevel')
             );
         }
-        // echo "<pre>";
-        // print_r($data['assignment']);
-        // die();
-
         if(empty($data['assignment']['assignmentnr'])){
             redirect(site_url('admin/assignments'));
         }
 
-        if(get_user_role()=='customer' && $data['assignment']['customerid']!=get_user_id()){
+        if(get_user_role()=='customer' && $data['assignment']['customerid']!= get_user_id() && $GLOBALS['current_user']->parent_customer_id == 0 ){
             redirect(site_url('admin/assignments'));
         }
         //- On the Dashboard he should only see Assignments which belongs to the User who is logged in. (Salesman)
@@ -490,7 +486,7 @@ Assignment) */
 
         $response = $this->Assignment_model->delete($this->input->post('id'));
         if ($response==1) {
-
+            handle_assignment_provider_logo_delete($this->input->post('id'));
             //History
             $Action_data = array('actionname'=>'assignment', 'actionid'=>$this->input->post('id'), 'actiontitle'=>'assignment_deleted');
             do_action_history($Action_data);
@@ -597,7 +593,7 @@ Assignment) */
             if (!$legitimation) {
                     die('No legitimation found in database');
             }
-            $path = get_upload_path_by_type('legitimation') . $legitimation->rel_id . '/' . $legitimation->file_name;
+            $path = get_upload_path_by_type('assignment') . $legitimation->rel_id . '/' . $legitimation->file_name;
             force_download($path, null);
     }
 
@@ -793,18 +789,57 @@ Assignment) */
         if ($this->input->post()) {
             $post = $this->input->post();
 
-            $response = $this->Assignmentbill_model->add($post);
-            if (is_numeric($response) && $response>0) {
+            $bill_id = $this->Assignmentbill_model->add($post);
+            if (is_numeric($bill_id) && $bill_id > 0) {
+                $assignmentData = $this->Assignment_model->get($post['assignmentnr']);
 
                 //History
-                $Action_data = array('actionname'=>'assignment', 'actionid'=>$post['assignmentnr'], 'actionsubid'=>$response, 'actiontitle'=>'assignment_invoice_added');
+                $Action_data = array('actionname'=>'assignment', 'actionid'=>$post['assignmentnr'], 'actionsubid'=>$bill_id, 'actiontitle'=>'assignment_invoice_added');
                 do_action_history($Action_data);
 
-                handle_assignment_invoicefile_upload($post['assignmentnr'], $response);
-                echo json_encode(array('response'=>'success','message'=>sprintf(lang('added_successfully'),lang('page_lb_invoice'))));
-            }
-            else{
-                echo json_encode(array('response'=>'error','message'=>$response));
+                $resu = handle_assignment_invoicefile_upload($post['assignmentnr'], $bill_id);
+                handle_assignment_invoicefilecsv_upload($post['assignmentnr'], $bill_id);
+                //echo $resu; die();
+                if($resu) {
+                    if(!empty($assignmentData))  {
+                        $customerData = $this->Customer_model->get($assignmentData->customer);
+
+
+                        if(!empty($customerData)) {
+                            if($customerData->invoice_email == '1') {
+                                 //CSV Attachment
+                                $mer_data = array();
+                                $billData = $this->Assignmentbill_model->get($bill_id);
+                                    if(!empty($billData) && $billData->invoicefilecsv != '') {
+                                    $file = FCPATH.'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefilecsv;
+                                    $this->Email_model->add_attachment(array('attachment' => $file));
+                                    $mer_data['assignment_link_csv'] = base_url().'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefilecsv;
+                                }
+
+                                if(!empty($billData) && $billData->invoicefile != '') {
+                                    $file = FCPATH.'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefile;
+                                    $this->Email_model->add_attachment(array('attachment' => $file));
+                                    $mer_data['assignment_link'] = base_url().'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefile;
+                                }
+
+                                $mer_data['customer_surname'] = $customerData->surname;
+                                $mer_data['customer_name'] = $customerData->name;
+                                $mer_data['customernr'] = $customerData->customernr;
+
+                                $merge_fields = array();
+                                $merge_fields = array_merge($merge_fields, get_customerinvoice_merge_fields($mer_data));
+
+                                $invoiceCustomer = $this->Customer_model->get($customerData->invoice_cus);
+                                $sent = $this->Email_model->send_email_template('invoicecsvemail', $invoiceCustomer->email, $merge_fields);
+                                //$sent = $this->Email_model->send_email_template('invoicecsvemail', 'connectusdemo12@gmail.com', $merge_fields);
+
+                            }
+                        }
+                    }
+                    echo json_encode(array('response'=>'success','message'=>sprintf(lang('added_successfully'),lang('page_lb_invoice'))));
+                } else{
+                    echo json_encode(array('response'=>'error','message'=>$response));
+                }
             }
         }
         exit;
