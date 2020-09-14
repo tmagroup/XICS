@@ -38,7 +38,7 @@ class Admin_controller extends CI_Controller
         $GLOBALS['current_datetime'] = $rowCurrentDateTime->row()->current_datetime;
 
 
-	//Autologin
+    //Autologin
         $this->Authentication_model->autologin();
         if (!is_logged_in()) {
             redirect(site_url());
@@ -81,9 +81,9 @@ class Admin_controller extends CI_Controller
         }
 
         //$language = load_admin_language();
-	$GLOBALS['current_user'] = $currentUser;
+    $GLOBALS['current_user'] = $currentUser;
 
-	//Default Currency
+    //Default Currency
         $curow = $this->Currencies_model->get(false, " isdefault=1 ");
         $GLOBALS['currency_data']['currency_name'] = $curow[0]['name'];
         $GLOBALS['currency_data']['currency_symbol'] = $curow[0]['symbol'];
@@ -109,12 +109,12 @@ class Admin_controller extends CI_Controller
 
 
         //Role Permission Settings
-        $GLOBALS['viewable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','employeecommission','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_pin_puk','a_invoice','a_hardwareinventory','a_moreoptionmobile','infodocument','history','termination');
+        $GLOBALS['viewable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','employeecommission','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_pin_puk','a_invoice','a_hardwareinventory','a_moreoptionmobile','infodocument','history');
         $GLOBALS['viewable_own_permission'] = array('lead','employeecommission','ticket','quotation','leadquotation','assignment','hardwareassignment','hardwareinvoice','monitoring');//For POS and Customer
-        $GLOBALS['creatable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','leadtocustomer','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','quotationtoassignment','assignment','hardwareinput','ticket','ticketcomment','calendar','monitoringcomment','document','a_pin_puk','a_subscriptionlock','a_subscriptionlock2','a_optionbook','a_hardwareorder','a_ultracardorder','a_cardpause','a_cardbreak','a_invoice','a_contractorder','a_moreoptionmobile','a_repairorder','a_rebuyorder','a_bookinsurance','a_hardwareuploaddocument','infodocument','termination');
-        $GLOBALS['editable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','qualitycheck','calendar','monitoring','monitoringcomment','document','profile','customerprofile','a_invoice','infodocument','termination');
-        $GLOBALS['deletable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_invoice','infodocument','termination');
-        $GLOBALS['importable_permission'] = array('ratemobile', 'ratelandline', 'optionmobile', 'optionlandline', 'discountlevel', 'hardware', 'lead','termination');
+        $GLOBALS['creatable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','leadtocustomer','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','quotationtoassignment','assignment','hardwareinput','ticket','ticketcomment','calendar','monitoringcomment','document','a_pin_puk','a_subscriptionlock','a_subscriptionlock2','a_optionbook','a_hardwareorder','a_ultracardorder','a_cardpause','a_cardbreak','a_invoice','a_contractorder','a_moreoptionmobile','a_repairorder','a_rebuyorder','a_bookinsurance','a_hardwareuploaddocument','infodocument');
+        $GLOBALS['editable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','qualitycheck','calendar','monitoring','monitoringcomment','document','profile','customerprofile','a_invoice','infodocument');
+        $GLOBALS['deletable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_invoice','infodocument');
+        $GLOBALS['importable_permission'] = array('ratemobile', 'ratelandline', 'optionmobile', 'optionlandline', 'discountlevel', 'hardware', 'lead');
 
 
         //Function Array for Role Permission
@@ -237,7 +237,7 @@ class Admin_controller extends CI_Controller
         );
         $GLOBALS['lead_permission'] = $lead_permission;
 
-	//Function Array for Lead Comment
+    //Function Array for Lead Comment
         $leadcomment_permission = array('view'=>has_permission('leadcomment','view'),
             'view_own'=>has_permission('leadcomment','view_own'),
             'create'=>has_permission('leadcomment','create'),
@@ -652,7 +652,6 @@ class Admin_controller extends CI_Controller
         );
         $GLOBALS['history_permission'] = $history_permission;
 
-
         //Function Array for Hardwarebudget
         $hardwarebudget_permission = array('view'=>has_permission('hardwarebudget','view'),
             'view_own'=>has_permission('hardwarebudget','view_own'),
@@ -662,16 +661,6 @@ class Admin_controller extends CI_Controller
             'import'=>has_permission('hardwarebudget','import'),
         );
         $GLOBALS['hardwarebudget_permission'] = $hardwarebudget_permission;
-
-        //Function Array for Termination
-        $termination_permission = array('view'=>has_permission('termination','view'),
-            'view_own'=>has_permission('termination','view_own'),
-            'create'=>has_permission('termination','create'),
-            'edit'=>has_permission('termination','edit'),
-            'delete'=>has_permission('termination','delete'),
-            'import'=>has_permission('termination','import'),
-        );
-        $GLOBALS['termination_permission'] = $termination_permission;
 
         //Auto loaded vars for global
         $auto_loaded_vars = array(
@@ -713,8 +702,7 @@ class Admin_controller extends CI_Controller
             'profile_permission' => $profile_permission,
             'infodocument_permission' => $infodocument_permission,
             'history_permission' => $history_permission,
-            'hardwarebudget_permission' => $hardwarebudget_permission,
-            'termination_permission' => $termination_permission
+            'hardwarebudget_permission' => $hardwarebudget_permission
         );
 
         $auto_loaded_vars = do_action('before_set_auto_loaded_vars_admin_area', $auto_loaded_vars);
@@ -733,7 +721,7 @@ class Admin_controller extends CI_Controller
 
     public function select_record($table,$field='',$param = array(),$where = array())
     {
-
+        // print_r($param); die();
         if($field !='') {
             $this->db->select($field);
         }
@@ -759,6 +747,9 @@ class Admin_controller extends CI_Controller
 
         if (array_key_exists('order_by', $param)) {
             $this->db->order_by($param['order_by'][0], $param['order_by'][1]);
+        }
+        if (array_key_exists('group_by', $param)) {
+            $this->db->group_by($param['group_by']);
         }
 
         if(array_key_exists('join', $param) && count($param['join']) > 0){

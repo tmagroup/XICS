@@ -66,10 +66,12 @@
 switch (ENVIRONMENT) {
 	case 'development':
 		// error_reporting(0); ini_set('display_errors', 0);
-		error_reporting(1); ini_set('display_errors', 1);
+		error_reporting(0);
 
-		if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165') {
-			// error_reporting(E_ALL | E_STRICT); ini_set('display_errors', 1); // comment for live
+		// echo $_SERVER['REMOTE_ADDR'];
+		// if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165') {
+		if ($_SERVER['REMOTE_ADDR'] === '2405:205:c8e2:885d:e5:ef64:584:f9e3') {
+			error_reporting(E_ALL | E_STRICT); ini_set('display_errors', 1); // comment for live
 		}
 	break;
 

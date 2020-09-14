@@ -4,18 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('admin/header.php'); ?>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-
+        
         <?php $this->load->view('admin/topnavigation.php'); ?>
-
+        
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
         <!-- END HEADER & CONTENT DIVIDER -->
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
-
+        
             <?php $this->load->view('admin/sidebar.php'); ?>
-
-
+        	
+            
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
@@ -36,100 +36,100 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </span>
                             </li>
                         </ul>
+                        
                     </div>
                     <!-- END PAGE BAR -->
-
+                    
                     <!-- BEGIN PAGE MESSAGE-->
                     <?php $this->load->view('admin/alerts'); ?>
                     <!-- BEGIN PAGE MESSAGE-->
-
+                    
                     <!-- BEGIN PAGE TITLE-->
-                    <h3 class="page-title">
+                    <h3 class="page-title"> 
                         <i class="fa fa-pencil"></i>
                         <?php
                         echo lang('page_edit_profile');
                         ?>
-
+                        
                     </h3>
                     <!-- END PAGE TITLE-->
                     <!-- END PAGE HEADER-->
-
-
+                    
+                    
                     <div class="row">
                         <?php echo form_open($this->uri->uri_string(), array('enctype' => "multipart/form-data", 'id' => 'form_customer') );?>
-
-
+                        
+                        
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#tab_profile" data-toggle="tab"><?php echo lang('page_lb_profile');?></a>
-                            </li>
+                            </li>                            
                         </ul>
-
-
+                        
+                        
                         <div class="tab-content">
-
+                            
                             <div class="tab-pane active" id="tab_profile">
-
+                                        
                                 <div class="col-md-6">
+                            
+                            
                                     <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light bordered">
+                                    <div class="portlet light bordered">                                
                                         <div class="portlet-body form">
+                                    
                                         <div class="form-body">
-
+                                            
                                             <div class="form-group yellow bold">
                                                 <label><?php echo lang('page_fl_username');?>: </label>
                                                 <?php echo $customer['username'];?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_changepassword');?> <span class="required"> * </span></label>
                                                 <?php echo form_password('password', "", 'class="form-control" id="submit_form_password"');?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_cpassword');?> <span class="required"> * </span></label>
                                                 <?php echo form_password('cpassword', "", 'class="form-control"');?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_email');?> <span class="required"> * </span></label>
                                                 <?php echo form_input(array('type'=>'email','name'=>'email'), isset($customer['email'])?$customer['email']:'', 'class="form-control"');?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_street');?> <span class="required"> * </span></label>
                                                 <?php echo form_textarea('street', isset($customer['street'])?$customer['street']:'', 'class="form-control"');?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_zipcode');?> <span class="required"> * </span></label>
                                                 <?php echo form_input('zipcode', isset($customer['zipcode'])?$customer['zipcode']:'', 'class="form-control"');?>
                                             </div>
-
+                                            
                                             <div class="form-group">
                                                 <label><?php echo lang('page_fl_city');?> <span class="required"> * </span></label>
                                                 <?php echo form_input('city', isset($customer['city'])?$customer['city']:'', 'class="form-control"');?>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label><?php echo lang('invoice_email');?></label>
-                                                <input type="checkbox" name="invoice_email" class="form-control" <?php echo $customer['invoice_email'] =='1' ? 'checked="checked"' : '';?>>
-                                            </div>
-
-                                            <div class="login_user_customer"></div>
+                                            
                                         </div>
+                                        
+                                </div>
                                     </div>
-                                </div>
                                     <!-- END SAMPLE FORM PORTLET-->
-
+                           
                                 </div>
-
-
+                        
+                        
                                 <div class="col-md-6">
-
+                            
                                     <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light bordered">
+                                    <div class="portlet light bordered">                                
                                         <div class="portlet-body form">
+                                            
                                                 <div class="form-body">
 
                                                     <div class="form-group">
@@ -150,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <span class="btn default btn-file">
                                                                     <span class="fileinput-new"> <?php echo lang('page_lb_selectimage');?> </span>
                                                                     <span class="fileinput-exists"> <?php echo lang('page_lb_change');?> </span>
-                                                                    <!--<input type="file" name="...">-->
+                                                                    <!--<input type="file" name="...">-->                                                             
                                                                     <?php
                                                                     echo form_upload('customerthumb');
                                                                     ?>
@@ -163,7 +163,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                             <span>&nbsp;<?php echo lang('page_lb_selectimage_note_text');?></span>
                                                         </div>
                                                     </div>
-
+                                                    
                                                     <div class="form-group">
                                                         <label><?php echo lang('page_fl_monitoringvalue');?>:</label>
                                                         <?php if($customer['monitoringvalue']){ echo $customer['monitoringvalue'].'%'; }?>
@@ -174,50 +174,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                     <!-- END SAMPLE FORM PORTLET-->
-
-                                </div>
-
+                            
+                                </div>  
+                                
                             </div>
-
-                        </div>
-
-
+                           
+                        </div>        
+                        
+                        
                         <div class="clearfix"></div>
                         <div class="col-md-6">
                             <!-- BEGIN SAMPLE FORM PORTLET-->
-                            <div class="portlet light">
+                            <div class="portlet light">                                
                                 <div class="portlet-body">
                                     <div class="form-body">
                                         <div class="form-actions">
-                                            <button type="submit" class="btn blue"><?php echo lang('save');?></button>
+                                            <button type="submit" class="btn blue"><?php echo lang('save');?></button>                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- END SAMPLE FORM PORTLET-->
-                        </div>
+                        </div>                
+
+                        
                         <?php echo form_close();?>
                     </div>
+                    
+                    
                 </div>
                 <!-- END CONTENT BODY -->
             </div>
             <!-- END CONTENT -->
+                        
+            
         </div>
         <!-- END CONTAINER -->
-<?php $this->load->view('admin/footer.php'); ?>
+               
 <script>
-    var form_id = 'form_customer';
+    var form_id = 'form_customer'; 
     var func_FormValidation = 'FormCustomValidation';
-
+    
     function after_func_FormValidation(form1, error1, success1){
-
+      
         form1.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
 
-            rules: {
+            rules: { 
                 password: {
                     minlength: 5,
                     required: <?php echo isset($customer['customernr'])?'false':'true'?>
@@ -226,7 +232,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     minlength: 5,
                     required: <?php echo isset($customer['customernr'])?'false':'true'?>,
                     equalTo: "#submit_form_password"
-                },
+                },			
                 email: {
                     required: true,
                     email: true
@@ -239,13 +245,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 },
                 city: {
                     required: true
-                },
-                customerthumb: {
+                },			
+                customerthumb: {					  
                   extension: "jpg|jpeg|png"
-                },
+                },			
             },
 
-            invalidHandler: function (event, validator) { //display error alert on form submit
+            invalidHandler: function (event, validator) { //display error alert on form submit              
                     success1.hide();
                     error1.show();
                     App.scrollTo(error1, -200);
@@ -272,42 +278,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     App.scrollTo(error1, -200);
                     return true;
             }
-	   });
+	});
     }
-
-    setTimeout(function(){
-        $('input[name="invoice_email"]').trigger("change");
-    }, 300);
-
-    $(document).on('change', 'input[name="invoice_email"]', function(event) {
-        event.preventDefault();
-        console.log('okoko');
-        var html = '';
-        if($(this).is(':checked')) {
-            $.ajax({
-              type: "POST",
-              url: "<?php echo base_url().'admin/settings/getLoginInvoiceCustomer/';?>",
-              dataType: "json",
-              success: function(data){
-                if(data.status) {
-                    // console.log(data.customer);
-                    html += '<div class="form-group">';
-                        html +='<select class="form-control" name="invoice_cus">';
-                            html +='<option value="" selected="selected">Select Customer</option>';
-                            $.each(data.customer, function(index, val) {
-                                // console.log(val['customernr']);
-                                 html +='<option value="'+val['customernr']+'">'+val['username']+'</option>';
-                            });
-                        html += '<select>';
-                    html += '<div class="">';
-                    $('.login_user_customer').html(html);
-                     $('select[name="invoice_cus"]').val('<?php echo $customer['invoice_cus'] != '' ? $customer['invoice_cus'] : '';?>');
-                }
-              }
-            });
-        } else {
-            $('.login_user_customer').html('');
-        }
-    });
 </script>
 
+<?php $this->load->view('admin/footer.php'); ?>         

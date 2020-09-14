@@ -701,15 +701,4 @@ class Customer_model extends CI_Model
             return 0;
         }
     }
-
-    public function getLoginInvoiceCustomer($id)
-    {
-        return $this->db
-                    ->select('*')
-                    ->from('tblcustomers')
-                    ->where('customernr',$id)
-                    ->or_where('parent_customer_id',$id)
-                    ->get()
-                    ->result_array();
-    }
 }

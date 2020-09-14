@@ -131,7 +131,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     var datatable_sortColumn = 0;
     var datatable_sortColumnBy = 'asc';
     var datatable_hide_columns = 6;
-    var excel_columns = [0,1,2,3];
 </script>
 
 <?php $this->load->view('admin/footer.php'); ?>

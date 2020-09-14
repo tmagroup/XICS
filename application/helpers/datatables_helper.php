@@ -185,6 +185,14 @@ function data_tables_init($aColumns, $sIndexColumn, $sTable, $join = array(), $w
     $sLimit
     ";
 
+    /*if ($_SERVER['REMOTE_ADDR'] == '2405:204:8407:d0e2:7da9:aa3b:9af8:f61') {
+        echo "<pre>";
+        print_r($__post);
+        echo "</pre>";
+        echo $sQuery;
+        exit;
+    }*/
+
     $rResult = $CI->db->query($sQuery)->result_array();
 
     $hookData = do_action('datatables_sql_query_results', array(

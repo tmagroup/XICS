@@ -224,62 +224,6 @@ function has_permission($permission, $can, $userid='')
     if(get_user_role()=='customer'){
         $roleid = 4;
         $permissions = $CI->Role_model->get_role_permissions($roleid);
-        // print_r($permissions); exit(0);
-
-        if ( ($GLOBALS['current_user']->parent_customer_id > 0) ) {
-            if ( ($GLOBALS['current_user']->customer_role == 1) ) {
-                foreach ($permissions as $key_permissions => $value_permissions) {
-                    if ( $value_permissions->permissionid == 23 ) {
-                        // $value_permissions->can_view = 1;
-                        // $value_permissions->can_view_own = 1;
-                        // $value_permissions->can_create = 1;
-                        // $value_permissions->can_edit = 1;
-                        // $value_permissions->can_delete = 1;
-                        // $value_permissions->can_import = 1;
-                    } else {
-                        $value_permissions->can_view = 0;
-                        $value_permissions->can_view_own = 0;
-                        $value_permissions->can_create = 0;
-                        $value_permissions->can_edit = 0;
-                        $value_permissions->can_delete = 0;
-                        $value_permissions->can_import = 0;
-                    }
-                }
-            } else if ( ($GLOBALS['current_user']->customer_role == 2) || ($GLOBALS['current_user']->customer_role == 3) ) { // 2=buchhaltung,3=controlling
-                foreach ($permissions as $key_permissions => $value_permissions) {
-                    if (
-                        $value_permissions->permissionid == 20 || // Assignment
-                        $value_permissions->permissionid == 23 || // Ticket
-                        $value_permissions->permissionid == 29 || // Monitoring
-                        $value_permissions->permissionid == 31 || // Document
-                        $value_permissions->permissionid == 45 || // Infodocument
-                        $value_permissions->permissionid == 7  || //Hardware
-                        $value_permissions->permissionid == 54 || // Hardware Budget
-                        $value_permissions->permissionid == 22 || //Hardwareassignment
-                        $value_permissions->permissionid == 25 || // Deliverynote
-                        $value_permissions->permissionid == 26 || // Hardwareinvoice
-                        $value_permissions->permissionid == 42 || // Assignment Invoice
-                        $value_permissions->permissionid == 48 || // Assignment Hardware Inventory
-                        $value_permissions->permissionid == 21    // Hardwareinput
-                    ) {
-                        // $value_permissions->can_view = 1;
-                        // $value_permissions->can_view_own = 1;
-                        // $value_permissions->can_create = 1;
-                        // $value_permissions->can_edit = 1;
-                        // $value_permissions->can_delete = 1;
-                        // $value_permissions->can_import = 1;
-                    } else {
-                        $value_permissions->can_view = 0;
-                        $value_permissions->can_view_own = 0;
-                        $value_permissions->can_create = 0;
-                        $value_permissions->can_edit = 0;
-                        $value_permissions->can_delete = 0;
-                        $value_permissions->can_import = 0;
-                    }
-                }
-            }
-        }
-        // print_r($permissions); exit(0);
     }
     else{
         $permission_type = $CI->User_model->get($userid, 'permission_type');
@@ -508,26 +452,9 @@ function my_array_search_by_id($s_array, $s_key, $s_value, $is_strict = FALSE) {
     return -1;
 }
 
-
-
-
-/**
- *  my_mkdir
- */
-if ( !function_exists('my_mkdir') ) {
-    function my_mkdir( $path ) {
-        if ( !file_exists($path) ) {
-            $path = rtrim($path, '/') .'/';
-            mkdir($path, 0777, TRUE);
-            $file_index = fopen($path .'index.html', 'w');
-            fclose($file_index);
-        }
-    }
-}
-
 if ( !function_exists('pdebug') ) {
     function pdebug( $dataP, $exitP = FALSE ) {
-        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165' || $_SERVER['REMOTE_ADDR'] === '::1') {
+        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165') {
             echo '<pre>';
             print_r($dataP);
             echo '</pre>';
@@ -540,7 +467,7 @@ if ( !function_exists('pdebug') ) {
 
 if ( !function_exists('ddebug') ) {
     function ddebug( $dataP, $exitP = FALSE ) {
-        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165' || $_SERVER['REMOTE_ADDR'] === '::1') {
+        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165') {
             echo '<pre>';
             var_dump($dataP);
             echo '</pre>';
@@ -553,7 +480,7 @@ if ( !function_exists('ddebug') ) {
 
 if ( !function_exists('fdebug') ) {
     function fdebug( $dataP, $debugP ) {
-        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165' || $_SERVER['REMOTE_ADDR'] === '::1') {
+        if ($_SERVER['REMOTE_ADDR'] === '123.201.19.165') {
             $dir = getcwd() .'/bouwstartbe_debug';
             if ( is_dir(dirname($dir)) && !file_exists($dir) ) { mkdir($dir); }
             $my_debug_file_path = $dir .'/'. 'my_debug_file_'. $debugP .'.txt';

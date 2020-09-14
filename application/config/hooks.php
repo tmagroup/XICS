@@ -11,14 +11,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/hooks.html
 |
 */
-$hook['post_controller_constructor'] = array(
+$hook['post_controller_constructor'][] = array(
 
 	'class'=>'LanguageLoader',
-	
-	'function' => 'initialize', 
-	
-	'filename' => 'LanguageLoader.php', 
-	
+
+	'function' => 'initialize',
+
+	'filename' => 'LanguageLoader.php',
+
 	'filepath' => 'hooks'
-	
+
+);
+
+$hook['post_controller_constructor'][] = array(
+	'class'=>'ssl',
+	'function' => 'force_ssl',
+	'filename' => 'ssl.php',
+	'filepath' => 'hooks'
 );

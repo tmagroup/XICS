@@ -156,36 +156,24 @@ if($GLOBALS['a_moreoptionmobile_permission']['create']){
                                                     <?php echo form_dropdown('customer', $customers, isset($assignment['customer'])?$assignment['customer']:'', 'class="form-control" id="customer" ');?>
                                                 </div>
 
+                                               <!--  <div class="form-group">
+                                                    <label><?php //echo lang('page_fl_provider');?> </label>
+                                                    <?php //echo form_dropdown('provider', provider_values(), isset($assignment['provider'])?$assignment['provider']:'', 'class="form-control" id="provider"');?>
+                                                </div> -->
                                                 <div class="form-group">
-                                                    <label><?php echo lang('page_fl_provider');?> </label>
-                                                        <select name="provider" class="form-control" id="provider">
-                                                        <?php if(!empty($providerData)) { ?>
-                                                            <option value="">Select <?php echo lang('page_fl_provider');?></option>
-                                                            <?php foreach($providerData as $provider) {
-                                                                $selected = isset($assignment['provider']) && $provider['name'] == $assignment['provider'] ? 'selected=selected' : '';
-                                                            ?>
-                                                            <option value="<?php echo $provider['name'];?>" <?php echo $selected;?>><?php echo $provider['name'];?></option>
+                                                <label><?php echo lang('page_fl_provider');?> </label>
+                                                <select name="provider" class="form-control" id="provider">
+                                                    <?php if(!empty($providerData)) { ?>
+                                                        <option value="">Select <?php echo lang('page_fl_provider');?></option>
+                                                        <?php foreach($providerData as $provider) {
+                                                            $selected = isset($assignment['provider']) && $provider['name'] == $assignment['provider'] ? 'selected=selected' : '';
+                                                        ?>
+                                                        <option value="<?php echo $provider['name'];?>" <?php echo $selected;?>><?php echo $provider['name'];?></option>
                                                         <?php } ?>
                                                     <?php } ?>
                                                 </select>
-                                                </div>
+                                            </div>
 
-                                               <!--  <div class="row">
-                                                    <div class="col-md-9">
-                                                        <div class="form-group">
-                                                            <label><?php //echo lang('page_fl_provider_logo');?> </label>
-                                                            <input type="file" name="provider_logo" id="provider_logo" class="form-control" onchange="PreviewImage();" accept="image/*">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <?php //if(isset($assignment['assignmentnr']) && $assignment['assignmentnr'] > 0 && $assignment['provider_logo'] != '') { ?>
-                                                            <img src="<?php //echo base_url().'uploads/assignments/provider/'.$assignment['assignmentnr'].'/'.$assignment['provider_logo'];?>" id="logoPreview" width="120px" height="70px">
-                                                        <?php// } else { ?>
-                                                            <img id="logoPreview"/>
-                                                        <?php// } ?>
-                                                    </div>
-                                                </div>
- -->
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_assignmentdate');?> <span class="required"> * </span></label>
 
@@ -810,27 +798,8 @@ if($GLOBALS['a_moreoptionmobile_permission']['create']){
 
         </div>
         <!-- END CONTAINER -->
-<?php
-//print_r($assignment); die();
-?>
+
 <script>
-    function PreviewImage()
-     {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("provider_logo").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("logoPreview").src = oFREvent.target.result;
-        };
-
-        var yourImg = document.getElementById('logoPreview');
-
-        if(yourImg && yourImg.style) {
-            yourImg.style.height = '70px';
-            yourImg.style.width = '120px';
-        }
-    }
-
     $('#submit_form_import_assignment').click(function(event) {
         $('#form_import_assignment').submit();
     });
@@ -1353,8 +1322,7 @@ changenewOptionMobile();
 changeFormula();
 changeHardware();
 </script>
-
-<?php $this->load->view('admin/assignments/assignmentjs',array('assignment'=>isset($assignment) ? $assignment:'', 'remindersubjects'=>$remindersubjects));?>
+<?php $this->load->view('admin/assignments/assignmentjs',array('assignment'=>isset($assignment)?$assignment:'', 'remindersubjects'=>$remindersubjects));?>
 
 <script>
 <?php

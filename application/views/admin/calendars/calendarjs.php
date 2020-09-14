@@ -155,7 +155,6 @@ var AppCalendar = function() {
                 editable: true,
                 eventStartEditable: false,
                 droppable: false, // this allows things to be dropped onto the calendar !!!
-                eventOrder: 'timestemp',
 
                 dayClick: function(date, jsEvent, view) {
                     // call the model
@@ -171,8 +170,7 @@ var AppCalendar = function() {
                     <?php
                     if($GLOBALS['calendar_permission']['create']){
                         ?>
-                        // DO NOT REMOVE CODE FormAjax('<?php echo base_url('admin/calendars/addEvent');?>', '', '<?php echo lang('page_create_event')?>', formatted, 'event');
-                        FormAjax('<?php echo base_url('admin/calendars/addEvent');?>', '', '<?php echo lang('page_create_event')?>', formatted);
+                        FormAjax('<?php echo base_url('admin/calendars/addEvent');?>', '', '<?php echo lang('page_create_event')?>', formatted, 'event');
                         <?php
                     }
                     ?>
@@ -571,8 +569,7 @@ function FormAjaxDetail(url, id, google_eid, calendarId){
 
 $('#editEvent').click(function() {
     var id = $(this).attr('data-id');
-    // DO NOT REMOVE CODE FormAjax('<?php echo base_url('admin/calendars/addEvent/');?>'+id, id,'<?php echo lang('page_edit_event')?>', '', 'event');
-    FormAjax('<?php echo base_url('admin/calendars/addEvent/');?>'+id, id,'<?php echo lang('page_edit_event')?>', '');
+    FormAjax('<?php echo base_url('admin/calendars/addEvent/');?>'+id, id,'<?php echo lang('page_edit_event')?>', '', 'event');
 });
 
 //General Event Modal

@@ -272,7 +272,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                                 <!-- ROW -->
                                                                 <tr id="row1_old_quotationproduct_<?php echo $quotationproduct['id'];?>">
                                                                     <!--<td class="text-nowrap text-center"><?php echo $quotationproduct['formula']=='M'?lang('page_lb_manual'):lang('page_lb_auto');?></td>-->
-                                                                    <td class="text-nowrap text-center"><?php echo $idx; ?></td>
+                                                                    <td class="text-nowrap text-center"><?php echo $idx++; ?></td>
                                                                     <td class="text-center"><?php echo $quotationproduct['mobilenr'];?></td>
                                                                     <td class="text-center"><?php echo $quotationproduct['vvlneu'];?></td>
                                                                     <td class="text-center"><?php echo $quotationproduct['currentratemobile'];?><br><br><div class="divcenter"><?php echo $quotationproduct['currentoptionmobile']?lang('page_fl_optiontitle').":".$quotationproduct['currentoptionmobile']:'';?></div></td>

@@ -156,7 +156,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                     <!-- END SAMPLE FORM PORTLET-->
+
                                 </div>
+
 
                                 <div class="col-md-6">
 
@@ -280,6 +282,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <!-- END CONTAINER -->
 <?php $this->load->view('admin/footer.php'); ?>
+<?php $this->load->view('admin/monitorings/monitoringjs',array('monitoring'=>$monitoring));?>
 
 <script type="text/javascript">
     show_datatable();
@@ -295,15 +298,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              "type": "POST",
              "data": {
                 "id": "<?php echo $this->uri->segment(4);?>"
-             }
+            }
         },
       "columns": [
           { "data": "id" },
           { "data": "monitoringnr" },
           { "data": "mobilenr" },
-          { "data": "simnr" },
-       ]
+          { "data": "simnr" }
+        ]
         });
     }
 </script>
-<?php $this->load->view('admin/monitorings/monitoringjs',array('monitoring'=>$monitoring));?>

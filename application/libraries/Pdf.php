@@ -7,6 +7,7 @@ class pdf extends TCPDF
 {
 	private $pdfname = '';
 	private $data = array();
+	protected $last_page_flag = false;
 
 	public function __construct($pdfname='', $data=array(),$orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='UTF-8', $diskcache=false, $pdfa=false)
 	{
@@ -14,6 +15,11 @@ class pdf extends TCPDF
 		$this->pdfname = $pdfname;
 		$this->data = $data;
 
+	}
+
+	public function Close() {
+		$this->last_page_flag = true;
+		parent::Close();
 	}
 
 	public function Header()
@@ -297,6 +303,7 @@ class pdf extends TCPDF
 
 				// $image_file = 'uploads/company/logo-big.png';
 				// $this->Image($image_file, 150, 8, 60, '', 'PNG', '', 'T', false, 500, '', false, false, 0, false, false, false);
+
 			break;
 			case 'printhardwarequotation':
 
@@ -839,28 +846,30 @@ class pdf extends TCPDF
 
 			case 'printmonitoringprotocol':
 
-				//Red Footer Line
-				$linestyle = array('width' => 6, 'cap' => 'butt', 'join' => 'miter', 'dash' => '', 'phase' => 0, 'color' => array(228, 34, 37));
-				$this->Line(20, 220, 210, 220, $linestyle);
+				if ($this->last_page_flag) {
+					//Red Footer Line
+					$linestyle = array('width' => 6, 'cap' => 'butt', 'join' => 'miter', 'dash' => '', 'phase' => 0, 'color' => array(228, 34, 37));
+					$this->Line(20, 220, 210, 220, $linestyle);
 
-				//Footer
-				$additional_extracost = $this->data['monitoring']['additional_extracost'];
+					//Footer
+					$additional_extracost = $this->data['monitoring']['additional_extracost'];
 
-				$this->SetY(218);
-				$html = '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="color:#2b2b2a"><tr><td width="2%"></td><td align="left" style="font-size:10px;color:#fff;"><b>'.lang('page_monitoring_pdf_otherremark').'</b></td></tr><tr><td width="2%"></td><td align="left" width="98%"><table border="0" width="100%"><tr style="font-size:10px;"><td>'.$additional_extracost.'</td></tr></table></td></tr></table>';
-				$this->writeHTML($html, true, false, true, false, '');
+					$this->SetY(218);
+					$html = '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="color:#2b2b2a"><tr><td width="2%"></td><td align="left" style="font-size:10px;color:#fff;"><b>'.lang('page_monitoring_pdf_otherremark').'</b></td></tr><tr><td width="2%"></td><td align="left" width="98%"><table border="0" width="100%"><tr style="font-size:10px;"><td>'.$additional_extracost.'</td></tr></table></td></tr></table>';
+					$this->writeHTML($html, true, false, true, false, '');
 
-				//Footer Text
-				$this->SetX(0);
-				$this->SetY(270);
-				$html = '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="color:#6a6a6a; font-size:8px; font-weight:normal;">
-				<tr><td></td></tr><tr><td align="center">'.$this->data['company_business_partner_name'].' - '.$this->data['company_name'].' - '.$this->data['company_address'].
-				' - '.$this->data['company_zipcode'].' '.$this->data['company_city'].'</td></tr>
-				<tr><td align="center">'.$this->data['company_address2'].'</td></tr>
-				<tr><td align="center">'.$this->data['company_address3'].'</td></tr>
-				<tr><td align="center">'.lang('page_lb_tel').'.: '.$this->data['company_tel'].' '.lang('page_lb_fax').': '.$this->data['company_fax'].' - '.$this->data['company_website'].' - '.$this->data['company_email'].'</td></tr>
-				</table>';
-				$this->writeHTML($html, true, false, true, false, '');
+					//Footer Text
+					$this->SetX(0);
+					$this->SetY(270);
+					$html = '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="color:#6a6a6a; font-size:8px; font-weight:normal;">
+					<tr><td></td></tr><tr><td align="center">'.$this->data['company_business_partner_name'].' - '.$this->data['company_name'].' - '.$this->data['company_address'].
+					' - '.$this->data['company_zipcode'].' '.$this->data['company_city'].'</td></tr>
+					<tr><td align="center">'.$this->data['company_address2'].'</td></tr>
+					<tr><td align="center">'.$this->data['company_address3'].'</td></tr>
+					<tr><td align="center">'.lang('page_lb_tel').'.: '.$this->data['company_tel'].' '.lang('page_lb_fax').': '.$this->data['company_fax'].' - '.$this->data['company_website'].' - '.$this->data['company_email'].'</td></tr>
+					</table>';
+					$this->writeHTML($html, true, false, true, false, '');
+				}
 
 			break;
 

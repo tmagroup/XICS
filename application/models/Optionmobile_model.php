@@ -78,6 +78,7 @@ class Optionmobile_model extends CI_Model
      */
     public function update($data, $id)
     {
+
         //Check Optiontitle
         $this->db->where($this->aid.'!=', $id);
         $this->db->where('optiontitle', trim($data['optiontitle']));
@@ -153,6 +154,18 @@ class Optionmobile_model extends CI_Model
                     $this->db->or_where("optiontitle",trim($line[1]));
                     $result = $this->db->get($this->table)->result();
 
+                    
+                    //exit;
+
+                    // echo "<pre>";
+                    // print_r($csv_data);
+                    // echo "</pre>";
+                    // echo "<pre>";
+                    // print_r($result);
+                    // echo "</pre>";
+                    // echo $this->db->last_query();
+                    // exit;
+
                     //Duplicate rows wont be imported
                     if(!count($result)){
                         $post = array();
@@ -185,6 +198,28 @@ class Optionmobile_model extends CI_Model
                             // $this->update(array('optionnr'=>$newid),$insertid);
                             $imported_records++;
                         }
+                    } else{
+                        $dataU = array();
+                        $result = json_decode(json_encode($result), true);
+                        $dataU['optionnr'] = $result[0]['optionnr']; 
+                        //$dataU['optiontitle'] = $result[0]['optiontitle']; 
+                        $dataU['price'] = $line[2];
+                        $dataU['runningtime'] = $line[3];
+                        $dataU['provider'] = $line[4];
+                        $dataU['updated'] = date('Y-m-d H:i:s');
+                        $imported_records++;
+                        $this->db->where($this->aid, $result[0]['optionnr']);
+                        $this->db->update($this->table, $dataU);
+
+                        //exit;
+                        // $dataU = array();
+                        // $dataU[''];
+                        // $result[0]['price'] = $line[2];
+                        // $result[0]['runningtime'] = $line[3];
+                        // $result[0]['provider'] = $line[4];
+                        // print_r($result);
+                        // exit;
+                        
                     }
                 }
 
