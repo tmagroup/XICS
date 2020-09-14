@@ -176,13 +176,14 @@ define('COMPANY_VAT','19');
 
 
 
-// echo ENVIRONMENT; die()
+
 
 if (ENVIRONMENT == 'production') {
 	define('BASE_URL', 'https://www.xics.de/');
 } else if (ENVIRONMENT == 'development') {
 	// define('BASE_URL', 'http://testxics.serv2net.de/');
 	define('BASE_URL', 'http://localhost/xics_live_git/');
+	// define('BASE_URL', 'http://localhost:80/testxics.serv2net.de/');
 } else {
 	define('BASE_URL', 'http://localhost:80/testxics.serv2net.de/');
 }
