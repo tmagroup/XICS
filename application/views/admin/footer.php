@@ -1,4 +1,4 @@
-<!-- Delete Confirmation -->
+f<!-- Delete Confirmation -->
 <div id="pageloaddiv" style="display: none;"></div>
 
 <div class="modal fade" id="deleteConfirmationAjax" tabindex="-1" role="dialog" style="z-index:10051;">
@@ -77,6 +77,8 @@
         <script src="<?php echo base_url('assets/global/plugins/jquery.blockui.min.js'); ?>" type="text/javascript"></script>
         <script src="<?php echo base_url('assets/global/plugins/uniform/jquery.uniform.min.js'); ?>" type="text/javascript"></script>
         <script src="<?php echo base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js'); ?>" type="text/javascript"></script>
+        <script src="<?php echo base_url('assets/global/plugins/counterup/jquery.waypoints.min.js'); ?>" type="text/javascript"></script>
+        <script src="<?php echo base_url('assets/global/plugins/counterup/jquery.counterup.min.js'); ?>" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->
 
 
