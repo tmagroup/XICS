@@ -1385,6 +1385,112 @@ function handle_customer_profile_image_delete($customer_id,$dirname=''){
     return true;
 }
 
+
+/**
+ * ASSIGNMENT PROVIDER LOGO UPLOAD
+ * @param  string $customer_id user_id or current logged in user id will be used if not passed
+ * @return boolean
+ */
+function handle_assignment_provider_logo_upload($assignment_id = '')
+{
+    /*if (!is_numeric($customer_id)) {
+        $customer_id = get_user_id();
+    }*/
+  // echo "<pre>";
+  //   print_r($_FILES);
+  //   die();
+
+    if (isset($_FILES['provider_logo']['name']) && $_FILES['provider_logo']['name'] != '') {
+        // do_action('before_upload_customer_customerthumb');
+        $path        = get_upload_path_by_type('assignment_provider') . $assignment_id . '/';
+        // Get the temp file path
+        $tmpFilePath = $_FILES['provider_logo']['tmp_name'];
+
+        // Make sure we have a filepath
+        $CI =& get_instance();
+        if (!empty($tmpFilePath) && $tmpFilePath != '') {
+            // Getting file extension
+                $path_parts         = pathinfo($_FILES["provider_logo"]["name"]);
+                $extension          = $path_parts['extension'];
+                $extension = strtolower($extension);
+                $allowed_extensions = array(
+                    'jpg',
+                    'jpeg',
+                    'png'
+                );
+                if (!in_array($extension, $allowed_extensions)) {
+                    set_alert('warning', lang('page_form_validation_file_php_extension_blocked'));
+
+                    return false;
+                }
+
+                // _maybe_create_upload_path($path);
+
+                $filename    = unique_filename($path, $_FILES["provider_logo"]["name"]);
+                $newFilePath = $path . '/' . $filename;
+                $upPath = $path;
+
+                if(!file_exists($upPath))  {
+                    mkdir($upPath, 0777, true);
+                }
+
+                $config = array(
+                    'upload_path' => $upPath,
+                    'allowed_types' => "gif|jpg|png|jpeg",
+                    'overwrite' => TRUE,
+                );
+
+                $CI->load->library('upload', $config);
+                $CI->load->initialize($config);
+                if(!$CI->upload->do_upload('provider_logo')) {
+                    $data['imageError'] =  $CI->upload->display_errors();
+                } else {
+                    $imageDetailArray = $CI->upload->data();
+                    $image =  $imageDetailArray['file_name'];
+
+                    $CI->db->where('assignmentnr', $assignment_id);
+                    $CI->db->update('tblassignments', array(
+                        'provider_logo' => $image
+                    ));
+                }
+                return true;
+        }
+    }
+
+    return false;
+}
+
+
+/**
+ * ASSIGNMENT PROVIDER LOGO DELETE
+*/
+function handle_assignment_provider_logo_delete($assignment_id,$dirname=''){
+    // do_action('before_delete_customer_customerthumb');
+
+    if($dirname==""){
+        $dirname = get_upload_path_by_type('assignment_provider') . $assignment_id . '/';
+    }
+
+    if(is_dir($dirname))
+         $dir_handle = opendir($dirname);
+    if (!$dir_handle)
+        return false;
+    while($file = readdir($dir_handle)) {
+        if ($file != "." && $file != "..") {
+            if (!is_dir($dirname."/".$file))
+            {
+                 unlink($dirname."/".$file);
+            }
+            else
+            {
+                 delete_directory($assignment_id, $dirname.'/'.$file);
+            }
+        }
+    }
+    closedir($dir_handle);
+    rmdir($dirname);
+    return true;
+}
 /**
  * Maybe upload contact profile image
  * @param  string $contact_id contact_id or current logged in contact id will be used if not passed
@@ -1514,7 +1620,6 @@ function handle_assignment_invoicefile_upload($assignment_id, $bill_id = '')
     /*if (!is_numeric($bill_id)) {
         $bill_id = get_bill_id();
     }*/
-
     if (isset($_FILES['invoicefile']['name']) && $_FILES['invoicefile']['name'] != '') {
         do_action('before_upload_product_invoicefile');
 
@@ -1562,6 +1667,56 @@ function handle_assignment_invoicefile_upload($assignment_id, $bill_id = '')
  * @param  string $product_id product_id or current logged in user id will be used if not passed
  * @return boolean
  */
+
+function handle_assignment_invoicefilecsv_upload($assignment_id, $bill_id = '')
+{
+    /*if (!is_numeric($bill_id)) {
+        $bill_id = get_bill_id();
+    }*/
+
+    if (isset($_FILES['invoicefilecsv']['name']) && $_FILES['invoicefilecsv']['name'] != '') {
+        do_action('before_upload_product_invoicefile');
+
+        _maybe_create_upload_path(get_upload_path_by_type('assignment') . $assignment_id.'/');
+        $path = get_upload_path_by_type('assignment') . $assignment_id . '/bills/';
+
+        // Get the temp file path
+        $tmpFilePath = $_FILES['invoicefilecsv']['tmp_name'];
+        // Make sure we have a filepath
+        if (!empty($tmpFilePath) && $tmpFilePath != '') {
+            // Getting file extension
+            $path_parts         = pathinfo($_FILES["invoicefilecsv"]["name"]);
+            $extension          = $path_parts['extension'];
+            $extension = strtolower($extension);
+            $allowed_extensions = array(
+                'csv'
+            );
+            if (!in_array($extension, $allowed_extensions)) {
+                set_alert('warning', lang('page_form_validation_file_php_extension_blocked'));
+
+                return false;
+            }
+            _maybe_create_upload_path($path);
+            $filename    = unique_filename($path, $_FILES["invoicefilecsv"]["name"]);
+            $newFilePath = $path . '/' . $filename;
+
+            // Upload the file into the company uploads dir
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $CI->db->where('billnr', $bill_id);
+                $CI->db->update('tblbills', array(
+                    'invoicefilecsv' => $filename,
+                    'invoicefilecsvtype' => $_FILES["invoicefilecsv"]["type"],
+                ));
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
 function handle_infodocument_attachments($documentid)
 {
     /*if (!is_numeric($bill_id)) {
@@ -1769,6 +1924,9 @@ function get_upload_path_by_type($type)
         case 'assignment':
             return ASSIGNMENT_ATTACHMENTS_FOLDER;
         break;
+        case 'assignment_provider':
+            return ASSIGNMENT_PROVIDER_ATTACHMENTS_FOLDER;
+        break;
         case 'hardwareassignment':
             return HARDWARE_ASSIGNMENT_ATTACHMENTS_FOLDER;
         break;
@@ -1789,9 +1947,110 @@ function get_upload_path_by_type($type)
         break;
         case 'hardwareassignmentpositiondocument':
             return HARDWARE_ASSIGNMENT_POSITION_DOCUMENTS_FOLDER;
+        case 'hardwarebudgetdocument':
+            return HARDWARE_BUDGET_DOCUMENT_FOLDER;
+        case 'hardwarebudgetdocumentuse':
+            return HARDWARE_BUDGET_DOCUMENT_USE_FOLDER;
+
         case 'leadquotation':
             return LEADQUOTATION_ATTACHMENTS_FOLDER;
         default:
         return false;
     }
+}
+
+/**
+ * Maybe upload hardwarebudget document
+ * @param  string $hardwarebudget_id hardwarebudget_id
+ * @return boolean
+ */
+function handle_image_upload_hardwarebudget( $hardwarebudget_id = '' ) {
+    if ( isset($_FILES['budget_document']['name']) && $_FILES['budget_document']['name'] != '' ) {
+        $path = get_upload_path_by_type('hardwarebudgetdocument') . $hardwarebudget_id;
+        // Get the temp file path
+        $tmpFilePath = $_FILES['budget_document']['tmp_name'];
+        // Make sure we have a filepath
+        if ( !empty($tmpFilePath) && $tmpFilePath != '' ) {
+            // Getting file extension
+            $path_parts = pathinfo($_FILES['budget_document']['name']);
+            $extension = $path_parts['extension'];
+            $extension = strtolower($extension);
+            $allowed_extensions = array(
+                'jpg',
+                'jpeg',
+                'png',
+                'pdf'
+            );
+            if ( !in_array($extension, $allowed_extensions) ) {
+                set_alert('warning', lang('page_form_validation_file_php_extension_blocked'));
+
+                return false;
+            }
+
+            my_mkdir($path);
+
+            $filename = unique_filename($path, $_FILES['budget_document']['name']);
+            $newFilePath = $path .'/'. $filename;
+            // Upload the file into the uploads dir
+            if ( move_uploaded_file($tmpFilePath, $newFilePath) ) {
+                $CI =& get_instance();
+                $CI->db->where('hardwarebudget_id', $hardwarebudget_id);
+                $CI->db->update('tblhardwarebudget', array(
+                    'budget_document' => $filename
+                ));
+
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Maybe upload hardwarebudgetuse budget_use_document
+ * @param  string $hardwarebudgetuse_id hardwarebudgetuse_id
+ * @return boolean
+ */
+function handle_image_upload_hardwarebudgetuse( $hardwarebudgetuse_id = '' ) {
+    if ( isset($_FILES['budget_use_document']['name']) && $_FILES['budget_use_document']['name'] != '' ) {
+        $path = get_upload_path_by_type('hardwarebudgetdocumentuse') . $hardwarebudgetuse_id;
+        // Get the temp file path
+        $tmpFilePath = $_FILES['budget_use_document']['tmp_name'];
+        // Make sure we have a filepath
+        if ( !empty($tmpFilePath) && $tmpFilePath != '' ) {
+            // Getting file extension
+            $path_parts = pathinfo($_FILES['budget_use_document']['name']);
+            $extension = $path_parts['extension'];
+            $extension = strtolower($extension);
+            $allowed_extensions = array(
+                'jpg',
+                'jpeg',
+                'png',
+                'pdf'
+            );
+            if ( !in_array($extension, $allowed_extensions) ) {
+                set_alert('warning', lang('page_form_validation_file_php_extension_blocked'));
+
+                return false;
+            }
+
+            my_mkdir($path);
+
+            $filename = unique_filename($path, $_FILES['budget_use_document']['name']);
+            $newFilePath = $path .'/'. $filename;
+            // Upload the file into the uploads dir
+            if ( move_uploaded_file($tmpFilePath, $newFilePath) ) {
+                $CI =& get_instance();
+                $CI->db->where('hardwarebudgetuse_id', $hardwarebudgetuse_id);
+                $CI->db->update('tblhardwarebudgetnutzen', array(
+                    'budget_use_document' => $filename
+                ));
+
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
