@@ -2153,6 +2153,45 @@ function get_customerreminder_merge_fields($data)
     return $fields;
 }
 
+function get_customerinvoice_merge_fields($data)
+{
+    $fields = array();
+
+    $fields['{customer_surname}'] = $data['customer_surname'];
+    $fields['{customer_name}'] = $data['customer_name'];
+    $fields['{assignment_link}'] = $data['assignment_link'];
+    $fields['{assignment_link_csv}'] = $data['assignment_link_csv'];
+
+    $hook_data['merge_fields'] = $fields;
+    $hook_data['fields_to']    = 'customerreminder';
+    $hook_data['id']           = $data['customernr'];
+
+    $hook_data = do_action('get_customerinvoice_merge_fields', $hook_data);
+    $fields    = $hook_data['merge_fields'];
+
+    return $fields;
+}
+function get_customertermination_merge_fields($data)
+{
+    $fields = array();
+
+    $fields['{customer_surname}'] = $data['customer_surname'];
+    $fields['{customer_name}'] = $data['customer_name'];
+    $fields['{logo_image_url}'] = $data['logo_image_url'];
+    $fields['{data_type}'] = $data['data_type'];
+    $fields['{appoiment_date}'] = $data['appoiment_date'];
+    $fields['{accept_url}'] = $data['accept_url'];
+    $fields['{cancel_url}'] = $data['cancel_url'];
+
+    $hook_data['merge_fields'] = $fields;
+    $hook_data['fields_to']    = 'customertermination';
+    $hook_data['id']           = $data['id'];
+
+    $hook_data = do_action('customertermination_merge_fields', $hook_data);
+    $fields    = $hook_data['merge_fields'];
+
+    return $fields;
+}
 /**
  * Merge field for customer reminder
  * @param  mixed $data array
