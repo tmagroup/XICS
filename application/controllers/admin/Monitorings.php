@@ -74,6 +74,10 @@ class Monitorings extends Admin_controller
                     'tblassignments as assignment'=>'assignment.assignmentnr=tblmonitorings.assignmentnr',
                     )
             );
+
+            // echo '<pre>';
+            // print_r($data['monitoring']);
+            // die();
         }
 
         if(empty($data['monitoring']['monitoringnr'])){
@@ -415,7 +419,7 @@ class Monitorings extends Admin_controller
         $this->Pdf_model->pdf_printmonitoringprotocol($data);
     }
 
-    /* Import Second Csv Assignment Positions by Ajax */
+     /* Import Second Csv Assignment Positions by Ajax */
     public function importsecond()
     {
         if(!$GLOBALS['monitoring_permission']['edit']){
@@ -425,11 +429,12 @@ class Monitorings extends Admin_controller
         //Submit for Import
         if ($this->input->post()) {
             $post = $this->input->post();
+
+            // echo "hhel"; die();
             //Import CSV
             $response = $this->Monitoring_model->importcsvSecond($post);
 
-            if ($response['status'] == 1) {
-
+            if ($response['status']==1) {
                 $Action_data = array('actionname'=>'monitoring', 'actionid'=>$post['monitoringId'], 'actiontitle'=>'monitoring_imported');
                 do_action_history($Action_data);
 
@@ -438,6 +443,7 @@ class Monitorings extends Admin_controller
                 echo json_encode(array('response'=>'error','message'=>$response['message']));
             }
         }
+
         exit;
     }
 
@@ -457,7 +463,6 @@ class Monitorings extends Admin_controller
             $order = $columns[$this->input->post('order')[0]['column']];
             $dir = $this->input->post('order')[0]['dir'];
 
-
             $param  = array();
 
             $field = 'pc.*,tb.monitoringnr_prefix';
@@ -469,7 +474,6 @@ class Monitorings extends Admin_controller
                             );
             $totalFiltered = count($this->select_record('tblassignmentproducts_csv as pc',$field,$param));
             $param['limit'] = array($limit,$start);
-
             if(empty($this->input->post('search')['value']))
             {
                 $posts = $this->select_record('tblassignmentproducts_csv as pc',$field,$param);
@@ -523,12 +527,13 @@ class Monitorings extends Admin_controller
                     )
             );
 
-            $data['monitoringcsvData'] = $this->db
-                                              ->select('*')
+             $data['monitoringcsvData'] = $this->db
+                                              ->select('connection')
                                               ->from('tblassignmentproducts_csv tc')
                                               ->where('tc.monitoringnr',$id)
                                               ->get()
                                               ->result_array();
+
 
             // echo "<pre>";
             // print_r($data['data']);
