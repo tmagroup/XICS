@@ -1,4 +1,4 @@
-<?php
+    <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // class Cronjobs extends CI_Controller
 class Cronjobs extends MY2_Controller {
@@ -130,7 +130,7 @@ class Cronjobs extends MY2_Controller {
             if(isset($dataCustomers) && count($dataCustomers)>0){
                 foreach($dataCustomers as $k => $dataCustomer){
                     $dataMonitoring = $this->Monitoring_model->get("","",array()," assignmentnr='".$dataCustomer['assignmentnr']."' AND MONTH(date)='".date('m')."' AND YEAR(date)='".date('Y')."'");
-                    if(empty($dataMonitoring)){
+                    if(empty($dataMonitoring) && $dataCustomer['assignmentnr'] != ''){
                         $post = array(
                             'customer' => $dataCustomer['customernr'],
                             'responsible' => $dataCustomer['responsible'],
@@ -143,7 +143,7 @@ class Cronjobs extends MY2_Controller {
                             'monitoringvalue' => $dataCustomer['monitoringvalue'],
                             'assignmentnr' => $dataCustomer['assignmentnr']
                         );
-                            $this->Monitoring_model->add($post);
+                        $this->Monitoring_model->add($post);
                     }
                 }
             }
