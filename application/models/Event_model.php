@@ -11,6 +11,8 @@ class Event_model extends CI_Model
         $this->load->model('User_model');
         $this->load->model('Assignment_model');
         $this->load->model('Qualitycheck_model');
+        ini_set('display_errors', 0);
+        // ini_set('allow_url_fopen', 1);
     }
 
     /**
@@ -55,7 +57,8 @@ class Event_model extends CI_Model
      */
     public function add($data, $isGoogle=false)
     {
-        error_reporting(E_ALL | E_STRICT); ini_set('display_errors', 1);
+        ini_set('display_errors', 0);
+        ini_set('allow_url_fopen', 1);
 
         //Database data
         $data['created'] = date('Y-m-d H:i:s');
@@ -317,6 +320,10 @@ class Event_model extends CI_Model
         $client->setAccessToken($accessToken);
         $service = new Google_Service_Calendar($client);
 
+            // echo "<pre>";
+            // print_r($service);
+            // die();
+
         $event = new Google_Service_Calendar_Event(array(
             'summary' => $data['title'],
             'colorId' => $data['google_color_id'],
@@ -337,7 +344,12 @@ class Event_model extends CI_Model
 
 
         //$calendarId = get_option('google_calendar_main_calendar');
+
+
         $calendarId = trim($data['calendarId']);//User's Calendar ID or Master Admin Select Calendar ID
+        //  echo "<pre>";
+        // print_r($event);
+        // die();
         $event = $service->events->insert($calendarId, $event);
         $data_event = array('google_eid'=>$event->id,'google_htmllink'=>$event->htmlLink);
         $this->update($data_event, $id, 'added', 'd1');
