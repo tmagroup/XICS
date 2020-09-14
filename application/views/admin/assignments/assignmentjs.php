@@ -537,7 +537,7 @@
                                 <?php echo form_input(array('name'=>'netamount','type'=>'number'), '', 'class="form-control"');?>
                             </div>
 
-                            <div class="row">
+                                <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group"><label><?php echo lang('page_dt_assignment_invoicefile');?> <span class="required"> * </span></label>
                                         <div class="clearfix"></div>
