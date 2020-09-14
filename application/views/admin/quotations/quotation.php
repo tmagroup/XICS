@@ -1121,7 +1121,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 var validate_arr = ['vvlneu', 'newratemobile', 'value2'];
                 var oldRowCount = jQuery('[id^="row1_old_quotationproduct"]').length;
                 for (var i = 0; i < oldRowCount; i++) {
-                    if (i==1) { i++; }
                     var old_row1 = '#quotationproduct_inputbox #row1_old_quotationproduct_'+i+' :input[type!="radio"][type!="checkbox"][type!="hidden"]:not(.noerror)[name]';
                     var old_row2 = '#quotationproduct_inputbox #row2_old_quotationproduct_'+i+' :input[type!="radio"][type!="checkbox"][type!="hidden"]:not(.noerror)[name]';
                     var temp = jQuery(old_row1+', '+old_row2);
@@ -1138,11 +1137,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     if (!validRow) { return false; }
                 }
 
-                if (oldRowCount!=0) {
-                    oldRowCount++;
-                }
+                oldRowCount++;
                 for (var i = oldRowCount; i < (oldRowCount+jQuery('[id^="row1_new_quotationproduct"]').length); i++) {
-                    if (i==1) { i++; }
                     var new_row1 = '#quotationproduct_inputbox #row1_new_quotationproduct_'+i+' :input[type!="radio"][type!="checkbox"][type!="hidden"]:not(.noerror)[name]';
                     var new_row2 = '#quotationproduct_inputbox #row2_new_quotationproduct_'+i+' :input[type!="radio"][type!="checkbox"][type!="hidden"]:not(.noerror)[name]';
                     var temp = jQuery(new_row1+', '+new_row2);

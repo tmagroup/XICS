@@ -271,12 +271,22 @@ class Calendars extends Admin_controller
                     'calendarId' => $event['calendarId'],
                     'id' => $event['eventid'],
                     // 'title' => ($event['title'] .' '. date('Y-m-d H:i:s', strtotime($event['start'])) .'_'. date('Y-m-d H:i:s', strtotime('1 day', strtotime($event['end'])))),
-                    'title' => ($event['title'] .' '. date('H:i:s', strtotime($event['start'])) .' - '. date('H:i:s', strtotime('1 day', strtotime($event['end'])))),
+                    'title' => ($event['title'] .' '. date('H:i:s', strtotime($event['start'])) .' - '. date('H:i:s', strtotime('1 day', strtotime($event['end'])))), // strtotime($event['start']) .' ----- '.
                     'start' => date('Y-m-d', strtotime($event['sdate'])),
                     'end' => date('Y-m-d', strtotime('1 day', strtotime($event['edate']))),
-                    'color' => $event['color']
+                    'color' => $event['color'],
+                    'timestemp' => strtotime($event['start']),
                 );
             }
+            // pdebug('$event_calendar before ----- ');
+            // pdebug($event_calendar);
+            /* DO NOT REMOVE
+            usort($event_calendar, function($a, $b) {
+                return $a['timestemp'] - $b['timestemp'];
+            });
+            */
+            // pdebug('$event_calendar after ----- ');
+            // pdebug($event_calendar, TRUE);
         }
 
         /* Sync from Google Events */

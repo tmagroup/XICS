@@ -19,7 +19,7 @@ if(isset($dataAssignedCalendarIDs) && count($dataAssignedCalendarIDs)>0)
     <?php
 
     if(count($dataAssignedCalendarIDs)>1){
-            /*if(isset($event['eventid']) && $event['eventid']>0){
+           /* if(isset($event['eventid']) && $event['eventid']>0){
                 $selected_calendarId = isset($event['calendarId'])?$event['calendarId']:'';
                 foreach($dataAssignedCalendarIDs as $ckey=>$dataAssignedCalendarID){
                     if(trim($selected_calendarId)==trim($dataAssignedCalendarID['id'])){
@@ -267,7 +267,8 @@ if(isset($dataAssignedCalendarIDs) && count($dataAssignedCalendarIDs)>0)
     }
 
     <?php
-    if($GLOBALS['calendar_permission']['edit'] && isset($event['userid']) && $event['userid']==get_user_id()){
+    if(1 || $GLOBALS['calendar_permission']['edit'] && $GLOBALS['current_user']->userrole == 1){
+    // if($GLOBALS['calendar_permission']['edit'] && isset($event['userid']) && $event['userid']==get_user_id()){
         ?>
         $('#btn_save_event').show();
         <?php
@@ -284,7 +285,7 @@ if(isset($dataAssignedCalendarIDs) && count($dataAssignedCalendarIDs)>0)
             <?php
         }
     }
-    if($GLOBALS['calendar_permission']['delete'] && isset($event['userid']) && $event['userid']==get_user_id()){
+    if(1 || $GLOBALS['calendar_permission']['delete'] && isset($event['userid']) && $event['userid']==get_user_id()){
         ?>
         $('#btn_delete_event').show();
         <?php

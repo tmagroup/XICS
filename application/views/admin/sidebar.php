@@ -197,7 +197,10 @@
 
 			|| $deliverynote_permission['view'] || $deliverynote_permission['create'] || $deliverynote_permission['edit'] || $deliverynote_permission['delete']
 			|| $hardwareinvoice_permission['view'] || $hardwareinvoice_permission['create'] || $hardwareinvoice_permission['edit'] || $hardwareinvoice_permission['delete']
+
+			|| $hardwarebudget_permission['view'] || $hardwarebudget_permission['view_own'] || $hardwarebudget_permission['create'] || $hardwarebudget_permission['edit'] || $hardwarebudget_permission['delete']
 			){
+
 				?>
 				<li class="nav-item  <?php if(current_url()==base_url('admin/hardwareinputs')
 						|| current_url()==base_url('admin/hardwareinputs/hardwareinput')
@@ -209,6 +212,11 @@
 						|| current_url()==base_url('admin/hardwareassignments/hardwareassignment/'.$this->uri->segment(4))
 						|| current_url()==base_url('admin/hardwareassignments/detail/'.$this->uri->segment(4))
 
+						|| current_url()==base_url('admin/hardwarebudgets')
+						|| current_url()==base_url('admin/hardwarebudgets/hardwarebudget')
+						|| current_url()==base_url('admin/hardwarebudgets/hardwarebudget/'.$this->uri->segment(4))
+						|| current_url()==base_url('admin/hardwarebudgets/detail/'.$this->uri->segment(4))
+
 						|| current_url()==base_url('admin/deliverynotes')
 						|| current_url()==base_url('admin/hardwareinvoices')
 
@@ -219,27 +227,30 @@
 						<span class="arrow"></span>
 					</a>
 					<ul class="sub-menu">
-						<!-- Hardware Baget -->
+
+						<!-- Hardware Budget Manage -->
 						<?php
-						    $sep_border = true;
-						    if ( $hardwarebudget_permission['view'] || $hardwarebudget_permission['view_own'] || $hardwarebudget_permission['create'] || $hardwarebudget_permission['edit'] || $hardwarebudget_permission['delete'] ) {
+							$sep_border = true;
+							if ( $hardwarebudget_permission['view'] || $hardwarebudget_permission['view_own'] || $hardwarebudget_permission['create'] || $hardwarebudget_permission['edit'] || $hardwarebudget_permission['delete'] ) {
 						?>
-						    <li class="nav-item
-						        <?php
-						            if (
-						                current_url() == base_url('admin/hardwarebudgets')
-						                || current_url() == base_url('admin/hardwarebudgets/hardwarebudget')
-						                || current_url() == base_url('admin/hardwarebudgets/hardwarebudget/'. $this->uri->segment(4))
-						                || current_url() == base_url('admin/hardwarebudgets/detail/'. $this->uri->segment(4))
-						            ) {
-						        ?> active open <?php } ?>">
-						        <a href="<?php echo base_url('admin/hardwarebudgets'); ?>" class="nav-link ">
-						            <i class="icon-settings"></i> <span class="title">Hardware-Budget</span>
-						        </a>
-						    </li>
+							<li class="nav-item
+								<?php
+									if (
+										current_url() == base_url('admin/hardwarebudgets')
+										|| current_url() == base_url('admin/hardwarebudgets/hardwarebudget')
+										|| current_url() == base_url('admin/hardwarebudgets/hardwarebudget/'. $this->uri->segment(4))
+										|| current_url() == base_url('admin/hardwarebudgets/detail/'. $this->uri->segment(4))
+									) {
+								?> active open <?php } ?>">
+								<a href="<?php echo base_url('admin/hardwarebudgets'); ?>" class="nav-link ">
+									<i class="icon-settings"></i> <span class="title">Hardware-Budget</span>
+								</a>
+							</li>
 						<?php
-						    $sep_border = false;
+							$sep_border = false;
 						} ?>
+
+
 						<!-- Hardware Assignment Manage -->
 						<?php
 						$sep_border = true;
@@ -572,19 +583,19 @@
 
 					<!-- Hardware Manage -->
 					<?php
-					$sep_border = true;
-					if($hardware_permission['view'] || $hardware_permission['edit'] || $hardware_permission['delete'] || $hardware_permission['import']){
-						?>
-						<li class="nav-item <?php if(current_url()==base_url('admin/hardwares')
-								|| current_url()==base_url('admin/hardwares/hardware/'.$this->uri->segment(4))
-								|| current_url()==base_url('admin/hardwares/import')){ ?>active open<?php }?> menu_separate_border">
-							<a href="<?php echo base_url('admin/hardwares');?>" class="nav-link ">
-							   <i class="fa fa-tag"></i> <span class="title"><?php echo lang('page_hardware');?></span>
-							</a>
-						</li>
-						<?php
-						$sep_border = false;
-					}
+						$sep_border = true;
+						if($hardware_permission['view'] || $hardware_permission['edit'] || $hardware_permission['delete'] || $hardware_permission['import']){
+							?>
+							<li class="nav-item <?php if(current_url()==base_url('admin/hardwares')
+									|| current_url()==base_url('admin/hardwares/hardware/'.$this->uri->segment(4))
+									|| current_url()==base_url('admin/hardwares/import')){ ?>active open<?php }?> menu_separate_border">
+								<a href="<?php echo base_url('admin/hardwares');?>" class="nav-link ">
+								   <i class="fa fa-tag"></i> <span class="title"><?php echo lang('page_hardware');?></span>
+								</a>
+							</li>
+							<?php
+							$sep_border = false;
+						}
 					?>
 
 					<!-- Supplier Manage -->
@@ -721,6 +732,55 @@
 			}
 			?>
 
+			<?php // print_r($GLOBALS['current_user']); ?>
+			<?php if ( get_user_role() === 'customer' ) { ?>
+				<!-- Hardware Manage -->
+				<?php /* if ( $hardware_permission['view'] || $hardware_permission['edit'] || $hardware_permission['delete'] || $hardware_permission['import'] ) { ?>
+					<li class="nav-item
+						<?php
+							if (
+								current_url() == base_url('admin/hardwares')
+								|| current_url() == base_url('admin/hardwares/hardware/'. $this->uri->segment(4))
+								|| current_url() == base_url('admin/hardwares/import')
+							) {
+						?> active open <?php } ?> menu_separate_border">
+						<a href="<?php echo base_url('admin/hardwares'); ?>" class="nav-link">
+							<i class="fa fa-tag"></i> <span class="title"><?php echo lang('page_hardware'); ?></span>
+						</a>
+					</li>
+				<?php } */ ?>
+
+				<?php if ( $GLOBALS['current_user']->parent_customer_id == 0 ) { ?>
+					<li class="nav-item
+						<?php
+							if (
+								current_url() == base_url('admin/subcustomers')
+								|| current_url() == base_url('admin/subcustomers/customer')
+								|| current_url() == base_url('admin/subcustomers/customer/'. $this->uri->segment(4))
+								|| current_url() == base_url('admin/subcustomers/detail/'. $this->uri->segment(4))
+							) {
+						?> active open <?php } ?>">
+						<a href="<?php echo base_url('admin/subcustomers');?>" class="nav-link">
+							<i class="fa fa-file"></i> <span class="title">Unterbenutzer</span>
+						</a>
+					</li>
+				<?php } ?>
+			<?php } ?>
+			<?php if($termination_permission['view'] || $termination_permission['create'] || $termination_permission['edit'] || $termination_permission['delete']){ ?>
+				<li class="nav-item
+					<?php
+						if (
+							current_url() == base_url('admin/termination')
+							|| current_url() == base_url('admin/termination/customer')
+							|| current_url() == base_url('admin/termination/customer/'. $this->uri->segment(4))
+							|| current_url() == base_url('admin/termination/detail/'. $this->uri->segment(4))
+						) {
+					?> active open <?php } ?>">
+					<a href="<?php echo base_url('admin/termination');?>" class="nav-link">
+						<i class="fa fa-file"></i> <span class="title">Terminierung</span>
+					</a>
+				</li>
+			<?php } ?>
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	</div>

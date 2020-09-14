@@ -25,6 +25,7 @@
                             <div class="form-group">
                                 <label><?php echo lang('choose_csv_file');?> <span class="required"> * </span></label>
                                 <input type="file" name="file_csv" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                <?php //echo form_upload('file_csv', '', 'class="form-control"');?>
                             </div>
 
 			</div>
@@ -77,7 +78,6 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!-- End Import CSV Modal -->
-
 <script>
 jQuery(document).ready(function() {
 
@@ -180,6 +180,7 @@ jQuery(document).ready(function() {
         }
     });
 
+
     //Generate Ticket Hardware Assignment Submit by Ajax
     jQuery("#FormImportCSVModalAjax").submit(function(e) {
 
@@ -223,6 +224,7 @@ jQuery(document).ready(function() {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+
     //Get Running Time of Mobile Option
     jQuery('.monitoringassignmentstatus').change(function() {
         var positionid = jQuery(this).attr('dataid');
@@ -251,6 +253,8 @@ jQuery(document).ready(function() {
             });
         });
     });
+
+
 });
 
 //Import CSV Validation
@@ -327,13 +331,14 @@ function importCSVAjax(url,id,title,aid){
     }
 }
 
+
 $('#FormImportCSVSecondeAjax').validate({
     ignore: "",
 
     rules: {
         file_csv_second: {
             required: true,
-            extension: "csv"
+            extension: "csv|CSV"
         },
     },
     messages : {

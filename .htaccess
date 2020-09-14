@@ -1,7 +1,12 @@
 RewriteEngine on
-RewriteBase /
+RewriteBase /testxics.serv2net.de/
 RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.php?/$1 [L,QSA]
+RewriteRule ^(.*)$ /xics_live_git/index.php?/$1 [L,QSA]
 AddDefaultCharset utf-8
+
+<IfModule mod_env.c>
+	SetEnv CI_ENV development
+	SetEnv BASE_URL http://localhost/xics_live_git/
+</IfModule>

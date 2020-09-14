@@ -223,7 +223,7 @@ class Monitoring_model extends CI_Model
     public function importcsv($data){
 
         //Monitoring
-        $rowMonitoring = (array) $this->get($data['monitoringId'],"tblmonitorings.monitoringnr,tblmonitorings.monitoringvalue,assignment.assignmentnr",
+        $rowMonitoring = (array) $this->get($data['monitoringId'],"tblmonitorings.monitoringnr,tblmonitorings.monitoringvalue,assignment.assignmentnr, assignment.provider",
                 array('tblusers as responsible'=>'responsible.userid=tblmonitorings.responsible',
                 'tblcustomers as customer'=>'customer.customernr=tblmonitorings.customer',
                 'tblmonitoringstatus'=>'tblmonitoringstatus.id=tblmonitorings.monitoringstatus',
@@ -244,74 +244,113 @@ class Monitoring_model extends CI_Model
             " tblassignmentproducts.assignmentnr='".$rowMonitoring['assignmentnr']."' "
         );
 
-
         if(isset($rowMonitoring['monitoringnr']) && $rowMonitoring['monitoringnr']>0){
 
             $csvMimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
             if(!empty($_FILES['file_csv']['name']) && in_array($_FILES['file_csv']['type'],$csvMimes)){
 
                 if(is_uploaded_file($_FILES['file_csv']['tmp_name'])){
-
-                    //open uploaded csv file with read only mode
-                    $csvFile = fopen($_FILES['file_csv']['tmp_name'], 'r');
-
-                    fgetcsv($csvFile);
-                    $csv_data = array();
-                    while (!feof($csvFile)) {
-                        $tmp = fgetcsv($csvFile, null, ';');
-                        if ($tmp) { $csv_data[] = $tmp; }
-                    }
-                    fclose($csvFile);
-
-                    // skip first line
-                    // if your csv file have no heading, just comment the next line
-                    // fgetcsv($csvFile);
-
-                    //parse data from csv file line by line
                     $imported_records = 0;
-                    // while(($line = fgetcsv($csvFile)) !== FALSE){
-                    foreach ($csv_data as $key => $line) {
 
-                        /*
-                        Compare:
-                        */
+                    if ( $rowMonitoring['provider'] === 'Telekom' ) { // FOR TELEKOM ONLY
+                        $csv_file = fopen($_FILES['file_csv']['tmp_name'], 'r');
+                        $csv_data = array();
+                        while ( !feof($csv_file) ) {
+                            $tmp = fgetcsv($csv_file, null, ';');
+                            if ($tmp) { $csv_data[] = $tmp; }
+                        }
+                        fclose($csv_file);
 
-                        if(isset($line[6])){
-                            foreach($rowAssignmentProducts as $rowAssignmentProduct){
-                                if(trim($line[6])==trim($rowAssignmentProduct['mobilenr'])){
-                                    $line[12] = str_replace(',', '.',$line[12]);
+                        foreach ($csv_data as $data) {
+                            if ( isset($data[9]) && (trim($data[9]) === '880101011348') ) {
+                                if ( isset($data[5]) ) {
+                                    foreach ( $rowAssignmentProducts as $rowAssignmentProduct ) {
+                                        if ( trim($data[5]) === trim($rowAssignmentProduct['mobilenr']) ) {
+                                            //Mobile Rate Price+all Option Prices=ValueA from the Assignment
+                                            $ValueA = $rowAssignmentProduct['value2'] + $rowAssignmentProduct['value4'];
 
-                                    //Mobile Rate Price+all Option Prices=ValueA from the Assignment
-                                    $ValueA = $rowAssignmentProduct['value2'] + $rowAssignmentProduct['value4'];
+                                            //Gesamtbetrag = ValueB from the new imported table
+                                            $ValueB = str_replace(',', '.', $data[18]);
 
-                                    //Gesamtbetrag = ValueB from the new imported table
-                                    $ValueB = str_replace(',', '.', $line[12]);
+                                            //Selectboxvalue "Kulanzwert" from Customer Settings = ValueC
+                                            $ValueC  = $rowMonitoring['monitoringvalue'];
 
-                                    //Selectboxvalue "Kulanzwert" from Customer Settings = ValueC
-                                    $ValueC  = $rowMonitoring['monitoringvalue'];
+                                            //Listed all Position where this is:
+                                            //ValueA + (ValueA/100*ValueC) <= ValueB
+                                            //Import only if codition true
+                                            if ( ($ValueA + (($ValueA / 100) * $ValueC)) <= $ValueB ) {
+                                                $mData['monitoringnr'] = $rowMonitoring['monitoringnr'];
+                                                $mData['invoiceitem'] = trim($data[5]);
+                                                $mData['invoicetotal'] = trim($ValueB);
+                                                $mData['created'] = date('Y-m-d H:i:s');
+                                                $this->db->insert('tblmonitoringassignments', $mData);
 
-                                    //Listed all Position where this is:
-                                    //ValueA + (ValueA/100*ValueC) <= ValueB
-                                    //Import only if codition true
-                                    if($ValueA + (($ValueA/100)*$ValueC) <= $ValueB){
+                                                $imported_records++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else { // FOR VODAFONE AND O2BUSINESS
+                        //open uploaded csv file with read only mode
+                        $csvFile = fopen($_FILES['file_csv']['tmp_name'], 'r');
 
-                                        $mData['monitoringnr'] = $rowMonitoring['monitoringnr'];
-                                        $mData['invoiceitem'] = trim($line[6]);
-                                        $mData['invoicetotal'] = trim($line[12]);
-                                        $mData['created'] = date('Y-m-d H:i:s');
-                                        $this->db->insert('tblmonitoringassignments', $mData);
+                        fgetcsv($csvFile);
+                        $csv_data = array();
+                        while (!feof($csvFile)) {
+                            $tmp = fgetcsv($csvFile, null, ';');
+                            if ($tmp) { $csv_data[] = $tmp; }
+                        }
+                        fclose($csvFile);
 
-                                        $imported_records++;
+                        // skip first line
+                        // if your csv file have no heading, just comment the next line
+                        // fgetcsv($csvFile);
+
+                        //parse data from csv file line by line
+                        // while(($line = fgetcsv($csvFile)) !== FALSE){
+                        foreach ($csv_data as $key => $line) {
+
+                            /*
+                            Compare:
+                            */
+
+                            if(isset($line[6])){
+                                foreach($rowAssignmentProducts as $rowAssignmentProduct){
+                                    if(trim($line[6])==trim($rowAssignmentProduct['mobilenr'])){
+                                        $line[12] = str_replace(',', '.',$line[12]);
+
+                                        //Mobile Rate Price+all Option Prices=ValueA from the Assignment
+                                        $ValueA = $rowAssignmentProduct['value2'] + $rowAssignmentProduct['value4'];
+
+                                        //Gesamtbetrag = ValueB from the new imported table
+                                        $ValueB = str_replace(',', '.', $line[12]);
+
+                                        //Selectboxvalue "Kulanzwert" from Customer Settings = ValueC
+                                        $ValueC  = $rowMonitoring['monitoringvalue'];
+
+                                        //Listed all Position where this is:
+                                        //ValueA + (ValueA/100*ValueC) <= ValueB
+                                        //Import only if codition true
+                                        if($ValueA + (($ValueA/100)*$ValueC) <= $ValueB){
+
+                                            $mData['monitoringnr'] = $rowMonitoring['monitoringnr'];
+                                            $mData['invoiceitem'] = trim($line[6]);
+                                            $mData['invoicetotal'] = trim($line[12]);
+                                            $mData['created'] = date('Y-m-d H:i:s');
+                                            $this->db->insert('tblmonitoringassignments', $mData);
+
+                                            $imported_records++;
+                                        }
                                     }
                                 }
                             }
                         }
 
-
+                        //close opened csv file
+                        fclose($csvFile);
                     }
-
-                    //close opened csv file
-                    fclose($csvFile);
 
                     if($imported_records>0){
                         return array('status'=>1,'message'=>sprintf(lang('import_total_imported'),$imported_records));
@@ -319,7 +358,6 @@ class Monitoring_model extends CI_Model
                     else{
                         return array('status'=>0,'message'=>sprintf(lang('import_total_imported'),$imported_records));
                     }
-
                 }else{
                     return array('status'=>0,'message'=>lang('import_upload_failed'));
                 }
@@ -349,28 +387,19 @@ class Monitoring_model extends CI_Model
                 if(($csv_file = fopen($tmpName, 'r')) !== FALSE) {
 
                     $dataAssigment = $this->db
-                                    ->select('DISTINCT TRIM(leading "0" FROM mobilenr) AS mobilenr,simnr')
+                                    ->select('DISTINCT TRIM(leading "0" FROM mobilenr) AS mobilenr')
                                     ->from('tblassignmentproducts')
                                     ->where('mobilenr != ""')
                                     ->where('assignmentnr',$data['assignmentnr'])
                                     ->get()->result_array();
-                    // $mobilenr_array = array_combine(array_keys($dataAssigment), array_column($dataAssigment, 'mobilenr'));
+                    //$mobilenr_array = array_combine(array_keys($dataAssigment), array_column($dataAssigment, 'mobilenr'));
+
                     // echo "<pre>";
                     // print_r($dataAssigment);
                     // die();
-                    // $mobilenr_array_ass = array (
-                    //               array('mobile_number' => 1),
-                    //               array('mobile_number' => 2),
-                    //               array('mobile_number' => 3),
-                    //               array('mobile_number' => 4),
-                    //               array('mobile_number' => 5),
-                    //             );
-                     // $mobilenr_array = array (1,2,3,4,5);
 
                     fgetcsv($csv_file);
-                    // $no = 0;
                     $csv_mobile_number = array();
-                    $new_uniq =  array();
                     while ( !feof($csv_file) ) {
                         $tmp = fgetcsv($csv_file);
                         if($tmp[0] != '') {
@@ -387,15 +416,15 @@ class Monitoring_model extends CI_Model
                             }
                         }
 
+                        // echo "<pre>";print_r($csv_data); die();
                         $this->db->insert_batch('tblassignmentproducts_csv', $csv_data);
                     }
-
                     if(!empty($csv_data)) {
                         return array('status'=>1,'message'=>'import data successfully');
                     } else if(empty($csv_data)) {
                         return array('status'=>1,'message'=>'import data Not Found');
                     } else {
-                        return array('status'=>0,'message'=>'import data Filed');
+                        return array('status'=>0,'message'=>'import data field');
                     }
                     fclose($csv_file);
                 }

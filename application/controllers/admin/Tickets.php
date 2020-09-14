@@ -121,7 +121,8 @@ class Tickets extends Admin_controller
 
         $where = '';
         if (get_user_role()=='customer') {
-           $where = 'tblcustomers.customernr = ' . get_user_id() .' OR tblcustomers.customernr = '. $GLOBALS['current_user']->parent_customer_id;
+            // $where = 'tblcustomers.customernr = ' . get_user_id();
+             $where = 'tblcustomers.customernr = ' . get_user_id() .' OR tblcustomers.customernr = '. $GLOBALS['current_user']->parent_customer_id;
         }
         $data['responsibles'] = $this->Customer_model->get('', "tblusers.userid, CONCAT(tblusers.name, ' ', tblusers.surname) AS name",
             array('tblusers' => 'tblusers.userid=tblcustomers.responsible')
@@ -131,7 +132,7 @@ class Tickets extends Admin_controller
 
         //Ticketstatus
         // $data['ticketstatus'] = $this->Ticketstatus_model->get((get_user_role()=='customer'?5:'')); // 5 = Erstellt
-         $data['ticketstatus'] = $this->Ticketstatus_model->get(); // 5 = Erstellt
+        $data['ticketstatus'] = $this->Ticketstatus_model->get(); // 5 = Erstellt
         // if (get_user_role()=='customer') {
         //     $data['ticketstatus'] = array((array) $data['ticketstatus']);
         // }
