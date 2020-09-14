@@ -122,6 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
                         <?php
+                        // echo get_user_role(); die();
                         //Only Editable
                         $tab_document = '';
                         $tab_reminder = '';
@@ -154,13 +155,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             //$tab_hardwareinventory = 'none';
                             //$tab_invoice = '';
                         //}
-
+                        //echo $GLOBALS['a_hardwareinventory_permission']['view']; die();
                         if($GLOBALS['a_hardwareinventory_permission']['view']){
                             $tab_hardwareinventory = '';
                         }
                         if($GLOBALS['a_invoice_permission']['view']){
                             $tab_invoice = '';
                         }
+                        ?>
+                        <?php
+                            if(get_user_role()=='customer' && $GLOBALS['current_user']->parent_customer_id > 0 && ($GLOBALS['current_user']->customer_role == 2) || ($GLOBALS['current_user']->customer_role == 3)){
+                                $tab_reminder = '';
+                                $tab_hardwareassignment = '';
+                                $tab_document = '';
+                                $tab_legitimation = '';
+                                $tab_hardwareinventory = '';
+                                $tab_invoice = '';
+
+                            }
                         ?>
 
 
@@ -246,12 +258,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <label><?php //echo lang('page_fl_customer');?>:</label>
                                                     <?php //echo $assignment['customer'];?>
                                                 </div>-->
-                                                 <?php if(isset($assignment['provider']) && $assignment['provider'] != '') { ?>
+
+                                               <?php if(isset($assignment['provider']) && $assignment['provider'] != '') { ?>
                                                     <div class="form-group">
                                                         <!-- <label><?php //echo lang('page_fl_provider_logo');?>:</label><br/> -->
-                                                        <img src="<?php echo base_url().$assignment['provider'];?>" alt="not logo" width="120px">
+                                                        <img src="<?php echo base_url().$assignment['provider'];?>" alt="not logo" width="120px" height="60px">
                                                     </div>
                                                 <?php } ?>
+
 
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_responsible');?>:</label>
