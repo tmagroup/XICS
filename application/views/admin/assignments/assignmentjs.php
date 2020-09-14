@@ -1,13 +1,13 @@
 <!-- Convert to Hardware Position Modal -->
 <div class="modal fade bs-modal-lg in" id="FormHardwarePositionUploadAjax" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-full" id="modal_size" role="document">
-		<?php //echo form_open("",array("id"=>"FormHardwarePositionUploadModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+        <?php //echo form_open("",array("id"=>"FormHardwarePositionUploadModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
                             <div class="form-body">
                                 <div class="col-md-12">
                                     <!--<form id="FormHardwarePositionUploadModalAjax" action="<?php echo base_url('admin/assignments/uploadHardwareAssignmentPositionDocuments/');?>" class="dropzone dropzone-file-area dz-clickable" id="my-dropzone" style="padding-top:40px;"></form>-->
@@ -19,27 +19,27 @@
                                     </div>
                                 </div>
                             </div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php //echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
+            </div>
+        </div><!-- /.modal-content -->
+        <?php //echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Convert to Hardware Position Modal -->
 
 
 <!-- Ticket Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <?php
                             $data_hidden = array('type'=>'hidden', 'name'=>'assignmentId', 'id'=>'assignmentId', 'value'=>'');
@@ -62,8 +62,8 @@
                             ?>
 
                             <p class="modal-text"></p>
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div><br><br>
 
                             <button id="btn_cardbreak" style="display: none;" type="button" class="btn btn-default green-jungle disabled"><?php echo lang('page_lb_breaklaid');?></button>
@@ -73,23 +73,23 @@
                             <?php /*<button id="btn_no" type="submit" class="btn btn-default red" onclick="$('#FormTicketAjax #emailSend').val(0);"><?php echo lang('page_lb_no'); ?></button>*/ ?>
                             <button id="btn_no" type="button" data-dismiss="modal" class="btn btn-default red"><?php echo lang('page_lb_no'); ?></button>
 
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Modal -->
 
 <!-- Ticket Mobile Option Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketMobileOptionAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketMobileOptionModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketMobileOptionModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -127,30 +127,30 @@
                                 <label><?php echo lang('page_fl_runningtime');?>: <b><span id="book_runningtime"></span></b></label>
                             </div>
 
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div>
 
                             <button type="submit" class="btn btn-default green" onclick="$('#FormTicketMobileOptionAjax #emailSend').val(1);"><?php echo lang('page_lb_book'); ?></button>
                             <button type="button" class="btn btn-default red" data-dismiss="modal" onclick="$('#FormTicketMobileOptionAjax #emailSend').val(0);"><?php echo lang('page_lb_stop'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Modal -->
 
 
 <!-- Ticket Hardware Order Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketHardwareOrderAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketHardwareOrderModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketHardwareOrderModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -190,30 +190,30 @@
                                 <label><?php echo lang('page_fl_price');?>: <b><span id="order_hardwareprice"></span></b></label>
                             </div>
 
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div>
 
                             <button type="submit" class="btn btn-default green" onclick="$('#FormTicketHardwareOrderAjax #emailSend').val(1);"><?php echo lang('page_lb_order'); ?></button>
                             <button type="button" class="btn btn-default red" data-dismiss="modal" onclick="$('#FormTicketHardwareOrderAjax #emailSend').val(0);"><?php echo lang('page_lb_stop'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Modal -->
 
 
 <!-- Ticket Card Order Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketCardOrderAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketCardOrderModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketCardOrderModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <?php
                             $data_hidden = array('type'=>'hidden', 'name'=>'assignmentId', 'id'=>'assignmentId', 'value'=>'');
@@ -236,32 +236,32 @@
                             ?>
 
                             <p class="modal-text text-center"><?php echo lang('page_lb_ultracardorder_popup_ask');?></p>
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div>
 
                             <button type="submit" class="btn btn-default green" onclick="$('#FormTicketCardOrderAjax #emailSend').val(1);"><?php echo lang('page_lb_yes'); ?></button>
                             <button type="button" class="btn btn-default red" data-dismiss="modal" onclick="$('#FormTicketCardOrderAjax #emailSend').val(0);"><?php echo lang('page_lb_no'); ?></button>
                             <!--<button type="submit" class="btn btn-default red" onclick="$('#FormTicketCardOrderAjax #emailSend').val(0);"><?php echo lang('page_lb_no'); ?></button>-->
 
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Card Order Modal -->
 
 
 <!-- Ticket Card Pause Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketCardPauseAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketCardPauseModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketCardPauseModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -318,8 +318,8 @@
                                 <?php echo form_input('card_reason', '', 'class="form-control"');?>
                             </div>
 
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div><br><br>
 
                             <?php
@@ -338,24 +338,24 @@
                             ?>
 
                             <button type="button" class="btn btn-default red" data-dismiss="modal" onclick="$('#FormTicketCardPauseAjax #emailSend').val(0);$('#FormTicketCardPauseAjax #cardbreak').val(0);$('#FormTicketCardPauseAjax #is_paused').val(0);"><?php echo lang('page_lb_stop'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Modal -->
 
 
 <!-- Ticket Contract Order Modal -->
 <div class="modal fade bs-modal-lg in" id="FormTicketContractOrderAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"FormTicketContractOrderModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"FormTicketContractOrderModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -394,30 +394,30 @@
                                 <?php echo form_input(array('name'=>'quantity','type'=>'number'), '', 'class="form-control"');?>
                             </div>
 
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                             <div class="pull-left"><a href="<?php echo base_url('admin/infodocuments');?>" target="_blank"><?php echo lang('page_lb_ultracardorder_popup_ask2');?></a></div>
 
                             <button type="submit" class="btn btn-default green" onclick="$('#FormTicketContractOrderAjax #emailSend').val(1);"><?php echo lang('page_lb_order'); ?></button>
                             <button type="button" class="btn btn-default red" data-dismiss="modal" onclick="$('#FormTicketContractOrderAjax #emailSend').val(0);"><?php echo lang('page_lb_stop'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Ticket Modal -->
 
 
 <!-- Add/Edit Reminder Modal -->
 <div class="modal fade" id="addeditReminderAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"addeditReminderModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"addeditReminderModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -464,28 +464,28 @@
                             </div>
                             <!-- End Form -->
 
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-default blue"><?php echo lang('save'); ?></button>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default blue"><?php echo lang('save'); ?></button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Add/Edit Reminder Modal -->
 
 
 <!-- Add/Edit Invoice Modal -->
 <div class="modal fade" id="addeditInvoiceAjax" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"addeditInvoiceModalAjax")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"addeditInvoiceModalAjax")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
 
                             <!-- BEGIN PAGE MESSAGE-->
                             <?php $this->load->view('admin/alerts_modal'); ?>
@@ -537,32 +537,50 @@
                                 <?php echo form_input(array('name'=>'netamount','type'=>'number'), '', 'class="form-control"');?>
                             </div>
 
-                            <div class="form-group"><label><?php echo lang('page_dt_assignment_invoicefile');?> <span class="required"> * </span></label>
-                                <div class="clearfix"></div>
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div>
-                                        <span class="btn btn-sm btn-default m-t-n-xs btn-file">
-                                            <span class="fileinput-new"> Select </span>
-                                            <span class="fileinput-exists"> <?php echo lang('page_lb_change');?> </span>
-                                            <?php
-                                            echo form_upload('invoicefile');
-                                            ?>
-                                        </span>
-                                        <a href="javascript:;" class="btn btn-sm btn-primary m-t-n-xs fileinput-exists" data-dismiss="fileinput"> <?php echo lang('page_lb_remove');?> </a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group"><label><?php echo lang('page_dt_assignment_invoicefile');?> <span class="required"> * </span></label>
+                                        <div class="clearfix"></div>
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div>
+                                                <span class="btn btn-sm btn-default m-t-n-xs btn-file">
+                                                    <span class="fileinput-new"> Select </span>
+                                                    <span class="fileinput-exists"> <?php echo lang('page_lb_change');?> </span>
+                                                    <input type="file" name="invoicefile" accept="application/pdf">
+                                                </span>
+                                                <a href="javascript:;" class="btn btn-sm btn-primary m-t-n-xs fileinput-exists" data-dismiss="fileinput"> <?php echo lang('page_lb_remove');?> </a>
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 160px; max-height: 160px;"></div>
+                                        </div>
                                     </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 160px; max-height: 160px;"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group"><label><?php echo lang('page_dt_assignment_invoicefilecsv');?></label>
+                                        <div class="clearfix"></div>
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div>
+                                                <span class="btn btn-sm btn-default m-t-n-xs btn-file">
+                                                    <span class="fileinput-new"> Select </span>
+                                                    <span class="fileinput-exists"> <?php echo lang('page_lb_change');?> </span>
+                                                    <input type="file" name="invoicefilecsv" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
+                                                </span>
+                                                <a href="javascript:;" class="btn btn-sm btn-primary m-t-n-xs fileinput-exists" data-dismiss="fileinput"> <?php echo lang('page_lb_remove');?> </a>
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 160px; max-height: 160px;"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- End Form -->
 
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-default blue"><?php echo lang('save'); ?></button>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default blue"><?php echo lang('save'); ?></button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Add/Edit Invoice Modal -->
 
@@ -769,7 +787,7 @@ function Dropzoneload(){
         dictCancelUpload: '<?php echo lang('page_lb_cancel_upload');?>',
         dictRemoveFile: '<?php echo lang('page_lb_remove_file');?>',
         dictMaxFilesExceeded: '<?php lang('page_lb_you_can_not_upload_any_more_files');?>',
-        maxFilesize: (<?php echo file_upload_max_size();?> / (1024 * 1024)).toFixed(0),
+       // maxFilesize: (<?php echo file_upload_max_size();?> / (1024 * 1024)).toFixed(0),
         acceptedFiles: '<?php echo get_option('allowed_files');?>',
 
         init: function() {
@@ -791,22 +809,22 @@ function Dropzoneload(){
 
                 //Get New Refresh Lead Document List & Legitimation List
                 <?php
-                /*if(isset($assignment['assignmentnr'])){
+                if(isset($assignment['assignmentnr'])){
                     ?>
-                    jQuery.ajax({url: '<?php echo base_url('admin/assignments/getDocuments/'.$assignment['assignmentnr']);?>', success: function(result){
-                        jQuery('#assignment_attachments').html(result);
-                    }});
+                    // jQuery.ajax({url: '<?php //echo base_url('admin/assignments/getDocuments/'.$assignment['assignmentnr']);?>', success: function(result){
+                    //     jQuery('#assignment_attachments').html(result);
+                    // }});
 
                     jQuery.ajax({url: '<?php echo base_url('admin/assignments/getLegitimations/'.$assignment['assignmentnr']);?>', success: function(result){
                         jQuery('#assignment_legitimations').html(result);
                     }});
                     <?php
-                }*/
+                }
                 ?>
 
-                jQuery.ajax({url: '<?php echo base_url('admin/assignments/getLegitimations/'.$assignment['assignmentnr']);?>', success: function(result){
-                    jQuery('#assignment_legitimations').html(result);
-                }});
+                // jQuery.ajax({url: '<?php //echo base_url('admin/assignments/getLegitimations/'.$assignment['assignmentnr']);?>', success: function(result){
+                //     jQuery('#assignment_legitimations').html(result);
+                // }});
 
                 var table = jQuery('#'+datatable_id_2).DataTable();
                 table.ajax.reload();
@@ -854,7 +872,7 @@ function Dropzoneload2(eid){
         dictCancelUpload: '<?php echo lang('page_lb_cancel_upload');?>',
         dictRemoveFile: '<?php echo lang('page_lb_remove_file');?>',
         dictMaxFilesExceeded: '<?php lang('page_lb_you_can_not_upload_any_more_files');?>',
-        maxFilesize: (<?php echo file_upload_max_size();?> / (1024 * 1024)).toFixed(0),
+        // maxFilesize: (<?php echo file_upload_max_size();?> / (1024 * 1024)).toFixed(0),
         acceptedFiles: '<?php echo get_option('allowed_files');?>',
 
         init: function() {
@@ -1976,14 +1994,14 @@ function FormTicketContractOrderAjax(url,id,tickettype,title){
 
 <!-- Add More Option Modal -->
 <div class="modal fade bs-modal-sm in" id="AddMoreOptionMobile" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<?php echo form_open("",array("id"=>"AddMoreOptionMobileModal")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+    <div class="modal-dialog" role="document">
+        <?php echo form_open("",array("id"=>"AddMoreOptionMobileModal")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
                             <input type="hidden" id="dataid" value="" />
                             <input type="hidden" id="datatype" value="" />
 
@@ -1997,28 +2015,28 @@ function FormTicketContractOrderAjax(url,id,tickettype,title){
 
                                 </tbody>
                             </table>
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                                 <button type="button" class="btn btn-default blue" id="apply_ok_optionmobile"><?php echo lang('page_lb_ok'); ?></button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Add More Option Modal -->
 
 
 <!-- View More Option Modal -->
 <div class="modal fade bs-modal-sm in" id="ViewMoreOptionMobile" tabindex="-1" role="dialog">
-	<div class="modal-dialog modal-sm" role="document">
-		<?php echo form_open("",array("id"=>"ViewMoreOptionMobileModal")); ?>
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"></h4>
-			</div>
-			<div class="modal-body">
+    <div class="modal-dialog modal-sm" role="document">
+        <?php echo form_open("",array("id"=>"ViewMoreOptionMobileModal")); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
                             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
                                 <thead>
                                     <tr>
@@ -2029,13 +2047,13 @@ function FormTicketContractOrderAjax(url,id,tickettype,title){
 
                                 </tbody>
                             </table>
-			</div>
-			<div class="modal-footer">
+            </div>
+            <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('page_lb_close'); ?></button>
-			</div>
-		</div><!-- /.modal-content -->
-		<?php echo form_close(); ?>
-	</div><!-- /.modal-dialog -->
+            </div>
+        </div><!-- /.modal-content -->
+        <?php echo form_close(); ?>
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End View More Option Modal -->
 
@@ -2280,12 +2298,15 @@ jQuery("#FormExternalHardwareModalAjax").submit(function(e) {
 
 //Change Filter By Year
 jQuery("#filter_invoice_year").select2({
-	placeholder: "<?php echo lang('page_lb_select_a_year');?>",
-	allowClear: true,
+    placeholder: "<?php echo lang('page_lb_select_a_year');?>",
+    allowClear: true,
         width:'150'
 });
+
 jQuery('#filter_invoice_year').change( function(){
-    var admin_url_3 = '<?php echo base_url('admin/assignments/ajaxinvoice/'.$assignment['assignmentnr']);?>';
+    <?php if(isset($assignment['assignmentnr'])){?>
+        var admin_url_3 = '<?php echo base_url('admin/assignments/ajaxinvoice/'.$assignment['assignmentnr']);?>';
+    <?php }?>
     var filter_invoice_year = jQuery('#filter_invoice_year').val();
     var admin_url_3 = admin_url_3 + '/'+ eval(filter_invoice_year);
 
@@ -2303,7 +2324,11 @@ var datatable_columnDefs2_5 = '';
 var datatable_sortColumn_5 = 0;
 var datatable_sortColumnBy_5 = 'asc';
 var datatable_hide_columns_5 = 4;
-var admin_url_5 = '<?php echo base_url('admin/assignments/ajaxproduct/'.$assignment['assignmentnr']);?>';
+<?php if(isset($assignment['assignmentnr'])) { ?>
+    var admin_url_5 = '<?php echo base_url('admin/assignments/ajaxproduct/'.$assignment['assignmentnr']);?>';
+<?php } else { ?>
+    var admin_url_5 = '';
+<?php } ?>
 eval(func_TableDatatablesAjax_5 + "('"+admin_url_5+"')");
 
 </script>
