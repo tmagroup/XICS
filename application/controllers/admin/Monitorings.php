@@ -528,7 +528,7 @@ class Monitorings extends Admin_controller
             );
 
              $data['monitoringcsvData'] = $this->db
-                                              ->select('connection')
+                                              ->select('*')
                                               ->from('tblassignmentproducts_csv tc')
                                               ->where('tc.monitoringnr',$id)
                                               ->get()
