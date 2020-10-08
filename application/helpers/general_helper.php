@@ -208,7 +208,6 @@ function _simplify_date_fix($date, $from_format)
 function has_permission($permission, $can, $userid='')
 {
     $CI =& get_instance();
-
     //Master Admin has all permissions
     if($userid==''){ $userid = get_user_id(); }
     if($userid==1 && get_user_role()=='user'){ return true; }
@@ -224,8 +223,6 @@ function has_permission($permission, $can, $userid='')
     if(get_user_role()=='customer'){
         $roleid = 4;
         $permissions = $CI->Role_model->get_role_permissions($roleid);
-        // print_r($permissions); exit(0);
-
         if ( ($GLOBALS['current_user']->parent_customer_id > 0) ) {
             if ( ($GLOBALS['current_user']->customer_role == 1) ) {
                 foreach ($permissions as $key_permissions => $value_permissions) {
@@ -280,15 +277,13 @@ function has_permission($permission, $can, $userid='')
             }
         }
         // print_r($permissions); exit(0);
-    }
-    else{
+    } else {
         $permission_type = $CI->User_model->get($userid, 'permission_type');
         if($permission_type->permission_type=='role'){
             $CI->load->model('Role_model');
             $roleid = $CI->User_model->get($userid, 'userrole')->userrole;
             $permissions = $CI->Role_model->get_role_permissions($roleid);
-        }
-        else{
+        } else {
             $permissions = $CI->User_model->get_user_permissions($userid);
         }
     }

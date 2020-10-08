@@ -188,8 +188,6 @@
 			}
 			?>
 			<!-- END ASSIGNMENTS -->
-
-
 			<!-- HARDWARE ASSIGNMENT -->
 			<?php
 			if($hardwareinput_permission['view'] || $hardwareinput_permission['create'] || $hardwareinput_permission['edit'] || $hardwareinput_permission['delete']
