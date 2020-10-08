@@ -929,6 +929,8 @@ $lang['page_assignment_repairorder'] = 'Assignment Repair Order';
 $lang['page_assignment_rebuyorder'] = 'Assignment Rebuy Order';
 $lang['page_assignment_bookinsurance'] = 'Assignment Book Insurance';
 $lang['page_assignment_hardwareuploaddocument'] = 'Hardware position Upload Document';
+$lang['page_hardwarebudget'] = 'Hardware budget';
+$lang['page_leadquotation'] = 'Lead quotation';
 
 $lang['page_create_invoice'] = 'Add %s ';
 $lang['page_edit_invoice'] = 'Edit %s ';

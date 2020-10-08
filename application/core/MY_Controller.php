@@ -109,11 +109,11 @@ class Admin_controller extends CI_Controller
 
 
         //Role Permission Settings
-        $GLOBALS['viewable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','employeecommission','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_pin_puk','a_invoice','a_hardwareinventory','a_moreoptionmobile','infodocument','history','termination');
-        $GLOBALS['viewable_own_permission'] = array('lead','employeecommission','ticket','quotation','leadquotation','assignment','hardwareassignment','hardwareinvoice','monitoring');//For POS and Customer
-        $GLOBALS['creatable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','leadtocustomer','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','quotationtoassignment','assignment','hardwareinput','ticket','ticketcomment','calendar','monitoringcomment','document','a_pin_puk','a_subscriptionlock','a_subscriptionlock2','a_optionbook','a_hardwareorder','a_ultracardorder','a_cardpause','a_cardbreak','a_invoice','a_contractorder','a_moreoptionmobile','a_repairorder','a_rebuyorder','a_bookinsurance','a_hardwareuploaddocument','infodocument','termination');
-        $GLOBALS['editable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','qualitycheck','calendar','monitoring','monitoringcomment','document','profile','customerprofile','a_invoice','infodocument','termination');
-        $GLOBALS['deletable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_invoice','infodocument','termination');
+        $GLOBALS['viewable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','employeecommission','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','a_leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_pin_puk','a_invoice','a_hardwareinventory','a_moreoptionmobile','infodocument','history','termination','a_hardwarebudget');
+        $GLOBALS['viewable_own_permission'] = array('lead','employeecommission','ticket','quotation','a_leadquotation','assignment','hardwareassignment','hardwareinvoice','monitoring');//For POS and Customer
+        $GLOBALS['creatable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','leadtocustomer','customer','customercomment','todo','todocomment','quotation','a_leadquotation','quotationcomment','quotationtoassignment','assignment','hardwareinput','ticket','ticketcomment','calendar','monitoringcomment','document','a_pin_puk','a_subscriptionlock','a_subscriptionlock2','a_optionbook','a_hardwareorder','a_ultracardorder','a_cardpause','a_cardbreak','a_invoice','a_contractorder','a_moreoptionmobile','a_repairorder','a_rebuyorder','a_bookinsurance','a_hardwareuploaddocument','infodocument','termination','a_hardwarebudget');
+        $GLOBALS['editable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','a_leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','qualitycheck','calendar','monitoring','monitoringcomment','document','profile','customerprofile','a_invoice','infodocument','termination','a_hardwarebudget');
+        $GLOBALS['deletable_permission'] = array('user','ratemobile','ratelandline','optionmobile','optionlandline','discountlevel','hardware','supplier','documentsetting','lead','leadcomment','customer','customercomment','todo','todocomment','quotation','a_leadquotation','quotationcomment','assignment','hardwareinput','hardwareassignment','ticket','ticketcomment','deliverynote','hardwareinvoice','qualitycheck','calendar','monitoring','monitoringcomment','document','a_invoice','infodocument','termination','a_hardwarebudget');
         $GLOBALS['importable_permission'] = array('ratemobile', 'ratelandline', 'optionmobile', 'optionlandline', 'discountlevel', 'hardware', 'lead','termination');
 
 
@@ -654,14 +654,14 @@ class Admin_controller extends CI_Controller
 
 
         //Function Array for Hardwarebudget
-        $hardwarebudget_permission = array('view'=>has_permission('hardwarebudget','view'),
-            'view_own'=>has_permission('hardwarebudget','view_own'),
-            'create'=>has_permission('hardwarebudget','create'),
-            'edit'=>has_permission('hardwarebudget','edit'),
-            'delete'=>has_permission('hardwarebudget','delete'),
-            'import'=>has_permission('hardwarebudget','import'),
+        $a_hardwarebudget_permission = array('view'=>has_permission('a_hardwarebudget','view'),
+            'view_own'=>has_permission('a_hardwarebudget','view_own'),
+            'create'=>has_permission('a_hardwarebudget','create'),
+            'edit'=>has_permission('a_hardwarebudget','edit'),
+            'delete'=>has_permission('a_hardwarebudget','delete'),
+            'import'=>has_permission('a_hardwarebudget','import'),
         );
-        $GLOBALS['hardwarebudget_permission'] = $hardwarebudget_permission;
+        $GLOBALS['hardwarebudget_permission'] = $a_hardwarebudget_permission;
 
         //Function Array for Termination
         $termination_permission = array('view'=>has_permission('termination','view'),
@@ -713,7 +713,7 @@ class Admin_controller extends CI_Controller
             'profile_permission' => $profile_permission,
             'infodocument_permission' => $infodocument_permission,
             'history_permission' => $history_permission,
-            'hardwarebudget_permission' => $hardwarebudget_permission,
+            'hardwarebudget_permission' => $a_hardwarebudget_permission,
             'termination_permission' => $termination_permission
         );
 

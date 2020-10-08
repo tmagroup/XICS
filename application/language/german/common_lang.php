@@ -926,6 +926,8 @@ $lang['page_assignment_repairorder'] = 'Aufträge Reparaturauftrag';
 $lang['page_assignment_rebuyorder'] = 'Aufträge Rebuyauftrag';
 $lang['page_assignment_bookinsurance'] = 'Aufträge Versicherung buchen';
 $lang['page_assignment_hardwareuploaddocument'] = 'Hardware position Dokument hochladen';
+$lang['page_hardwarebudget'] = 'Hardware budget';
+$lang['page_leadquotation'] = 'Lead-Zitat';
 
 $lang['page_create_invoice'] = '%s hinzufügen';
 $lang['page_edit_invoice'] = '%s bearbeiten';
