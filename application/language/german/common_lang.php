@@ -188,6 +188,7 @@ $lang['page_fl_leadstatus'] = 'Lead-Status';
 $lang['page_fl_salutation'] = 'Anrede';
 $lang['page_fl_company'] = 'Name der Firma';
 $lang['page_fl_name'] = 'Name';
+$lang['page_fl_surname'] = 'Nachname';
 $lang['page_fl_position'] = 'Position';
 $lang['page_fl_street'] = 'Straße';
 $lang['page_fl_zipcode'] = 'Postleitzahl';

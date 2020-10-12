@@ -93,16 +93,21 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
+
                                                 <div class="form-group">
+                                                    <label><?php echo lang('page_fl_position');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="position" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['position'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_surname');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="surname" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['surname'] :'';?>">
+                                                </div>
+                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_salutation');?> <span class="required"> * </span></label>
                                                     <select name="salutation" class="form-control">
                                                         <option value="0" <?php echo isset($terminationData) && $terminationData['salutation'] == '0' ? 'selected="selected"' : '';?>>Herr</option>
                                                         <option value="1" <?php echo isset($terminationData) && $terminationData['salutation'] == '1' ? 'selected="selected"' : '';?>>Frau</option>
                                                     </select>
-                                                </div>
-                                                 <div class="form-group">
-                                                    <label><?php echo lang('page_fl_position');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="position" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['position'] :'';?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_zipcode');?> <span class="required"> * </span></label>
@@ -242,6 +247,9 @@
         name: {
           required: true
         },
+        surname: {
+          required: true
+        },
         position: {
           required: true
         },
@@ -293,7 +301,10 @@
           required: "Please enter Anrede",
         },
         name: {
-          required: "Please enter name",
+          required: "Please enter first name",
+        },
+        surname: {
+          required: "Please enter Nachname",
         },
         position: {
           required: "Please enter Position",
