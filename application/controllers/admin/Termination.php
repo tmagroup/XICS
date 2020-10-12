@@ -198,8 +198,8 @@ class Termination extends Admin_controller
                 $emailtemplate = 'terminationvodafone';
                 $logo_image_url = base_url().'assets/Vodafone.jpg';
             }
-            $mer_data['customer_surname'] = 'akshay';
-            $mer_data['customer_name'] = 'sorathiya';
+            $mer_data['customer_surname'] = $data['surname'];
+            $mer_data['customer_name'] = $data['name'];
             $mer_data['logo_image_url'] = $logo_image_url;
             $mer_data['data_type'] = date('d-m-Y',strtotime($data['date']));
             $mer_data['appoiment_date'] = date('d-m-Y',strtotime($data['date']));
@@ -212,7 +212,7 @@ class Termination extends Admin_controller
             // echo "<pre>";
              // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
             // $sent = $this->Email_model->send_email_template($emailtemplate, 'akshaysorathiya555@gmail.com', $merge_fields);
-            $sent = $this->Email_model->send_email_template($emailtemplate, 'connectusdemo12@gmail.com', $merge_fields);
+            $sent = $this->Email_model->send_email_template($emailtemplate, $data['email'], $merge_fields);
 
             if($sent) {
                 $current_datetime = date('Y-m-d H:i:s');
