@@ -187,4 +187,56 @@ class Cronjobs extends MY2_Controller {
         );
         $qualitychecknr = $this->Qualitycheck_model->add($data_qualitycheck,'hardwarequalitycheck');
     }
+
+    public function terminationEmailSend()
+    {
+        $terminationData = $this->db
+                                ->select('tt.*')
+                                ->from('tbltermination tt')
+                                ->where('status','0')
+                                ->get()
+                                ->result_array();
+
+        if(!empty($terminationData)) {
+            foreach ($terminationData as $key => $data) {
+                $cron_send_time = strtotime('+24 hours',strtotime($data['mail_send_time']));
+                $currentime = time();
+
+                if($cron_send_time < $currentime) {
+                    if($data['provider'] == '2') {
+                        $emailtemplate = 'terminationtelekon';
+                        $logo_image_url = base_url().'assets/telekon.png';
+                    } else if($data['provider'] == '3') {
+                        $emailtemplate = 'terminationO2Business';
+                        $logo_image_url = base_url().'assets/o2.png';
+                    } else {
+                        $emailtemplate = 'terminationvodafone';
+                        $logo_image_url = base_url().'assets/Vodafone.jpg';
+                    }
+
+                    $mer_data['customer_surname'] = 'akshay';
+                    $mer_data['customer_name'] = 'sorathiya';
+                    $mer_data['logo_image_url'] = $logo_image_url;
+                    $mer_data['data_type'] = date('d-m-Y',strtotime($data['date']));
+                    $mer_data['appoiment_date'] = date('d-m-Y',strtotime($data['date']));
+                    $mer_data['accept_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/accept/';
+                    $mer_data['cancel_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/cancel/';
+
+                    $merge_fields = array();
+                    $merge_fields = array_merge($merge_fields, get_customertermination_merge_fields($mer_data));
+
+                    // echo "<pre>";
+                     // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
+                    // $sent = $this->Email_model->send_email_template($emailtemplate, 'akshaysorathiya555@gmail.com', $merge_fields);
+                    $sent = $this->Email_model->send_email_template($emailtemplate, 'connectusdemo12@gmail.com', $merge_fields);
+
+                    if($sent) {
+                        $current_datetime = date('Y-m-d H:i:s');
+                        $this->update_record($this->table,array('id'=>$id),array('status' => '3','mail_send_time'=> $current_datetime));
+                    }
+                }
+            }
+        }
+
+    }
 }
