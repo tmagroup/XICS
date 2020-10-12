@@ -3,11 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php $this->load->view('admin/header.php'); ?>
 <style type="text/css">
+    .clrwhite{
+        background-color:#fff !important;
+    }
     .clrGreen{
-        background-color:#7cb342 !important;
+        background-color:#c6ddae !important;
     }
     .clrRed{
-        background-color:#ff0000 !important;
+        background-color:#f6d1d1 !important;
     }
 </style>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -229,16 +232,17 @@ function show_datatable() {
          "type": "POST",
     },
     createdRow: function ( row, data, index ) {
-    switch (data.leadStatus) {
-         case "Kunde hat Termin zugesagt":
-            $(row).addClass("clrGreen");
+    switch (data.status) {
+        case "0":
+            $(row).addClass("clrwhite");
             break;
-        case "Abgesagt vom Kunden":
+        case "1":
             $(row).addClass("clrRed");
             break;
+        case "2":
+            $(row).addClass("clrGreen");
+            break;
     };
-     // $(row).addClass('row_termination_green');
-     // $(row).addClass('row_termination_red');
     },
   "columns": [
       { "data": "id"},
