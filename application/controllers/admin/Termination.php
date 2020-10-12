@@ -77,6 +77,7 @@ class Termination extends Admin_controller
                     $nestedData['id'] = $no+1;
                     $nestedData['company_name'] = $post['company_name'];
                     $nestedData['leadStatus'] = $post['leadStatus'];
+                    $nestedData['status'] = $post['status'];
                     $nestedData['salutation'] = $post['salutation'] == '0' ? 'HERR' :'FRAU';
                     $nestedData['action'] = '<button class="btn btn-danger delete-termination" data-id="'.$post['id'].'">Delete</button>&nbsp;&nbsp;<a href="'.base_url().'admin/termination/setup/'.$post['id'].'" class="btn btn-success">Edit</a>&nbsp;&nbsp;<a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" data-id="'.$post['id'].'">Appointment Confirmation</a>';
 
@@ -183,9 +184,6 @@ class Termination extends Admin_controller
                          ->where('tt.id',$id)
                          ->get()
                          ->row_array();
-            // echo "<pre>";
-            // print_r($data);
-            // die();
             // $billData = $this->Assignmentbill_model->get($bill_id);
             // $file = FCPATH.'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefilecsv;
             // $this->Email_model->add_attachment(array('attachment' => $file));
@@ -208,27 +206,22 @@ class Termination extends Admin_controller
             $mer_data['accept_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/accept/';
             $mer_data['cancel_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/cancel/';
 
-            // echo "<pre>";
-            // print_r($mer_data);
-            // die();
-
             $merge_fields = array();
             $merge_fields = array_merge($merge_fields, get_customertermination_merge_fields($mer_data));
 
             // echo "<pre>";
-            // print_r($merge_fields);
-            // die();
              // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
             // $sent = $this->Email_model->send_email_template($emailtemplate, 'akshaysorathiya555@gmail.com', $merge_fields);
-            $sent = $this->Email_model->send_email_template($emailtemplate, 'akshay@connectusinfoway.com', $merge_fields);
+            $sent = $this->Email_model->send_email_template($emailtemplate, 'connectusdemo12@gmail.com', $merge_fields);
 
             if($sent) {
+                $current_datetime = date('Y-m-d H:i:s');
+                $this->update_record($this->table,array('id'=>$id),array('status' => '0','mail_send_time'=> $current_datetime));
 
+                $return['status'] = TRUE;
+                $return['response'] = 'success';
+                $return['message'] = 'Send Mail Successfully';
             }
-
-            $return['status'] = TRUE;
-            $return['response'] = 'success';
-            $return['message'] = 'Send Mail Successfully';
         } else {
             $return['response'] = 'error';
             $return['status'] = FALSE;
@@ -241,10 +234,13 @@ class Termination extends Admin_controller
         if($id > 0){
             if($status == 'accept') {
                 $post['lead_status'] = '8';
+                $post['status'] = '2';
                 $this->addCalendarsEvent($id);
             } else {
                 $post['lead_status'] = '9';
+                $post['status'] = '1';
             }
+
             $this->update_record($this->table,array('id'=>$id),$post);
         }
         redirect(site_url('admin/termination/'));
