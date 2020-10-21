@@ -14,7 +14,7 @@
 //Working v1
 /*$config = array(
     'useragent' => 'CodeIgniter',
-    'protocol' => 'smtp',   
+    'protocol' => 'smtp',
     'smtp_host' => 'h2810582.stratoserver.net',
     'smtp_port' => '25',
     'smtp_user' => 'optimus@h2810582.stratoserver.net',
@@ -22,16 +22,17 @@
     'smtp_timeout' => '10',
     'mailtype'  => 'html'
 );*/
- 
+
 //Working v2
 $config = array(
     'useragent' => 'CodeIgniter',
-    'protocol' => 'smtp',   
+    'protocol' => 'smtp',
     'smtp_crypto' => 'ssl',
     'smtp_host' => 'sslout.df.eu',
     'smtp_port' => '465',
     'smtp_user' => 'xics@xics.de',
-    'smtp_pass' => 'xics2019',
+    // 'smtp_pass' => 'xics2019',
+    'smtp_pass' => 'a3Gi8Efu',
     'smtp_timeout' => '10',
     'mailtype'  => 'html'
 );

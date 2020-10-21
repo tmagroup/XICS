@@ -2171,6 +2171,7 @@ function get_customerinvoice_merge_fields($data)
 
     return $fields;
 }
+
 function get_customertermination_merge_fields($data)
 {
     $fields = array();
@@ -2188,6 +2189,37 @@ function get_customertermination_merge_fields($data)
     $hook_data['id']           = $data['id'];
 
     $hook_data = do_action('customertermination_merge_fields', $hook_data);
+    $fields    = $hook_data['merge_fields'];
+
+    return $fields;
+}
+
+function get_getterminationlead_merge_fields($data)
+{
+    $fields = array();
+
+    $fields['{leadstatus}'] = $data['leadstatus'];
+    $fields['{appointment_type}'] = $data['appointment_type'];
+    $fields['{provider}'] = $data['provider'];
+    $fields['{salution}'] = $data['salution'];
+    $fields['{surname}'] = $data['surname'];
+    $fields['{name}'] = $data['name'];
+    $fields['{company}'] = $data['company'];
+    $fields['{phone}'] = $data['phone'];
+    $fields['{email}'] = $data['email'];
+    $fields['{card}'] = $data['card'];
+    $fields['{employment}'] = $data['employment'];
+    $fields['{street}'] = $data['street'];
+    $fields['{zipcode}'] = $data['zipcode'];
+    $fields['{city}'] = $data['city'];
+    $fields['{notice}'] = $data['notice'];
+
+
+    $hook_data['merge_fields'] = $fields;
+    $hook_data['fields_to']    = 'getterminationlead';
+    $hook_data['id']           = $data['id'];
+
+    $hook_data = do_action('get_getterminationlead_merge_fields', $hook_data);
     $fields    = $hook_data['merge_fields'];
 
     return $fields;

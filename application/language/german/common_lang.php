@@ -179,12 +179,13 @@ $lang['page_comments'] = 'Kommentare';
 $lang['page_create_comment'] = 'Kommentar Anlegen';
 $lang['page_edit_comment'] = 'Kommentar Bearbeiten';
 
-
+$lang['page_details_termination'] = 'Details Kündigung';
 $lang['page_create_termination'] = 'Kündigung erstellen';
 $lang['page_import_termination'] = 'Kündigung importieren';
 $lang['page_manage_termination'] = 'Kündigung verwalten';
 
 $lang['page_fl_leadstatus'] = 'Lead-Status';
+$lang['appointment_type'] = 'Terminart';
 $lang['page_fl_salutation'] = 'Anrede';
 $lang['page_fl_company'] = 'Name der Firma';
 $lang['page_fl_name'] = 'Name';

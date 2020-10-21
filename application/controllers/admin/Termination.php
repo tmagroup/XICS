@@ -45,12 +45,14 @@ class Termination extends Admin_controller
 
             $param  = array();
 
-            $field = 'tbltermination.*,ls.name as leadStatus,color';
+            $field = 'tbltermination.*,ls.name as leadStatus,color,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser';
             $param['limit'] = array($limit,$start);
             // print_r($param['limit']); die();
             $param['order_by'] = array($order,$dir);
             $param['join'] = array(
-                            'tblleadstatus ls'=>'ls.id=tbltermination.lead_status'
+                            'tblleadstatus ls'=>'ls.id=tbltermination.lead_status',
+                            'tblprovider p'=>'p.id=tbltermination.provider',
+                            'tblusers u'=>'u.userid=tbltermination.responsive_user'
                             );
 
             if(empty($this->input->post('search')['value']))
@@ -77,9 +79,10 @@ class Termination extends Admin_controller
                     $nestedData['id'] = $no+1;
                     $nestedData['company_name'] = $post['company_name'];
                     $nestedData['leadStatus'] = $post['leadStatus'];
-                    $nestedData['status'] = $post['status'];
-                    $nestedData['salutation'] = $post['salutation'] == '0' ? 'HERR' :'FRAU';
-                    $nestedData['action'] = '<button class="btn btn-danger delete-termination" data-id="'.$post['id'].'">Delete</button>&nbsp;&nbsp;<a href="'.base_url().'admin/termination/setup/'.$post['id'].'" class="btn btn-success">Edit</a>&nbsp;&nbsp;<a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" data-id="'.$post['id'].'">Appointment Confirmation</a>';
+                    $nestedData['providerName'] = $post['providerName'];
+                    $nestedData['cards'] = $post['cards'];
+                    $nestedData['responsiUser'] = $post['responsiUser'];
+                    $nestedData['action'] = '<button class="btn btn-danger delete-termination" title="Delete" data-id="'.$post['id'].'"><i class="fa fa-trash"></i></button>&nbsp;<a href="'.base_url().'admin/termination/setup/'.$post['id'].'"  title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i></a>&nbsp;<a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" title="Appointment Confirmation" data-id="'.$post['id'].'"><i class="fa fa-check"></i></a>&nbsp;<a href="'.base_url().'admin/termination/show/'.$post['id'].'" class="btn btn-primary" title="View Details" data-id="'.$post['id'].'"><i class="fa fa-eye"></i></a>';
 
                     $data[] = $nestedData;
                     $no++;
@@ -118,6 +121,7 @@ class Termination extends Admin_controller
         $data['leadStatusData'] = $this->select_record('tblleadstatus',$field='*');
         $data['providerData'] = $this->select_record('tblprovider',$field='*');
         $data['responsiveUserData'] = $this->select_record('tblusers',$field='*');
+        $data['appointmentTypeData'] = $this->select_record('tblappointmenttype',$field='*');
 
         if($id > 0) {
             $data['terminationData'] = $this->get_single_record('tbltermination',array('id' => $id));
@@ -148,6 +152,25 @@ class Termination extends Admin_controller
                     redirect(site_url('admin/termination/'));
                 }
             }
+        }
+    }
+
+    public function show($id)
+    {
+        if($id > 0) {
+            $data = array();
+            $data['data'] = $this->db
+                                ->select('t.*,ls.name as leadName,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,a.name as appointmentName')
+                                ->from('tbltermination t')
+                                ->where('t.id',$id)
+                                ->join('tblleadstatus ls','ls.id=t.lead_status','left')
+                                ->join('tblprovider p','p.id=t.provider','left')
+                                ->join('tblusers u','u.userid=t.responsive_user','left')
+                                ->join('tblappointmenttype a','a.id=t.appointment_type','left')
+                                ->get()
+                                ->row_array();
+
+            $this->load->view('admin/termination/view', $data);
         }
     }
 
@@ -208,12 +231,14 @@ class Termination extends Admin_controller
 
             $merge_fields = array();
             $merge_fields = array_merge($merge_fields, get_customertermination_merge_fields($mer_data));
-
             // echo "<pre>";
              // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
-            // $sent = $this->Email_model->send_email_template($emailtemplate, 'akshaysorathiya555@gmail.com', $merge_fields);
-            $sent = $this->Email_model->send_email_template($emailtemplate, $data['email'], $merge_fields);
-
+            $sent = $this->Email_model->send_email_template($emailtemplate, 'connectusdemo12@gmail.com', $merge_fields);
+            // echo "<pre>";
+            // print_r($sent);
+            // die();
+            // $sent = $this->Email_model->send_email_template($emailtemplate, $data['email'], $merge_fields);
+            // echo $sent; die();
             if($sent) {
                 $current_datetime = date('Y-m-d H:i:s');
                 $this->update_record($this->table,array('id'=>$id),array('status' => '0','mail_send_time'=> $current_datetime));
@@ -221,6 +246,90 @@ class Termination extends Admin_controller
                 $return['status'] = TRUE;
                 $return['response'] = 'success';
                 $return['message'] = 'Send Mail Successfully';
+            } else {
+                $return['status'] = TRUE;
+                $return['response'] = 'success';
+                $return['message'] = 'Mail not send';
+            }
+        } else {
+            $return['response'] = 'error';
+            $return['status'] = FALSE;
+        }
+        echo json_encode($return); die();
+    }
+    public function createLead()
+    {
+        $return = array();
+        if ($this->input->post()) {
+            $id = $this->input->post('id');
+
+           $data = $this->db
+                        ->select('t.*,ls.name as leadName,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,a.name as appointmentName')
+                        ->from('tbltermination t')
+                        ->where('t.id',$id)
+                        ->join('tblleadstatus ls','ls.id=t.lead_status','left')
+                        ->join('tblprovider p','p.id=t.provider','left')
+                        ->join('tblusers u','u.userid=t.responsive_user','left')
+                        ->join('tblappointmenttype a','a.id=t.appointment_type','left')
+                        ->get()
+                        ->row_array();
+
+            if(!empty($data)) {
+                $current_datetime = date('Y-m-d H:i:s');
+                $dataNew = array(
+                    'responsible' => $data['responsive_user'],
+                    'leadstatus' => $data['lead_status'],
+                    'company' => $data['company_name'],
+                    'street' => $data['street'],
+                    'zipcode' => $data['zipcode'],
+                    'city' => $data['city'],
+                    'phone' => $data['phone_number'],
+                    'email' => $data['email'],
+                    'salutation' => $data['salutation'],
+                    'provider' => $data['providerName'],
+                    'surname' => $data['surname'],
+                    'name' => $data['name'],
+                    'position' => $data['position'],
+                    'created' => $current_datetime
+                );
+
+                $lead_id = $this->insert('tblleads',$dataNew);
+
+                if($lead_id > 0) {
+
+                    $this->db->where('leadnr', $lead_id);
+                    $this->db->update('tblleads', array('leadnr_prefix' => 'DKD-L-'.date('Y').'-'.$lead_id));
+
+                    $mer_data['leadstatus'] = $data['leadName'];
+                    $mer_data['appointment_type'] = $data['appointmentName'];
+                    $mer_data['provider'] = $data['providerName'];
+                    $mer_data['salution'] = $data['salutation'] == '1' ? 'Herr' : 'Frau';
+                    $mer_data['surname'] = $data['surname'];
+                    $mer_data['name'] = $data['name'];
+                    $mer_data['company'] = $data['company_name'];
+                    $mer_data['phone'] = $data['phone_number'];
+                    $mer_data['email'] = $data['email'];
+                    $mer_data['card'] = $data['cards'];
+                    $mer_data['employment'] = $data['employment'];
+                    $mer_data['street'] = $data['street'];
+                    $mer_data['zipcode'] = $data['zipcode'];
+                    $mer_data['city'] = $data['city'];
+                    $mer_data['notice'] = $data['notice'];
+
+                    $merge_fields = array();
+                    $merge_fields = array_merge($merge_fields, get_getterminationlead_merge_fields($mer_data));
+                    // echo "<pre>";
+                     // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
+                    $sent = $this->Email_model->send_email_template('terminationleademail', 'connectusdemo12@gmail.com', $merge_fields);
+
+                    $return['status'] = TRUE;
+                    $return['response'] = 'success';
+                    $return['message'] = 'Send Mail Successfully';
+                }
+            } else {
+                $return['status'] = TRUE;
+                $return['response'] = 'success';
+                $return['message'] = 'Mail not send';
             }
         } else {
             $return['response'] = 'error';

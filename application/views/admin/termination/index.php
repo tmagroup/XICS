@@ -141,7 +141,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <th> No. </th>
                                                     <th> Firma </th>
                                                     <th> Leadstatus </th>
-                                                    <th> Anrede</th>
+                                                    <th> Provider </th>
+                                                    <th> Cards </th>
+                                                    <th> Responsive User </th>
                                                     <th> <?php echo lang('page_dt_action');?></th>
                                                 </tr>
                                             </thead>
@@ -248,7 +250,9 @@ function show_datatable() {
       { "data": "id"},
       { "data": "company_name"},
       { "data": "leadStatus"},
-      { "data": "salutation"},
+      { "data": "providerName"},
+      { "data": "cards"},
+      { "data": "responsiUser"},
       { "data": "action"},
    ]
     });

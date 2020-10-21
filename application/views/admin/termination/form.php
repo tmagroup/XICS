@@ -93,83 +93,6 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_position');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="position" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['position'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_surname');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="surname" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['surname'] :'';?>">
-                                                </div>
-                                                 <div class="form-group">
-                                                    <label><?php echo lang('page_fl_salutation');?> <span class="required"> * </span></label>
-                                                    <select name="salutation" class="form-control">
-                                                        <option value="0" <?php echo isset($terminationData) && $terminationData['salutation'] == '0' ? 'selected="selected"' : '';?>>Herr</option>
-                                                        <option value="1" <?php echo isset($terminationData) && $terminationData['salutation'] == '1' ? 'selected="selected"' : '';?>>Frau</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_zipcode');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="zipcode" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['zipcode'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_phone');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="phone_number" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['phone_number'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_employment');?> <span class="required"> * </span></label>
-                                                    <input type="number" name="employment" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['employment'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_cards');?> <span class="required"> * </span></label>
-                                                    <input type="number" name="cards" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['cards'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_responsive_user');?> <span class="required"> * </span></label>
-                                                    <select name="responsive_user" class="form-control">
-                                                        <option value="">Select Responsive user</option>
-                                                        <?php if(!empty($responsiveUserData)) { ?>
-                                                            <?php foreach ($responsiveUserData as $key => $reponsive_user) {
-                                                                $seleted = isset($terminationData) && $terminationData['responsive_user'] == $reponsive_user['userid'] ? 'selected="selected"' : '';
-                                                            ?>
-                                                                <option value="<?php echo $reponsive_user['userid'];?>" <?php echo $seleted;?>><?php echo $reponsive_user['username'];?></option>
-                                                            <?php } ?>
-                                                        <?php } ?>
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END SAMPLE FORM PORTLET-->
-                                </div>
-
-                                <div class="col-md-6">
-                                    <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light bordered">
-                                        <div class="portlet-body form">
-                                            <div class="form-body">
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_company');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="company_name" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['company_name'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_name');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="name" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['name'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_street');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="street" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['street'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_city');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="city" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['city'] :'';?>">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label><?php echo lang('page_fl_email');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="email" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['email'] :'';?>">
-                                                </div>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_provider');?> <span class="required"> * </span></label>
                                                     <select name="provider" class="form-control">
@@ -183,6 +106,96 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_surname');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="surname" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['surname'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_position');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="position" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['position'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_phone');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="phone_number" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['phone_number'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_cards');?> <span class="required"> * </span></label>
+                                                    <input type="number" name="cards" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['cards'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_street');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="street" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['street'] :'';?>">
+                                                </div>
+
+                                                 <div class="form-group">
+                                                    <label><?php echo lang('page_fl_city');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="city" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['city'] :'';?>">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_responsive_user');?> <span class="required"> * </span></label>
+                                                    <select name="responsive_user" class="form-control">
+                                                        <option value="">Select Responsive user</option>
+                                                        <?php if(!empty($responsiveUserData)) { ?>
+                                                            <?php foreach ($responsiveUserData as $key => $reponsive_user) {
+                                                                $seleted = isset($terminationData) && $terminationData['responsive_user'] == $reponsive_user['userid'] ? 'selected="selected"' : '';
+                                                            ?>
+                                                                <option value="<?php echo $reponsive_user['userid'];?>" <?php echo $seleted;?>><?php echo $reponsive_user['username'];?></option>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END SAMPLE FORM PORTLET-->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-body form">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label><?php echo lang('appointment_type');?> <span class="required"> * </span></label>
+                                                    <select name="appointment_type" class="form-control">
+                                                        <option value="">Select Appointment Type</option>
+                                                        <?php if(!empty($appointmentTypeData)) { ?>
+                                                            <?php foreach ($appointmentTypeData as $key => $appointment_type) {
+                                                                $seleted = isset($terminationData) && $terminationData['appointment_type'] == $appointment_type['id'] ? 'selected="selected"' : '';
+                                                            ?>
+                                                                <option value="<?php echo $appointment_type['id'];?>" <?php echo $seleted;?>><?php echo $appointment_type['name'];?></option>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_salutation');?> <span class="required"> * </span></label>
+                                                    <select name="salutation" class="form-control">
+                                                        <option value="1" <?php echo isset($terminationData) && $terminationData['salutation'] == '1' ? 'selected="selected"' : '';?>>Herr</option>
+                                                        <option value="2" <?php echo isset($terminationData) && $terminationData['salutation'] == '2' ? 'selected="selected"' : '';?>>Frau</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_name');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="name" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['name'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_company');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="company_name" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['company_name'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_email');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="email" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['email'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_employment');?> <span class="required"> * </span></label>
+                                                    <input type="number" name="employment" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['employment'] :'';?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_fl_zipcode');?> <span class="required"> * </span></label>
+                                                    <input type="text" name="zipcode" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['zipcode'] :'';?>">
+                                                </div>
                                                 <div class="form-group date form_date">
                                                     <label><?php echo lang('page_fl_date');?> <span class="required"> * </span></label>
                                                     <div class="input-group date form_date">
@@ -195,8 +208,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label><?php echo lang('page_fl_notice');?> <span class="required"> * </span></label>
-                                                    <input type="text" name="notice" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['notice'] :'';?>">
+                                                    <label><?php echo lang('page_fl_notice');?></label>
+                                                    <textarea name="notice" class="form-control"><?php echo isset($terminationData) ? $terminationData['notice'] :'';?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -286,7 +299,7 @@
         responsive_user: {
           required: true
         },
-        notice: {
+        appointment_type: {
           required: true
         },
       },
@@ -342,8 +355,8 @@
         responsive_user: {
           required: "Please select Responsive user",
         },
-        notice: {
-          required: "Please enter Hinweis",
+        appointment_type: {
+          required: "Please select Terminart",
         }
       }
     });

@@ -182,9 +182,11 @@ $lang['page_edit_comment'] = 'Edit Comment';
 $lang['page_termination'] = 'Termination';
 $lang['page_create_termination'] = 'Create Termination';
 $lang['page_edit_termination'] = 'Edit Termination';
+$lang['page_details_termination'] = 'Details Termination';
 $lang['page_import_termination'] = 'Import Termination';
 $lang['page_manage_termination'] = 'Manage Termination';
 
+$lang['appointment_type'] = 'Appointment type';
 $lang['page_fl_leadstatus'] = 'Lead Status';
 $lang['page_fl_salutation'] = 'Salutation';
 $lang['page_fl_company'] = 'Company Name';

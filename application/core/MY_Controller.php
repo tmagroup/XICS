@@ -308,12 +308,12 @@ class Admin_controller extends CI_Controller
         $GLOBALS['quotation_permission'] = $quotation_permission;
 
         //Function Array for Quotation
-        $leadquotation_permission = array('view'=>has_permission('leadquotation','view'),
-            'view_own'=>has_permission('leadquotation','view_own'),
-            'create'=>has_permission('leadquotation','create'),
-            'edit'=>has_permission('leadquotation','edit'),
-            'delete'=>has_permission('leadquotation','delete'),
-            'import'=>has_permission('leadquotation','import'),
+        $leadquotation_permission = array('view'=>has_permission('a_leadquotation','view'),
+            'view_own'=>has_permission('a_leadquotation','view_own'),
+            'create'=>has_permission('a_leadquotation','create'),
+            'edit'=>has_permission('a_leadquotation','edit'),
+            'delete'=>has_permission('a_leadquotation','delete'),
+            'import'=>has_permission('a_leadquotation','import'),
         );
         $GLOBALS['leadquotation_permission'] = $leadquotation_permission;
 
