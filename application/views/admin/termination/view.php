@@ -179,7 +179,7 @@
     event.preventDefault();
     var $this = $(this);
     var id = $this.attr('data-id');
-
+    var text =  $this.text();
     if(confirm("Are you sure you want to Create Lead?")){
         if($this.hasClass('fresh')) {
             $this.removeClass('fresh');
@@ -193,7 +193,7 @@
                 success: function(data){
                     if(data.status) {
                         $this.addClass('fresh');
-                        $this.text('');
+                        $this.text(text);
                         showtoast(data.response,'',data.message);
                         show_datatable();
                     }
