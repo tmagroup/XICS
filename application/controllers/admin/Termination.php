@@ -2,8 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class Termination extends Admin_controller
 {
-    var $table = 'tbltermination';
-    var $aid = 'id';
+    public $table = 'tbltermination';
+    public $aid = 'id';
 
     public function __construct()
     {
@@ -12,6 +12,89 @@ class Termination extends Admin_controller
         $this->load->model('Event_model');
     }
 
+    public function view_mail()
+    {
+        $hostname = '{imap.dk-deutschland.de:993/imap/ssl/novalidate-cert}INBOX';
+        $username = 'lead@dk-deutschland.de';
+        $password = 'a3Gi8Efu';
+
+        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
+        // $since = date('d-m-Y', strtotime ("-1 days")); // current time
+        // echo $since; die();
+        // $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON ' . $since .'');
+        $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED');
+        if($emails) {
+            $output = '';
+            // rsort($emails);
+            $dataNew = array();
+            foreach($emails as $k => $email_number) {
+                $overview = imap_fetch_overview($inbox,$email_number,0);
+                $structure = imap_fetchstructure($inbox, $email_number);
+                if(isset($structure->parts) && is_array($structure->parts) && isset($structure->parts[1])) {
+                    $part = $structure->parts[0];
+                    $message = imap_fetchbody($inbox,$email_number,2);
+
+                    if($part->encoding == 3) {
+                        $message = imap_base64($message);
+                    } else if($part->encoding == 1) {
+                        $message = imap_8bit($message);
+                    } else {
+                        $message = imap_qprint($message);
+                    }
+                }
+                $htmlDom = new DOMDocument;
+                @$htmlDom->loadHTML($message);
+                $spanTags = $htmlDom->getElementsByTagName('span');
+
+                foreach ($spanTags as $key => $value) {
+                    if($value->getElementsByTagName('br')->length) {
+                        foreach ($value->childNodes as $key => $val) {
+                            if($val->nodeValue != '' && explode(':', $val->nodeValue)) {
+                                $dataNew[$k][trim(explode(':', $val->nodeValue)[0])] = trim(explode(':', $val->nodeValue)[1]);
+                            }
+                        }
+                    } else {
+                        if($value->nodeValue != '' && explode(':', $value->nodeValue)) {
+                            $dataNew[$k][trim(explode(':', $value->nodeValue)[0])] = trim(explode(':', $value->nodeValue)[1]);
+                        }
+                    }
+                }
+            }
+
+            if(!empty($dataNew)){
+                foreach ($dataNew as $key => $value) {
+                    $leadstatus = $this->get_single_record('tblleadstatus',array('LOWER(name)'=>trim(strtolower($value['Leadstatus']))));
+                    $appointment_type = $this->get_single_record('tblappointmenttype',array('LOWER(name)'=>trim(strtolower($value['Terminart']))));
+                    $provider = $this->get_single_record('tblprovider',array('LOWER(name)'=>trim(strtolower($value['Provider']))));
+                    $responsive_user = $this->get_single_record('tblusers',array('LOWER(username)'=>trim(strtolower($value['ResponsiveUser']))));
+                    $dataTermination = array(
+                        'lead_status' => !empty($leadstatus) ? $leadstatus['id'] :0,
+                        'appointment_type' => !empty($appointment_type) ? $appointment_type['id'] :0,
+                        'provider' => !empty($provider) ? $provider['id'] :0,
+                        'responsive_user' => !empty($responsive_user) ? $responsive_user['userid'] :0,
+                        'salutation' => $value['Salution'] == 'Herr' ? '1' :'2',
+                        'surname' => $value['Surname'],
+                        'company_name' => $value['Company'],
+                        'name' => $value['Name'],
+                        'phone_number' => $value['Phone'],
+                        'email' => $value['Email'],
+                        'cards' => $value['Cards'],
+                        'employment' => $value['Employment'],
+                        'street' => $value['Street'],
+                        'zipcode' => $value['Zipcode'],
+                        'city' => $value['City'],
+                        'notice' => $value['Notice'],
+                        'created_at' => date('Y-m-d H:i:s')
+                    );
+                    $insert_id = $this->insert($this->table,$dataTermination);
+                }
+            }
+
+            echo "<pre>";
+            print_r($dataNew);
+            die();
+        }
+    }
     /* List all monitorings */
     public function index()
     {
@@ -320,7 +403,7 @@ class Termination extends Admin_controller
                     $merge_fields = array_merge($merge_fields, get_getterminationlead_merge_fields($mer_data));
                     // echo "<pre>";
                      // $sent = $this->Email_model->send_email_template('invoicecsvemail', $customerData->email, $merge_fields);
-                    $sent = $this->Email_model->send_email_template('terminationleademail', 'connectusdemo12@gmail.com', $merge_fields);
+                    //$sent = $this->Email_model->send_email_template('terminationleademail', 'lead@dk-deutschland.de', $merge_fields);
 
                     $return['status'] = TRUE;
                     $return['response'] = 'success';
