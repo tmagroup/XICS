@@ -9,92 +9,8 @@ class Termination extends Admin_controller
     {
         parent::__construct();
         $this->load->model('Email_model');
-        $this->load->model('Event_model');
     }
 
-    public function view_mail()
-    {
-        $hostname = '{imap.dk-deutschland.de:993/imap/ssl/novalidate-cert}INBOX';
-        $username = 'lead@dk-deutschland.de';
-        $password = 'a3Gi8Efu';
-
-        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
-        // $since = date('d-m-Y', strtotime ("-1 days")); // current time
-        // echo $since; die();
-        // $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON ' . $since .'');
-        $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED');
-        if($emails) {
-            $output = '';
-            // rsort($emails);
-            $dataNew = array();
-            foreach($emails as $k => $email_number) {
-                $overview = imap_fetch_overview($inbox,$email_number,0);
-                $structure = imap_fetchstructure($inbox, $email_number);
-                if(isset($structure->parts) && is_array($structure->parts) && isset($structure->parts[1])) {
-                    $part = $structure->parts[0];
-                    $message = imap_fetchbody($inbox,$email_number,2);
-
-                    if($part->encoding == 3) {
-                        $message = imap_base64($message);
-                    } else if($part->encoding == 1) {
-                        $message = imap_8bit($message);
-                    } else {
-                        $message = imap_qprint($message);
-                    }
-                }
-                $htmlDom = new DOMDocument;
-                @$htmlDom->loadHTML($message);
-                $spanTags = $htmlDom->getElementsByTagName('span');
-
-                foreach ($spanTags as $key => $value) {
-                    if($value->getElementsByTagName('br')->length) {
-                        foreach ($value->childNodes as $key => $val) {
-                            if($val->nodeValue != '' && explode(':', $val->nodeValue)) {
-                                $dataNew[$k][trim(explode(':', $val->nodeValue)[0])] = trim(explode(':', $val->nodeValue)[1]);
-                            }
-                        }
-                    } else {
-                        if($value->nodeValue != '' && explode(':', $value->nodeValue)) {
-                            $dataNew[$k][trim(explode(':', $value->nodeValue)[0])] = trim(explode(':', $value->nodeValue)[1]);
-                        }
-                    }
-                }
-            }
-
-            if(!empty($dataNew)){
-                foreach ($dataNew as $key => $value) {
-                    $leadstatus = $this->get_single_record('tblleadstatus',array('LOWER(name)'=>trim(strtolower($value['Leadstatus']))));
-                    $appointment_type = $this->get_single_record('tblappointmenttype',array('LOWER(name)'=>trim(strtolower($value['Terminart']))));
-                    $provider = $this->get_single_record('tblprovider',array('LOWER(name)'=>trim(strtolower($value['Provider']))));
-                    $responsive_user = $this->get_single_record('tblusers',array('LOWER(username)'=>trim(strtolower($value['ResponsiveUser']))));
-                    $dataTermination = array(
-                        'lead_status' => !empty($leadstatus) ? $leadstatus['id'] :0,
-                        'appointment_type' => !empty($appointment_type) ? $appointment_type['id'] :0,
-                        'provider' => !empty($provider) ? $provider['id'] :0,
-                        'responsive_user' => !empty($responsive_user) ? $responsive_user['userid'] :0,
-                        'salutation' => $value['Salution'] == 'Herr' ? '1' :'2',
-                        'surname' => $value['Surname'],
-                        'company_name' => $value['Company'],
-                        'name' => $value['Name'],
-                        'phone_number' => $value['Phone'],
-                        'email' => $value['Email'],
-                        'cards' => $value['Cards'],
-                        'employment' => $value['Employment'],
-                        'street' => $value['Street'],
-                        'zipcode' => $value['Zipcode'],
-                        'city' => $value['City'],
-                        'notice' => $value['Notice'],
-                        'created_at' => date('Y-m-d H:i:s')
-                    );
-                    $insert_id = $this->insert($this->table,$dataTermination);
-                }
-            }
-
-            echo "<pre>";
-            print_r($dataNew);
-            die();
-        }
-    }
     /* List all monitorings */
     public function index()
     {
@@ -160,6 +76,7 @@ class Termination extends Admin_controller
                 foreach ($posts as $key => $post)
                 {
                     $nestedData['id'] = $no+1;
+                    $nestedData['status'] = $post['status'];
                     $nestedData['company_name'] = $post['company_name'];
                     $nestedData['leadStatus'] = $post['leadStatus'];
                     $nestedData['providerName'] = $post['providerName'];
@@ -309,8 +226,8 @@ class Termination extends Admin_controller
             $mer_data['logo_image_url'] = $logo_image_url;
             $mer_data['data_type'] = date('d-m-Y',strtotime($data['date']));
             $mer_data['appoiment_date'] = date('d-m-Y',strtotime($data['date']));
-            $mer_data['accept_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/accept/';
-            $mer_data['cancel_url'] = base_url().'admin/termination/terminationAcceptCancel/'.$id.'/cancel/';
+            $mer_data['accept_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/accept/';
+            $mer_data['cancel_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/cancel/';
 
             $merge_fields = array();
             $merge_fields = array_merge($merge_fields, get_customertermination_merge_fields($mer_data));
@@ -419,59 +336,6 @@ class Termination extends Admin_controller
             $return['status'] = FALSE;
         }
         echo json_encode($return); die();
-    }
-
-    public function terminationAcceptCancel($id,$status)
-    {
-        if($id > 0){
-            if($status == 'accept') {
-                $post['lead_status'] = '8';
-                $post['status'] = '2';
-                $this->addCalendarsEvent($id);
-            } else {
-                $post['lead_status'] = '9';
-                $post['status'] = '1';
-            }
-
-            $this->update_record($this->table,array('id'=>$id),$post);
-        }
-        redirect(site_url('admin/termination/'));
-    }
-
-    public function addCalendarsEvent($id)
-    {
-        $data = $this->db
-                     ->select('*')
-                     ->from($this->table)
-                     ->where('id',$id)
-                     ->get()
-                     ->row_array();
-
-        $startDate = $data['date'].' 00:01:00';
-        $endDate = $data['date'].' 00:23:59';
-
-        $dataEvent['created'] = date('Y-m-d H:i:s');
-        $dataEvent['userid']  = get_user_id();
-        $dataEvent['start']   = $startDate;
-        $dataEvent['end']     = $endDate;
-        $dataEvent['public']  = 0;
-
-        $this->db->insert('tblevents', $dataEvent);
-        $event_id = $this->db->insert_id();
-
-        if($event_id > 0) {
-            $dataNew  = array(
-                'calendarId' => 'bvtcomgmbh@gmail.com',
-                'start' => $startDate,
-                'end' => $endDate,
-                'title' => $data['name'],
-                'google_color_id' => '2',
-                'event_address' => $data['street'].','.$data['city'],
-                'description' => $data['notice'],
-            );
-
-            $this->Event_model->addGoogleEvent($dataNew,$event_id);
-        }
     }
 
     public function export_excel()

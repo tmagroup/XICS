@@ -196,13 +196,13 @@
                                                     <label><?php echo lang('page_fl_zipcode');?> <span class="required"> * </span></label>
                                                     <input type="text" name="zipcode" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['zipcode'] :'';?>">
                                                 </div>
-                                                <div class="form-group date form_date">
+                                                <div class="form-group">
                                                     <label><?php echo lang('page_fl_date');?> <span class="required"> * </span></label>
-                                                    <div class="input-group date form_date">
-                                                        <input type="text" class="form-control" readonly="readonly" size="16" name="date" value="<?php echo isset($terminationData['date'])?_d($terminationData['date']):date('d.m.Y');?>">
+                                                    <div class="input-group date form_datetime">
+                                                         <input type="text" class="form-control" readonly="readonly" size="16" name="date" value="">
                                                         <span class="input-group-btn">
                                                             <button class="btn default date-set" type="button">
-                                                            <i class="fa fa-calendar"></i>
+                                                                <i class="fa fa-calendar"></i>
                                                             </button>
                                                         </span>
                                                     </div>
@@ -246,6 +246,14 @@
 <?php $this->load->view('admin/footer.php'); ?>
 
 <script>
+
+    jQuery(".form_datetime").datetimepicker({
+        autoclose: true,
+        isRTL: App.isRTL(),
+        format: "dd.mm.yyyy"+" hh:ii:ss",
+        pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+    });
+
     $("#form_termination").validate({
       rules: {
         lead_status: {

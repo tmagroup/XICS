@@ -234,15 +234,16 @@ function show_datatable() {
          "type": "POST",
     },
     createdRow: function ( row, data, index ) {
+    console.log(data);
     switch (data.status) {
         case "0":
             $(row).addClass("clrwhite");
             break;
         case "1":
-            $(row).addClass("clrRed");
+            $(row).addClass("clrGreen");
             break;
         case "2":
-            $(row).addClass("clrGreen");
+            $(row).addClass("clrRed");
             break;
     };
     },

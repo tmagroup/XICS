@@ -2214,7 +2214,6 @@ function get_getterminationlead_merge_fields($data)
     $fields['{city}'] = $data['city'];
     $fields['{notice}'] = $data['notice'];
 
-
     $hook_data['merge_fields'] = $fields;
     $hook_data['fields_to']    = 'getterminationlead';
     $hook_data['id']           = $data['id'];

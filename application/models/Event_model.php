@@ -347,10 +347,10 @@ class Event_model extends CI_Model
 
 
         $calendarId = trim($data['calendarId']);//User's Calendar ID or Master Admin Select Calendar ID
-        //  echo "<pre>";
+        $event = $service->events->insert($calendarId, $event);
+        //     echo "<pre>";
         // print_r($event);
         // die();
-        $event = $service->events->insert($calendarId, $event);
         $data_event = array('google_eid'=>$event->id,'google_htmllink'=>$event->htmlLink);
         $this->update($data_event, $id, 'added', 'd1');
     }

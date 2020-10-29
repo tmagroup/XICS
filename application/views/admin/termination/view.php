@@ -151,7 +151,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_date');?> :</label>
-                                                     <?php echo date('d-m-Y',strtotime($data['cards']));?>
+                                                     <?php echo date('d-m-Y',strtotime($data['date']));?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_notice');?> :</label>

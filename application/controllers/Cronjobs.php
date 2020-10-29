@@ -16,6 +16,156 @@ class Cronjobs extends MY2_Controller {
         $this->load->model('Qualitycheck_model');
     }
 
+    public function view_mail()
+    {
+        // echo "Dd"; die();
+        $hostname = '{imap.dk-deutschland.de:993/imap/ssl/novalidate-cert}INBOX';
+        $username = 'lead@dk-deutschland.de';
+        $password = 'a3Gi8Efu';
+
+        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
+        // $since = date('d-m-Y', strtotime ("-1 days")); // current time
+        // echo $since; die();
+        // $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON ' . $since .'');
+        $date = date("Y-m-d");
+        $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON "'.$date.'"');
+
+        if($emails) {
+            $output = '';
+            // rsort($emails);
+            $dataNew = array();
+            foreach($emails as $k => $email_number) {
+                $overview = imap_fetch_overview($inbox,$email_number,0);
+
+                $structure = imap_fetchstructure($inbox, $email_number);
+                if(isset($structure->parts) && is_array($structure->parts) && isset($structure->parts[1])) {
+                    $part = $structure->parts[0];
+                    $message = imap_fetchbody($inbox,$email_number,2);
+
+                    if($part->encoding == 3) {
+                        $message = imap_base64($message);
+                    } else if($part->encoding == 1) {
+                        $message = imap_8bit($message);
+                    } else {
+                        $message = imap_qprint($message);
+                    }
+                }
+                $htmlDom = new DOMDocument;
+                @$htmlDom->loadHTML($message);
+                $spanTags = $htmlDom->getElementsByTagName('span');
+
+                foreach ($spanTags as $key => $value) {
+                    if($value->getElementsByTagName('br')->length) {
+                        foreach ($value->childNodes as $key => $val) {
+                            if($val->nodeValue != '' && explode(':', $val->nodeValue)) {
+                                $dataNew[$k][trim(explode(':', $val->nodeValue)[0])] = trim(explode(':', $val->nodeValue)[1]);
+                            }
+                        }
+                    } else {
+                        if($value->nodeValue != '' && explode(':', $value->nodeValue)) {
+                            $dataNew[$k][trim(explode(':', $value->nodeValue)[0])] = trim(explode(':', $value->nodeValue)[1]);
+                        }
+                    }
+                }
+            }
+            if(!empty($dataNew)){
+                foreach ($dataNew as $key => $value) {
+                    $leadstatus = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Leadstatus'])))->get('tblleadstatus')->row_array();
+                    $appointment_type = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Terminart'])))->get('tblappointmenttype')->row_array();
+                    $provider = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Provider'])))->get('tblprovider')->row_array();
+                    $responsive_user = $this->db->select('*')->where('LOWER(username)', trim(strtolower($value['ResponsiveUser'])))->get('tblusers')->row_array();
+
+                    $dataTermination = array(
+                        'lead_status' => !empty($leadstatus) ? $leadstatus['id'] :0,
+                        'appointment_type' => !empty($appointment_type) ? $appointment_type['id'] :0,
+                        'provider' => !empty($provider) ? $provider['id'] :0,
+                        'responsive_user' => !empty($responsive_user) ? $responsive_user['userid'] :0,
+                        'salutation' => $value['Salution'] == 'Herr' ? '1' :'2',
+                        'surname' => $value['Surname'],
+                        'company_name' => $value['Company'],
+                        'name' => $value['Name'],
+                        'phone_number' => $value['Phone'],
+                        'email' => $value['Email'],
+                        'cards' => $value['Cards'],
+                        'date' => date('Y-m-d'),
+                        'employment' => $value['Employment'],
+                        'street' => $value['Street'],
+                        'zipcode' => $value['Zipcode'],
+                        'city' => $value['City'],
+                        'notice' => $value['Notice'],
+                        'created_at' => date('Y-m-d H:i:s')
+                    );
+
+                    $this->db->insert('tbltermination', $dataTermination);
+                    $insert_id = $this->db->insert_id();
+                }
+            }
+        }
+    }
+
+    public function terminationAcceptCancel($id,$status)
+    {
+        $terminationData = $this->db->select('*')->where('md5(id)', $id)->get('tbltermination')->row_array();
+        $data['terminationData']  = $terminationData;
+
+        if($id != ''){
+            if($status == 'accept') {
+                $post['lead_status'] = '8';
+                $post['status'] = '1';
+                if($terminationData['status'] != '1') {
+                    $this->addCalendarsEvent($id);
+                }
+                $this->load->view('admin/termination/accept', $data, FALSE);
+            }
+
+            if($status == 'cancel'){
+                $post['lead_status'] = '9';
+                $post['status'] = '2';
+                $this->load->view('admin/termination/cancel', $data, FALSE);
+            }
+            $this->db->where('md5(id)', $id);
+            $this->db->update('tbltermination', $post);
+        }
+    }
+
+    public function addCalendarsEvent($id)
+    {
+        $data = $this->db
+                     ->select('*')
+                     ->from('tbltermination')
+                     ->where('md5(id)',$id)
+                     ->get()
+                     ->row_array();
+
+        $startDate = $data['date'].' 00:01:00';
+        $endDate = $data['date'].' 00:23:59';
+
+        $dataEvent['created'] = date('Y-m-d H:i:s');
+        $dataEvent['userid']  = $data['responsive_user'];
+        // $dataEvent['userid']  = get_user_id();
+        $dataEvent['start']   = $startDate;
+        $dataEvent['end']     = $endDate;
+        $dataEvent['public']  = 0;
+
+        $this->db->insert('tblevents', $dataEvent);
+        $event_id = $this->db->insert_id();
+
+        if($event_id > 0) {
+            $dataNew  = array(
+                'calendarId' => 'bvtcomgmbh@gmail.com',
+                'start' => $startDate,
+                'end' => $endDate,
+                'title' => $data['name'],
+                'google_color_id' => '2',
+                'event_address' => $data['street'].','.$data['city'],
+                'description' => $data['notice'],
+            );
+            // echo "<pre>";
+            // print_r($dataNew);
+            // die();
+            $this->Event_model->addGoogleEvent($dataNew,$event_id);
+        }
+    }
     //once a day check if 1st day of month at morning
     public function employeecommissions_generateslip($month_year = ''){
         if(date('d')=='01'){
