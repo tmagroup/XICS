@@ -199,7 +199,7 @@
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_date');?> <span class="required"> * </span></label>
                                                     <div class="input-group date form_datetime">
-                                                         <input type="text" class="form-control" readonly="readonly" size="16" name="date" value="">
+                                                         <input type="text" class="form-control" readonly="readonly" size="16" name="date" value="<?php echo isset($terminationData) ? date('d.m.Y H:i:s',strtotime($terminationData['date'])) : '';?>">
                                                         <span class="input-group-btn">
                                                             <button class="btn default date-set" type="button">
                                                                 <i class="fa fa-calendar"></i>

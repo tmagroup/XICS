@@ -29,8 +29,8 @@
 				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Ansprechpartner: <?php echo $terminationData['surname'].' '.$terminationData['name'];?></p>
 				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Strasse: <?php echo $terminationData['street'];?></p>
 				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">PLZ/Ort: <?php echo $terminationData['zipcode'].','.$terminationData['city'];?>, City</p><br>
-				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Datum: <?php echo date('d-m-Y',strtotime($terminationData['date']));?></p>
-				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Uhrzeit: (Time)</p><br/><br/>
+				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Datum: <?php echo date('d.m.Y',strtotime($terminationData['date']));?></p>
+				<p class="text-center" style="font-size: 14px;color: #000000;font-family: Arial;margin-bottom: 2px;">Uhrzeit: <?php echo date('H:i:s',strtotime($terminationData['date']));?></p><br/><br/>
 			</div>
 
 			<div class="col-md-12">

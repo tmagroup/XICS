@@ -137,8 +137,8 @@ class Cronjobs extends MY2_Controller {
                      ->get()
                      ->row_array();
 
-        $startDate = $data['date'].' 00:01:00';
-        $endDate = $data['date'].' 00:23:59';
+        $startDate = date('Y-m-d',strtotime($data['date'])).' 00:01:00';
+        $endDate = date('Y-m-d',strtotime($data['date'])).' 00:23:59';
 
         $dataEvent['created'] = date('Y-m-d H:i:s');
         $dataEvent['userid']  = $data['responsive_user'];

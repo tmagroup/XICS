@@ -135,7 +135,7 @@ class Termination extends Admin_controller
         if($this->input->server('REQUEST_METHOD') == 'POST') {
             $post = $this->input->post();
 
-            $post['date'] = to_sql_date($post['date'], false);
+            $post['date'] = to_sql_date($post['date'], true);
             if($id > 0) {
                 $post['updated_at'] = date('Y-m-d H:i:s');
 
@@ -202,8 +202,9 @@ class Termination extends Admin_controller
             $id = $this->input->post('id');
 
             $data = $this->db
-                         ->select('tt.*')
+                         ->select('tt.*,a.name as eventType')
                          ->from('tbltermination as tt')
+                         ->join('tblappointmenttype a','a.id=tt.appointment_type','left')
                          ->where('tt.id',$id)
                          ->get()
                          ->row_array();
@@ -211,9 +212,11 @@ class Termination extends Admin_controller
             // $file = FCPATH.'uploads/assignments/'.$post['assignmentnr'].'/bills/'.$billData->invoicefilecsv;
             // $this->Email_model->add_attachment(array('attachment' => $file));
             $mer_data = array();
+            $data_type = date('d.m.Y',strtotime($data['date']));
             if($data['provider'] == '2') {
                 $emailtemplate = 'terminationtelekon';
                 $logo_image_url = base_url().'assets/telekon.png';
+                $data_type  = $data['eventType'];
             } else if($data['provider'] == '3') {
                 $emailtemplate = 'terminationO2Business';
                 $logo_image_url = base_url().'assets/o2.png';
@@ -224,8 +227,8 @@ class Termination extends Admin_controller
             $mer_data['customer_surname'] = $data['surname'];
             $mer_data['customer_name'] = $data['name'];
             $mer_data['logo_image_url'] = $logo_image_url;
-            $mer_data['data_type'] = date('d-m-Y',strtotime($data['date']));
-            $mer_data['appoiment_date'] = date('d-m-Y',strtotime($data['date']));
+            $mer_data['data_type'] = $data_type;
+            $mer_data['appoiment_date'] = date('d.m.Y',strtotime($data['date']));
             $mer_data['accept_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/accept/';
             $mer_data['cancel_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/cancel/';
 
@@ -241,7 +244,7 @@ class Termination extends Admin_controller
             // echo $sent; die();
             if($sent) {
                 $current_datetime = date('Y-m-d H:i:s');
-                $this->update_record($this->table,array('id'=>$id),array('status' => '0','mail_send_time'=> $current_datetime));
+                $this->update_record($this->table,array('id'=>$id),array('status' => '0','lead_status' => 10,'mail_send_time'=> $current_datetime));
 
                 $return['status'] = TRUE;
                 $return['response'] = 'success';
