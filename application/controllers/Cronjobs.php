@@ -18,16 +18,12 @@ class Cronjobs extends MY2_Controller {
 
     public function view_mail()
     {
-        // echo "Dd"; die();
         $hostname = '{imap.dk-deutschland.de:993/imap/ssl/novalidate-cert}INBOX';
         $username = 'lead@dk-deutschland.de';
         $password = 'a3Gi8Efu';
 
-        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
-        // $since = date('d-m-Y', strtotime ("-1 days")); // current time
-        // echo $since; die();
-        // $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON ' . $since .'');
         $date = date("Y-m-d");
+        $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
         $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON "'.$date.'"');
 
         if($emails) {
@@ -36,7 +32,6 @@ class Cronjobs extends MY2_Controller {
             $dataNew = array();
             foreach($emails as $k => $email_number) {
                 $overview = imap_fetch_overview($inbox,$email_number,0);
-
                 $structure = imap_fetchstructure($inbox, $email_number);
                 if(isset($structure->parts) && is_array($structure->parts) && isset($structure->parts[1])) {
                     $part = $structure->parts[0];
@@ -59,11 +54,13 @@ class Cronjobs extends MY2_Controller {
                         foreach ($value->childNodes as $key => $val) {
                             if($val->nodeValue != '' && explode(':', $val->nodeValue)) {
                                 $dataNew[$k][trim(explode(':', $val->nodeValue)[0])] = trim(explode(':', $val->nodeValue)[1]);
+                                $dataNew[$k]['udate'] = $$overview[0]->udate;
                             }
                         }
                     } else {
                         if($value->nodeValue != '' && explode(':', $value->nodeValue)) {
                             $dataNew[$k][trim(explode(':', $value->nodeValue)[0])] = trim(explode(':', $value->nodeValue)[1]);
+                           $dataNew[$k]['udate'] = $overview[0]->udate;
                         }
                     }
                 }
@@ -93,11 +90,15 @@ class Cronjobs extends MY2_Controller {
                         'zipcode' => $value['Zipcode'],
                         'city' => $value['City'],
                         'notice' => $value['Notice'],
+                        'mail_date' => $value['udate'],
                         'created_at' => date('Y-m-d H:i:s')
                     );
 
-                    $this->db->insert('tbltermination', $dataTermination);
-                    $insert_id = $this->db->insert_id();
+                    $exists = $this->db->select('id')->where('mail_date',$value['udate'])->get('tbltermination')->row_array();
+                    if(empty($exists)) {
+                        $this->db->insert('tbltermination', $dataTermination);
+                        $insert_id = $this->db->insert_id();
+                    }
                 }
             }
         }
