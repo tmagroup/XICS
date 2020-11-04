@@ -132,9 +132,10 @@ class Cronjobs extends MY2_Controller {
     public function addCalendarsEvent($id)
     {
         $data = $this->db
-                     ->select('*')
-                     ->from('tbltermination')
-                     ->where('md5(id)',$id)
+                     ->select('t.*,u.googleCalendarIDs')
+                     ->from('tbltermination t')
+                     ->join('tblusers u','u.userid=t.responsive_user')
+                     ->where('md5(t.id)',$id)
                      ->get()
                      ->row_array();
 
@@ -152,8 +153,10 @@ class Cronjobs extends MY2_Controller {
         $event_id = $this->db->insert_id();
 
         if($event_id > 0) {
+            $calendarId = explode(',', $data['googleCalendarIDs']);
+
             $dataNew  = array(
-                'calendarId' => 'bvtcomgmbh@gmail.com',
+                'calendarId' => $calendarId[0],
                 'start' => $startDate,
                 'end' => $endDate,
                 'title' => $data['name'],
@@ -161,9 +164,6 @@ class Cronjobs extends MY2_Controller {
                 'event_address' => $data['street'].','.$data['city'],
                 'description' => $data['notice'],
             );
-            // echo "<pre>";
-            // print_r($dataNew);
-            // die();
             $this->Event_model->addGoogleEvent($dataNew,$event_id);
         }
     }

@@ -232,7 +232,6 @@ class Calendars extends Admin_controller
     public function getEvents(){
         /*$_GET['start'] = '2018-09-30';
         $_GET['end'] = '2018-11-11';*/
-
         /* Sync from Google Events */
         $crm_event_ids = $this->Event_model->getGoogleEvents($_GET['start'], $_GET['end']);
         if(is_array($crm_event_ids) && count($crm_event_ids)>0){
