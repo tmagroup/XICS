@@ -22,9 +22,10 @@ class Cronjobs extends MY2_Controller {
         $username = 'lead@dk-deutschland.de';
         $password = 'a3Gi8Efu';
 
-        $date = date("Y-m-d");
         $inbox = imap_open($hostname,$username,$password) or die('Cannot connect to server: ' . imap_last_error());
+        $date = date("Y-m-d");
         $emails = imap_search($inbox,'SUBJECT "Neuer Termin" UNDELETED ON "'.$date.'"');
+        // $emails = imap_search($inbox,'SUBJECT "New appointment" UNDELETED ON "'.$date.'"');
 
         if($emails) {
             $output = '';
@@ -32,6 +33,8 @@ class Cronjobs extends MY2_Controller {
             $dataNew = array();
             foreach($emails as $k => $email_number) {
                 $overview = imap_fetch_overview($inbox,$email_number,0);
+                $udate = $overview[0]->udate;
+
                 $structure = imap_fetchstructure($inbox, $email_number);
                 if(isset($structure->parts) && is_array($structure->parts) && isset($structure->parts[1])) {
                     $part = $structure->parts[0];
@@ -47,24 +50,25 @@ class Cronjobs extends MY2_Controller {
                 }
                 $htmlDom = new DOMDocument;
                 @$htmlDom->loadHTML($message);
-                $spanTags = $htmlDom->getElementsByTagName('span');
+                $spanTags = $htmlDom->getElementsByTagName('td');
 
+                $label = array();
+                $filed_value = array();
                 foreach ($spanTags as $key => $value) {
-                    if($value->getElementsByTagName('br')->length) {
-                        foreach ($value->childNodes as $key => $val) {
-                            if($val->nodeValue != '' && explode(':', $val->nodeValue)) {
-                                $dataNew[$k][trim(explode(':', $val->nodeValue)[0])] = trim(explode(':', $val->nodeValue)[1]);
-                                $dataNew[$k]['udate'] = $$overview[0]->udate;
-                            }
-                        }
+                    if($key % 2 == 0) {
+                        $label[$k][] =trim(trim($value->nodeValue),':');
                     } else {
-                        if($value->nodeValue != '' && explode(':', $value->nodeValue)) {
-                            $dataNew[$k][trim(explode(':', $value->nodeValue)[0])] = trim(explode(':', $value->nodeValue)[1]);
-                           $dataNew[$k]['udate'] = $overview[0]->udate;
-                        }
+                        $filed_value[$k][] = trim($value->nodeValue);
                     }
                 }
+                if(!empty($filed_value) && !empty($label)) {
+                    $dataNew[$k] = array_combine($label[$k],$filed_value[$k]);
+                }
             }
+            // echo "<pre>";
+            // print_r($dataNew);
+            // die();
+
             if(!empty($dataNew)){
                 foreach ($dataNew as $key => $value) {
                     $leadstatus = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Leadstatus'])))->get('tblleadstatus')->row_array();
@@ -84,17 +88,17 @@ class Cronjobs extends MY2_Controller {
                         'phone_number' => $value['Phone'],
                         'email' => $value['Email'],
                         'cards' => $value['Cards'],
-                        'date' => date('Y-m-d'),
+                        'date' => date('Y-m-d H:i:s',strtotime($value['Date'].' '.$value['Time'])),
                         'employment' => $value['Employment'],
                         'street' => $value['Street'],
                         'zipcode' => $value['Zipcode'],
                         'city' => $value['City'],
                         'notice' => $value['Notice'],
-                        'mail_date' => $value['udate'],
+                        'mail_date' => $udate,
                         'created_at' => date('Y-m-d H:i:s')
                     );
 
-                    $exists = $this->db->select('id')->where('mail_date',$value['udate'])->get('tbltermination')->row_array();
+                    $exists = $this->db->select('id')->where('mail_date',$udate)->get('tbltermination')->row_array();
                     if(empty($exists)) {
                         $this->db->insert('tbltermination', $dataTermination);
                         $insert_id = $this->db->insert_id();
@@ -103,6 +107,7 @@ class Cronjobs extends MY2_Controller {
             }
         }
     }
+
 
     public function terminationAcceptCancel($id,$status)
     {
