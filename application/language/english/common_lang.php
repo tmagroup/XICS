@@ -204,6 +204,21 @@ $lang['page_fl_cards'] = 'Cards';
 $lang['page_fl_date'] = 'Date';
 $lang['page_fl_responsive_user'] = 'Responsive User';
 
+// termination accept and cancel
+$lang['page_fl_lead_add_message'] = 'Lead was added';
+$lang['page_fl_appointment_mail_message'] = 'Appointment Mail Send Successfully';
+$lang['page_fl_time'] = 'Time';
+$lang['page_fl_meeting'] = 'Meeting';
+$lang['page_fl_accept'] = 'Accept';
+$lang['page_fl_appointment_confirmation'] = 'Appointment confirmation';
+$lang['page_fl_app_conf_message_line1'] = 'We would like to thank you for confirming the appointment.';
+$lang['page_fl_app_conf_message_line2'] = 'You have already received all further information regarding our appointment by email.';
+$lang['page_fl_appointment_cancel'] = 'You canceled the appointment.';
+$lang['page_fl_app_cancel_message_line1'] = 'We are very sorry that you canceled the appointment. We were happy to treat you without obligation';
+$lang['page_fl_app_cancel_message_line2'] = 'and showed you the potential for performance enhancers and savings.';
+$lang['page_fl_app_cancel_message_line3'] = 'Maybe you want to keep the appointment after all?';
+
+
 $lang['page_leadquotations'] = 'Lead Quotations';
 $lang['page_leadquotation'] = 'Lead Quotation';
 $lang['page_leadquotation_product'] = 'Lead Quotation Product';

@@ -202,6 +202,19 @@ $lang['page_fl_cards'] = 'Karten';
 $lang['page_fl_date'] = 'Datum';
 $lang['page_fl_responsive_user'] = 'Responsive User';
 
+// termination accept and cancel
+$lang['lead_add_message'] = 'Lead wurde hinzugefügt';
+$lang['page_fl_appointment_mail_message'] = 'Termin-Mail erfolgreich senden';
+$lang['page_fl_time'] = 'Uhrzeit';
+$lang['page_fl_meeting'] = 'Termin';
+$lang['page_fl_appointment_confirmation'] = 'Terminbestätigung';
+$lang['page_fl_app_conf_message_line1'] = 'Wir möchten uns bedanken für die Terminbestätigung.';
+$lang['page_fl_app_conf_message_line2'] = 'Alle weiteren Infos in Bezug auf unseren Termin haben Sie schon per Email erhalten.';
+$lang['page_fl_appointment_cancel'] = 'Sie haben den Termin abgesagt.';
+$lang['page_fl_app_cancel_message_line1'] = 'Wir bedauern sehr das Sie den Termin abgesagt haben. Wir hätten Sie gerne unverbindlich beraten';
+$lang['page_fl_app_cancel_message_line2'] = 'und Ihnen dargestellt welches Potential an Leistungssteigern und Ersparnisse möglich wären.';
+$lang['page_fl_app_cancel_message_line3'] = 'Vielleicht wollen Sie den Termin eventuell doch wahrnehmen?';
+
 $lang['page_leadquotations'] = 'Lead-Angebote';
 $lang['page_leadquotation'] = 'Hauptangebot';
 $lang['page_leadquotation_product'] = 'Angebotsprodukt führen';

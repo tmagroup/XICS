@@ -12,6 +12,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     .clrRed{
         background-color:#f6d1d1 !important;
     }
+    .clrYellow{
+        background-color:#eeee66  !important;
+    }
 </style>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
         <?php $this->load->view('admin/topnavigation.php'); ?>
@@ -235,6 +238,9 @@ function show_datatable() {
     },
     createdRow: function ( row, data, index ) {
     console.log(data);
+    if(data.leadStatus_id == 10) {  //Terminbestätigung verschickt
+        $(row).addClass("clrYellow");
+    }
     switch (data.status) {
         case "0":
             $(row).addClass("clrwhite");

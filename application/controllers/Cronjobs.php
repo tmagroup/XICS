@@ -165,7 +165,7 @@ class Cronjobs extends MY2_Controller {
                 'start' => $startDate,
                 'end' => $endDate,
                 'title' => $data['name'],
-                'google_color_id' => '2',
+                // 'google_color_id' => '2',
                 'event_address' => $data['street'].','.$data['city'],
                 'description' => $data['notice'],
             );

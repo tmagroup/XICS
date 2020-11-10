@@ -523,9 +523,9 @@ class Event_model extends CI_Model
                                                 'event_startaddress_lat' => $event_latitude,
                                                 'event_startaddress_lng' => $event_longitude,
 
-                                                /*'event_address' => $event->location,
-                                                'event_address_lat' => $latitude,
-                                                'event_address_lng' => $longitude,*/
+                                                'event_address' => $event->location,
+                                                // 'event_address_lat' => $latitude,
+                                                // 'event_address_lng' => $longitude,
 
                                                 'start' => $event_start_dateTime,
                                                 'end' => $event_end_dateTime,
@@ -579,9 +579,9 @@ class Event_model extends CI_Model
                                                 'event_startaddress_lat' => $event_latitude,
                                                 'event_startaddress_lng' => $event_longitude,
 
-                                                /*'event_address' => $event->location,
-                                                'event_address_lat' => '',
-                                                'event_address_lng' => '',*/
+                                                'event_address' => $event->location,
+                                                // 'event_address_lat' => '',
+                                                // 'event_address_lng' => '',
 
                                                 'start' => $event_start_dateTime,
                                                 'end' => $event_end_dateTime,
@@ -648,9 +648,9 @@ class Event_model extends CI_Model
                                                 'event_startaddress_lat' => $event_latitude,
                                                 'event_startaddress_lng' => $event_longitude,
 
-                                                /*'event_address' => $event->location,
-                                                'event_address_lat' => $latitude,
-                                                'event_address_lng' => $longitude,*/
+                                                'event_address' => $event->location,
+                                                // 'event_address_lat' => $latitude,
+                                                // 'event_address_lng' => $longitude,
 
                                                 'start' => $event_start_dateTime,
                                                 'end' => $event_end_dateTime,
@@ -704,9 +704,9 @@ class Event_model extends CI_Model
                                                 'event_startaddress_lat' => $event_latitude,
                                                 'event_startaddress_lng' => $event_longitude,
 
-                                                /*'event_address' => $event->location,
-                                                'event_address_lat' => '',
-                                                'event_address_lng' => '',*/
+                                                'event_address' => $event->location,
+                                                // 'event_address_lat' => '',
+                                                // 'event_address_lng' => '',
 
                                                 'start' => $event_start_dateTime,
                                                 'end' => $event_end_dateTime,
@@ -797,9 +797,9 @@ class Event_model extends CI_Model
                                             'event_startaddress_lat' => $event_latitude,
                                             'event_startaddress_lng' => $event_longitude,
 
-                                            /*'event_address' => $event->location,
-                                            'event_address_lat' => '',
-                                            'event_address_lng' => '',*/
+                                            'event_address' => $event->location,
+                                            // 'event_address_lat' => '',
+                                            // 'event_address_lng' => '',
 
                                             'start' => $event_start_dateTime,
                                             'end' => $event_end_dateTime,
@@ -856,9 +856,9 @@ class Event_model extends CI_Model
                                             'event_startaddress_lat' => $event_latitude,
                                             'event_startaddress_lng' => $event_longitude,
 
-                                            /*'event_address' => $event->location,
-                                            'event_address_lat' => '',
-                                            'event_address_lng' => '',*/
+                                            'event_address' => $event->location,
+                                            // 'event_address_lat' => '',
+                                            // 'event_address_lng' => '',
 
                                             'start' => $event_start_dateTime,
                                             'end' => $event_end_dateTime,
@@ -931,9 +931,9 @@ class Event_model extends CI_Model
                                             'event_startaddress_lat' => $event_latitude,
                                             'event_startaddress_lng' => $event_longitude,
 
-                                            /*'event_address' => $event->location,
-                                            'event_address_lat' => $latitude,
-                                            'event_address_lng' => $longitude,*/
+                                            'event_address' => $event->location,
+                                            // 'event_address_lat' => $latitude,
+                                            // 'event_address_lng' => $longitude,
 
                                             'start' => $event_start_dateTime,
                                             'end' => $event_end_dateTime,
@@ -992,9 +992,9 @@ class Event_model extends CI_Model
                                             'event_startaddress_lat' => $event_latitude,
                                             'event_startaddress_lng' => $event_longitude,
 
-                                            /*'event_address' => $event->location,
-                                            'event_address_lat' => '',
-                                            'event_address_lng' => '',*/
+                                            'event_address' => $event->location,
+                                            // 'event_address_lat' => '',
+                                            // 'event_address_lng' => '',
 
                                             'start' => $event_start_dateTime,
                                             'end' => $event_end_dateTime,
