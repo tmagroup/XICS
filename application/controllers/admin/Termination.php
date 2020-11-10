@@ -323,7 +323,7 @@ class Termination extends Admin_controller
 
 					$return['status'] = TRUE;
 					$return['response'] = 'success';
-					$return['message'] = lang('lead_add_message');;
+					$return['message'] = lang('page_fl_lead_add_message');;
 				}
 			} else {
 				$return['status'] = TRUE;
