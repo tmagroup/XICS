@@ -44,14 +44,15 @@ class Termination extends Admin_controller
 
 			$param  = array();
 
-			$field = 'tbltermination.*,ls.name as leadStatus,color,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser';
+			$field = 'tbltermination.*,ls.name as leadStatus,color,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,CONCAT(us.surname," ", us.name) as createdUsers';
 			$param['limit'] = array($limit,$start);
 			// print_r($param['limit']); die();
 			$param['order_by'] = array($order,$dir);
 			$param['join'] = array(
 							'tblleadstatus ls'=>'ls.id=tbltermination.lead_status',
 							'tblprovider p'=>'p.id=tbltermination.provider',
-							'tblusers u'=>'u.userid=tbltermination.responsive_user'
+							'tblusers u'=>'u.userid=tbltermination.responsive_user',
+							'tblusers us'=>'us.userid=tbltermination.created_by'
 							);
 
 			if(empty($this->input->post('search')['value']))
@@ -83,7 +84,8 @@ class Termination extends Admin_controller
 					$nestedData['providerName'] = $post['providerName'];
 					$nestedData['cards'] = $post['cards'];
 					$nestedData['responsiUser'] = $post['responsiUser'];
-					$nestedData['action'] = '<button class="btn btn-danger delete-termination" title="Delete" data-id="'.$post['id'].'"><i class="fa fa-trash"></i></button>&nbsp;<a href="'.base_url().'admin/termination/setup/'.$post['id'].'"  title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i></a>&nbsp;<a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" title="Appointment Confirmation" data-id="'.$post['id'].'"><i class="fa fa-envelope-square"></i></a>&nbsp;<a href="'.base_url().'admin/termination/show/'.$post['id'].'" class="btn btn-primary" title="View Details" data-id="'.$post['id'].'"><i class="fa fa-eye"></i></a>';
+					$nestedData['created_by'] = $post['createdUsers'];
+					$nestedData['action'] = '<div class="lass="btn-group""><button class="btn btn-danger delete-termination" title="Delete" data-id="'.$post['id'].'"><i class="fa fa-trash"></i></button><a href="'.base_url().'admin/termination/setup/'.$post['id'].'"  title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i></a><a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" title="Appointment Confirmation" data-id="'.$post['id'].'"><i class="fa fa-envelope-square"></i></a><a href="'.base_url().'admin/termination/show/'.$post['id'].'" class="btn btn-primary" title="View Details" data-id="'.$post['id'].'"><i class="fa fa-eye"></i></a></div>';
 
 					$data[] = $nestedData;
 					$no++;
@@ -138,14 +140,16 @@ class Termination extends Admin_controller
 
 			$post['date'] = to_sql_date($post['date'], true);
 			if($id > 0) {
-				$post['updated_at'] = date('Y-m-d H:i:s');
+				$post['updated_at'] = $GLOBALS['current_datetime'];
+				$post['updated_by'] = $GLOBALS['current_user']->userid;
 
 				$this->update_record($this->table,array('id'=>$id),$post);
 				set_alert('success', sprintf(lang('updated_successfully'),lang('page_termination')));
 				redirect(site_url('admin/termination/'));
+
 			} else {
-				$post['created_at'] = date('Y-m-d H:i:s');
-				$post['updated_at'] = date('Y-m-d H:i:s');
+				$post['created_at'] = $GLOBALS['current_datetime'];
+				$post['created_by'] = $GLOBALS['current_user']->userid;
 
 				$insert_id = $this->insert($this->table,$post);
 				if($insert_id > 0) {
@@ -161,13 +165,14 @@ class Termination extends Admin_controller
 		if($id > 0) {
 			$data = array();
 			$data['data'] = $this->db
-								->select('t.*,ls.name as leadName,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,a.name as appointmentName')
+								->select('t.*,ls.name as leadName,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,a.name as appointmentName,CONCAT(us.surname," ", us.name) as createdUsers')
 								->from('tbltermination t')
 								->where('t.id',$id)
 								->join('tblleadstatus ls','ls.id=t.lead_status','left')
 								->join('tblprovider p','p.id=t.provider','left')
 								->join('tblusers u','u.userid=t.responsive_user','left')
 								->join('tblappointmenttype a','a.id=t.appointment_type','left')
+								->join('tblusers us','us.userid=t.created_by','left')
 								->get()
 								->row_array();
 

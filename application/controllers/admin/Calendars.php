@@ -176,6 +176,10 @@ class Calendars extends Admin_controller
 		}
 		$data['dataAssignedCalendarIDs'] = $dataAssignedCalendarID;
 		//******************** End Initialise ********************/
+		// echo "<pre>";
+		// print_r($data);
+		// die();
+
 		$this->load->view('admin/calendars/addEvent', $data);
 	}
 

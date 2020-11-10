@@ -473,6 +473,9 @@ class Event_model extends CI_Model
 
                             if(isset($events) && count($events)){
                                 foreach($events as $event){
+                            //         echo "<pre>";
+                            // print_r($event);
+                            // die();
                                     //Check in CRM Exists
                                     $crm_event = $this->get("","",array()," google_eid='".$event->id."' ");
                                     if(!$crm_event && count($crm_event)<=0){
@@ -517,7 +520,7 @@ class Event_model extends CI_Model
                                                 'title' => ($event->summary),
                                                 'description' => ($event->description),
 
-                                                'eventstatus' => 1, //Vorort Termin
+                                                // 'eventstatus' => 1, //Vorort Termin
 
                                                 'event_startaddress' => $event_location,
                                                 'event_startaddress_lat' => $event_latitude,
@@ -573,7 +576,7 @@ class Event_model extends CI_Model
                                                 'title' => ($event->summary),
                                                 'description' => ($event->description),
 
-                                                'eventstatus' => 1, //Vorort Termin
+                                                // 'eventstatus' => 1, //Vorort Termin
 
                                                 'event_startaddress' => $event_location,
                                                 'event_startaddress_lat' => $event_latitude,
@@ -642,7 +645,7 @@ class Event_model extends CI_Model
                                                 'title' => ($event->summary),
                                                 'description' => ($event->description),
 
-                                                //'eventstatus' => 1, //Vorort Termin
+                                                // 'eventstatus' => 1, //Vorort Termin
 
                                                 'event_startaddress' => $event_location,
                                                 'event_startaddress_lat' => $event_latitude,
@@ -698,7 +701,7 @@ class Event_model extends CI_Model
                                                 'title' => ($event->summary),
                                                 'description' => ($event->description),
 
-                                                //'eventstatus' => 1, //Vorort Termin
+                                                // 'eventstatus' => 1, //Vorort Termin
 
                                                 'event_startaddress' => $event_location,
                                                 'event_startaddress_lat' => $event_latitude,
@@ -791,7 +794,7 @@ class Event_model extends CI_Model
                                             'title' => ($event->summary),
                                             'description' => ($event->description),
 
-                                            'eventstatus' => 1, //Vorort Termin
+                                            // 'eventstatus' => 1, //Vorort Termin
 
                                             'event_startaddress' => $event_location,
                                             'event_startaddress_lat' => $event_latitude,
@@ -850,7 +853,7 @@ class Event_model extends CI_Model
                                             'title' => ($event->summary),
                                             'description' => ($event->description),
 
-                                            'eventstatus' => 1, //Vorort Termin
+                                            // 'eventstatus' => 1, //Vorort Termin
 
                                             'event_startaddress' => $event_location,
                                             'event_startaddress_lat' => $event_latitude,
@@ -925,7 +928,7 @@ class Event_model extends CI_Model
                                             'title' => ($event->summary),
                                             'description' => ($event->description),
 
-                                            //'eventstatus' => 1, //Vorort Termin
+                                            // 'eventstatus' => 1, //Vorort Termin
 
                                             'event_startaddress' => $event_location,
                                             'event_startaddress_lat' => $event_latitude,
@@ -986,7 +989,7 @@ class Event_model extends CI_Model
                                             'title' => ($event->summary),
                                             'description' => ($event->description),
 
-                                            //'eventstatus' => 1, //Vorort Termin
+                                            // 'eventstatus' => 1, //Vorort Termin
 
                                             'event_startaddress' => $event_location,
                                             'event_startaddress_lat' => $event_latitude,

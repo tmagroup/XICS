@@ -183,6 +183,12 @@ $lang['page_details_termination'] = 'Details Kündigung';
 $lang['page_create_termination'] = 'Kündigung erstellen';
 $lang['page_import_termination'] = 'Kündigung importieren';
 $lang['page_manage_termination'] = 'Kündigung verwalten';
+$lang['page_export_excel'] = 'Excel exportieren';
+$lang['page_filter_export_excel'] = 'Filter Excel exportieren';
+$lang['page_select_month'] = 'Wählen Sie einen Monat';
+$lang['page_select_year'] = 'Jahr auswählen';
+$lang['page_select_lead_status'] = 'Wählen Sie Lead Status';
+$lang['page_added_by'] = 'Hinzugefügt von';
 
 $lang['page_fl_leadstatus'] = 'Lead-Status';
 $lang['appointment_type'] = 'Terminart';
@@ -200,6 +206,7 @@ $lang['page_fl_employment'] = 'Beschäftigung';
 $lang['page_fl_provider'] = 'Anbieterin';
 $lang['page_fl_cards'] = 'Karten';
 $lang['page_fl_date'] = 'Datum';
+$lang['page_fl_responsive_user'] = 'Responsive User';
 $lang['page_fl_responsive_user'] = 'Responsive User';
 
 // termination accept and cancel

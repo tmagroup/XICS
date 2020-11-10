@@ -144,6 +144,14 @@ class Cronjobs extends MY2_Controller {
                      ->get()
                      ->row_array();
 
+        $eventstatus = 1;//Vor-Ort Termin
+
+        if($data['appointment_type'] == '1') { // Innendienst
+            $eventstatus = 3; //Telko
+        } elseif ($data['appointment_type'] == '2') { // Webmeeting
+             $eventstatus = 6; //Webmeeting
+        }
+
         $startDate = date('Y-m-d',strtotime($data['date'])).' 00:01:00';
         $endDate = date('Y-m-d',strtotime($data['date'])).' 00:23:59';
 
@@ -153,6 +161,7 @@ class Cronjobs extends MY2_Controller {
         $dataEvent['start']   = $startDate;
         $dataEvent['end']     = $endDate;
         $dataEvent['public']  = 0;
+        $dataEvent['eventstatus']  = $eventstatus;
 
         $this->db->insert('tblevents', $dataEvent);
         $event_id = $this->db->insert_id();
@@ -164,7 +173,7 @@ class Cronjobs extends MY2_Controller {
                 'calendarId' => $calendarId[0],
                 'start' => $startDate,
                 'end' => $endDate,
-                'title' => $data['name'],
+                'title' => $data['company_name'],
                 // 'google_color_id' => '2',
                 'event_address' => $data['street'].','.$data['city'],
                 'description' => $data['notice'],

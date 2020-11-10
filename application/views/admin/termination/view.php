@@ -109,6 +109,10 @@
                                                     <label><?php echo lang('page_fl_responsive_user');?> :</label>
                                                     <?php echo $data['responsiUser'];?>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label><?php echo lang('page_added_by');?> :</label>
+                                                    <?php echo $data['createdUsers'];?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -185,6 +185,13 @@ $lang['page_edit_termination'] = 'Edit Termination';
 $lang['page_details_termination'] = 'Details Termination';
 $lang['page_import_termination'] = 'Import Termination';
 $lang['page_manage_termination'] = 'Manage Termination';
+$lang['page_export_excel'] = 'Export Excel';
+$lang['page_filter_export_excel'] = 'Filter Export Excel';
+$lang['page_select_month'] = 'Select Month';
+$lang['page_select_year'] = 'Select Year';
+$lang['page_select_lead_status'] = 'Select Lead Status';
+$lang['page_added_by'] = 'Added by';
+
 
 $lang['appointment_type'] = 'Appointment type';
 $lang['page_fl_leadstatus'] = 'Lead Status';
