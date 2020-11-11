@@ -51,7 +51,6 @@ class Cronjobs extends MY2_Controller {
 					}
 				}
 			}
-			$test = array();
 
 			if(!empty($insert_data)) {
 				foreach ($insert_data as $key => $value) {
