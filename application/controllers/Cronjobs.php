@@ -45,10 +45,13 @@ class Cronjobs extends MY2_Controller {
 						if($value != '') {
 							$value = explode(':',$value,2);
 							$insert_data[$k][trim($value[0])] = trim($value[1]);
+							$insert_data[$k]['udate'] = $udate;
+
 						}
 					}
 				}
 			}
+			$test = array();
 
 			if(!empty($insert_data)) {
 				foreach ($insert_data as $key => $value) {
@@ -74,12 +77,14 @@ class Cronjobs extends MY2_Controller {
 						'street' => $value['Street'],
 						'zipcode' => $value['Zipcode'],
 						'city' => $value['City'],
+						'position' => isset($value['Position']) ? $value['Position'] : '',
 						'notice' => $value['Notice'],
-						'mail_date' => $udate,
-						'created_at' => date('Y-m-d H:i:s')
+						'mail_date' => $value['udate'],
+						'created_at' => date('Y-m-d H:i:s'),
+						'created_by' => 1
 					);
 
-					$exists = $this->db->select('id')->where('mail_date',$udate)->get('tbltermination')->row_array();
+					$exists = $this->db->select('id')->where('mail_date',$value['udate'])->get('tbltermination')->row_array();
 					if(empty($exists)) {
 						$this->db->insert('tbltermination', $dataTermination);
 						$insert_id = $this->db->insert_id();
