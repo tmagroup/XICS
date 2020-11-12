@@ -5,31 +5,31 @@ class Authentication_model extends CI_Model
 {
 	var $table = 'tblusers';
 	var $aid = 'userid';
-	
+
     public function __construct()
     {
-        parent::__construct();   
+        parent::__construct();
 		$this->load->model('Userautologin_model');
-        $this->autologin();    
+        $this->autologin();
     }
-   
+
    	/**
      * @param  string Username for login
      * @param  string Password
      * @param  boolean Set cookies for user if remember me is checked
-     * @param  boolean 
+     * @param  boolean
      * @return boolean if not redirect url found, if found redirect to the url
      */
     public function login($username, $password, $remember)
     {
 		$_aid = $this->aid;
 		$customer_login = false;
-		
+
         if ((!empty($username)) and (!empty($password))) {
-           
+
             $this->db->where('username', $username);
             $user = $this->db->get($this->table)->row();
-			
+
             if ($user) {
                 // Username is okey lets check the password now
                 $this->load->helper('phpass');
@@ -50,24 +50,23 @@ class Authentication_model extends CI_Model
 						// Password failed, return
 						return false;
 					}
-					
+
 					$customer_login = true;
-				}
-				else{
-	                return false;	
+				} else {
+	                return false;
 				}
 				//End Check Customer Login *************************
             }
-			
-			
+
+
 			if($customer_login){
 				$role = 'customer';
                 $_aid = 'customernr';
 			}else{
 				$role = 'user';
 			}
-			
-			
+
+
             if ($user->active == 0) {
                 return array(
                     'memberinactive' => true,
@@ -104,17 +103,17 @@ class Authentication_model extends CI_Model
      * @return none
      */
     public function logout()
-    {      
+    {
 		$this->delete_autologin();
         if (is_logged_in()) {
             do_action('before_user_logout', get_user_id());
             $this->session->unset_userdata('user_id');
             $this->session->unset_userdata('logged_in');
 			$this->session->unset_userdata('role');
-        } 
+        }
         $this->session->sess_destroy();
 	}
-	
+
 	/**
      * @param  integer ID to create autologin
      * @param  boolean
@@ -141,9 +140,9 @@ class Authentication_model extends CI_Model
 
         return false;
     }
-	
+
 	/**
-     * @param  boolean 
+     * @param  boolean
      * @return none
      */
     private function delete_autologin()
@@ -155,7 +154,7 @@ class Authentication_model extends CI_Model
             delete_cookie('autologin');
         }
     }
-	
+
 	/**
      * @return boolean
      * Check if autologin found
@@ -175,7 +174,7 @@ class Authentication_model extends CI_Model
 							'role' => $role
 						);
                         $this->session->set_userdata($user_data);
-						
+
                         // Renew users cookie to prevent it from expiring
                         set_cookie(array(
                             'name' => 'autologin',
@@ -191,7 +190,7 @@ class Authentication_model extends CI_Model
 
         return false;
     }
-	
+
 	/**
      * @param  integer ID
      * @param  boolean

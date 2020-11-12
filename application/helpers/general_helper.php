@@ -38,7 +38,9 @@ function get_user_role()
     if (!$CI->session->has_userdata('logged_in')) {
         return false;
     }
-
+    // echo "<pre>";
+    // print_r($CI->session->userdata());
+    // die();
     return $CI->session->userdata('role');
 }
 
@@ -283,6 +285,9 @@ function has_permission($permission, $can, $userid='')
             $CI->load->model('Role_model');
             $roleid = $CI->User_model->get($userid, 'userrole')->userrole;
             $permissions = $CI->Role_model->get_role_permissions($roleid);
+        // echo "<pre>";
+        // print_r($permissions);
+        // die();
         } else {
             $permissions = $CI->User_model->get_user_permissions($userid);
         }

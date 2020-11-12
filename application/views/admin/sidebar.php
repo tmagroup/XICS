@@ -763,21 +763,27 @@
 					</li>
 				<?php } ?>
 			<?php } ?>
-
-			<?php if($termination_permission['view'] || $termination_permission['create'] || $termination_permission['edit'] || $termination_permission['delete']){ ?>
-				<li class="nav-item
-					<?php
-						if (
-							current_url() == base_url('admin/termination')
-							|| current_url() == base_url('admin/termination/customer')
-							|| current_url() == base_url('admin/termination/customer/'. $this->uri->segment(4))
-							|| current_url() == base_url('admin/termination/detail/'. $this->uri->segment(4))
-						) {
-					?> active open <?php } ?>">
-					<a href="<?php echo base_url('admin/termination');?>" class="nav-link">
-						<i class="fa fa-file"></i> <span class="title">Terminierung</span>
-					</a>
-				</li>
+			<?php
+				// echo "<pre>";
+				// print_r($termination_permission);
+				// die();
+			?>
+			<?php if(get_user_role() === 'user' && isset($GLOBALS['current_user']->userrole) || $GLOBALS['current_user']->userrole==1 || $GLOBALS['current_user']->userrole==5 || $GLOBALS['current_user']->userrole==2 || $GLOBALS['current_user']->userrole==3 || $GLOBALS['current_user']->userrole==8){ ?> <!-- Admin,Support,Salesmanager,Salesman,AGENT -->
+				<?php if($termination_permission['view'] || $termination_permission['create'] || $termination_permission['edit'] || $termination_permission['delete']){ ?>
+					<li class="nav-item
+						<?php
+							if (
+								current_url() == base_url('admin/termination')
+								|| current_url() == base_url('admin/termination/customer')
+								|| current_url() == base_url('admin/termination/customer/'. $this->uri->segment(4))
+								|| current_url() == base_url('admin/termination/detail/'. $this->uri->segment(4))
+							) {
+						?> active open <?php } ?>">
+						<a href="<?php echo base_url('admin/termination');?>" class="nav-link">
+							<i class="fa fa-file"></i> <span class="title">Terminierung</span>
+						</a>
+					</li>
+				<?php } ?>
 			<?php } ?>
 		</ul>
 		<!-- END SIDEBAR MENU -->

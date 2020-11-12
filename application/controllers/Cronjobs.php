@@ -36,7 +36,7 @@ class Cronjobs extends MY2_Controller {
 				$udate = $overview[0]->udate;
 
 				$structure = imap_fetchstructure($inbox, $email_number);
-				$message = imap_fetchbody($inbox,$email_number,1);
+				$message = trim(utf8_encode(quoted_printable_decode(imap_fetchbody($inbox,$email_number,1))));
 				$message = strip_tags(htmlentities($message));
 				$dataNew = explode("\n", $message);
 				if(!empty($dataNew)){
@@ -54,10 +54,11 @@ class Cronjobs extends MY2_Controller {
 
 			if(!empty($insert_data)) {
 				foreach ($insert_data as $key => $value) {
-					$leadstatus = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Leadstatus'])))->get('tblleadstatus')->row_array();
-					$appointment_type = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Terminart'])))->get('tblappointmenttype')->row_array();
-					$provider = $this->db->select('*')->where('LOWER(name)', trim(strtolower($value['Provider'])))->get('tblprovider')->row_array();
-					$responsive_user = $this->db->select('*')->where('LOWER(username)', trim(strtolower($value['ResponsiveUser'])))->get('tblusers')->row_array();
+				$leadstatus = $this->db->select('id')->where('LOWER(name)', trim(strtolower($value['Leadstatus'])))->get('tblleadstatus')->row_array();
+                    $appointment_type = $this->db->select('id')->where('LOWER(name)', trim(strtolower($value['Terminart'])))->get('tblappointmenttype')->row_array();
+                    $provider = $this->db->select('id')->where('LOWER(name)', trim(strtolower($value['Provider'])))->get('tblprovider')->row_array();
+                    $responsive_user = $this->db->select('userid')->where('LOWER(username)', trim(strtolower(str_replace(' ', '', $value['ResponsiveUser']))))->get('tblusers')->row_array();
+                    $added_by = $this->db->select('userid')->where('LOWER(username)', trim(strtolower(str_replace(' ', '', $value['Added by']))))->get('tblusers')->row_array();
 
 					$dataTermination = array(
 						'lead_status' => !empty($leadstatus) ? $leadstatus['id'] :0,
@@ -80,7 +81,7 @@ class Cronjobs extends MY2_Controller {
 						'notice' => $value['Notice'],
 						'mail_date' => $value['udate'],
 						'created_at' => date('Y-m-d H:i:s'),
-						'created_by' => 1
+						'created_by' => !empty($added_by) ? $added_by['userid'] :1
 					);
 
 					$exists = $this->db->select('id')->where('mail_date',$value['udate'])->get('tbltermination')->row_array();

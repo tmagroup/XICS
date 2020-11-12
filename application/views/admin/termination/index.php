@@ -83,60 +83,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="col-md-12">
 
 							<!-- Begin: life time stats -->
+
 							<div class="portlet light portlet-fit portlet-datatable bordered">
 								<div class="portlet-body">
 									<div class="table-container">
-									<form method="post" action="<?php echo base_url().'admin/termination/export_excel';?>">
-										<div class="col-md-2 col-sm-2">
-											<div class="form-group">
-												<label><b><?php echo lang('page_filter_export_excel');?></b></label>
-											</div>
-										</div>
-										<div class="col-md-2 col-sm-2">
-											<div class="form-group">
-												<select name="filter_month" class="form-control">
-													<?php
-													$months = array(1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.');
-													?>
-													<option value="" selected="selected"><?php echo lang('page_select_month');?></option>
-													<?php foreach ($months as $key => $month) { ?>
-														<option value="<?php echo $key;?>"><?php echo $month;?></option>
-													<?php } ?>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-2 col-sm-2">
-											<div class="form-group">
-												<select name="filter_year" class="form-control">
-													<option value="" selected="selected"><?php echo lang('page_select_lead_status');?></option>
-													<?php if(!empty($yearData)){ ?>
-														<?php foreach($yearData as $year) { ?>
-															<option value="<?php echo date('Y',strtotime($year['date']));?>"><?php echo date('Y',strtotime($year['date']));?></option>
-														<?php } ?>
-													<?php } ?>
+										<?php if($GLOBALS['current_user']->userrole == 1 || $GLOBALS['current_user']->userrole == 2){ ?> <!-- Admin,Salesmanager -->
+											<form method="post" action="<?php echo base_url().'admin/termination/export_excel';?>">
+												<div class="col-md-2 col-sm-2">
+													<div class="form-group">
+														<label><b><?php echo lang('page_filter_export_excel');?></b></label>
+													</div>
+												</div>
+												<div class="col-md-2 col-sm-2">
+													<div class="form-group">
+														<select name="filter_month" class="form-control">
+															<?php
+															$months = array(1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.');
+															?>
+															<option value="" selected="selected"><?php echo lang('page_select_month');?></option>
+															<?php foreach ($months as $key => $month) { ?>
+																<option value="<?php echo $key;?>"><?php echo $month;?></option>
+															<?php } ?>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-2 col-sm-2">
+													<div class="form-group">
+														<select name="filter_year" class="form-control">
+															<option value="" selected="selected"><?php echo lang('page_select_lead_status');?></option>
+															<?php if(!empty($yearData)){ ?>
+																<?php foreach($yearData as $year) { ?>
+																	<option value="<?php echo date('Y',strtotime($year['date']));?>"><?php echo date('Y',strtotime($year['date']));?></option>
+																<?php } ?>
+															<?php } ?>
 
-												</select>
-											</div>
-										</div>
-										<div class="col-md-3 col-sm-3">
-											<div class="form-group">
-												<select name="filter_leadStatus" class="form-control">
-													<option value="" selected="selected"><?php echo lang('page_select_month');?></option>
-													<?php if(!empty($leadStatusData)){ ?>
-														<?php foreach($leadStatusData as $lead_status) { ?>
-															<option value="<?php echo $lead_status['id'];?>"><?php echo $lead_status['name'];?></option>
-														<?php } ?>
-													<?php } ?>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-3 col-sm-3">
+													<div class="form-group">
+														<select name="filter_leadStatus" class="form-control">
+															<option value="" selected="selected"><?php echo lang('page_select_month');?></option>
+															<?php if(!empty($leadStatusData)){ ?>
+																<?php foreach($leadStatusData as $lead_status) { ?>
+																	<option value="<?php echo $lead_status['id'];?>"><?php echo $lead_status['name'];?></option>
+																<?php } ?>
+															<?php } ?>
 
-												</select>
-											</div>
-										</div>
-										<div class="col-md-2 col-sm-2">
-											<div class="form-group">
-												<button type="submit" class="btn sbold blue btn-sm"><?php echo lang('page_export_excel')?></button>
-											</div>
-										</div>
-									</form>
+														</select>
+													</div>
+												</div>
+
+												<div class="col-md-2 col-sm-2">
+													<div class="form-group">
+														<button type="submit" class="btn sbold blue btn-sm"><?php echo lang('page_export_excel')?></button>
+													</div>
+												</div>
+											</form>
+										<?php } ?>
 										<div class="table-actions-wrapper"></div>
 										<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="termination_datatable_ajax">
 											<thead>

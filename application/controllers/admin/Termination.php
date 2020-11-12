@@ -9,6 +9,10 @@ class Termination extends Admin_controller
 	{
 		parent::__construct();
 		$this->load->model('Email_model');
+		// Admin,Support,Salesmanager,Salesman,AGENT allow
+		if(get_user_role() !== 'user' && isset($GLOBALS['current_user']->userrole) || $GLOBALS['current_user']->userrole != 1 || $GLOBALS['current_user']->userrole != 5 || $GLOBALS['current_user']->userrole != 2 || $GLOBALS['current_user']->userrole != 3 || $GLOBALS['current_user']->userrole != 8){
+			return FALSE;
+		}
 	}
 
 	/* List all monitorings */
@@ -76,6 +80,8 @@ class Termination extends Admin_controller
 				$no = $start;
 				foreach ($posts as $key => $post)
 				{
+					$action = '';
+
 					$nestedData['id'] = $no+1;
 					$nestedData['status'] = $post['status'];
 					$nestedData['company_name'] = $post['company_name'];
@@ -85,8 +91,21 @@ class Termination extends Admin_controller
 					$nestedData['cards'] = $post['cards'];
 					$nestedData['responsiUser'] = $post['responsiUser'];
 					$nestedData['created_by'] = $post['createdUsers'];
-					$nestedData['action'] = '<div class="lass="btn-group""><button class="btn btn-danger delete-termination" title="Delete" data-id="'.$post['id'].'"><i class="fa fa-trash"></i></button><a href="'.base_url().'admin/termination/setup/'.$post['id'].'"  title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i></a><a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" title="Appointment Confirmation" data-id="'.$post['id'].'"><i class="fa fa-envelope-square"></i></a><a href="'.base_url().'admin/termination/show/'.$post['id'].'" class="btn btn-primary" title="View Details" data-id="'.$post['id'].'"><i class="fa fa-eye"></i></a></div>';
 
+					if($GLOBALS['termination_permission']['delete'] && $GLOBALS['current_user']->userrole != 8) {
+						$action .= '<button class="btn btn-danger delete-termination" title="Delete" data-id="'.$post['id'].'"><i class="fa fa-trash"></i></button>';
+					}
+
+					if($GLOBALS['current_user']->userrole != 8) {
+						$action .= '<a href="javascript:void(0);" class="btn btn-default yellow sendmail-term fresh" title="Appointment Confirmation" data-id="'.$post['id'].'"><i class="fa fa-envelope-square"></i></a>';
+					}
+
+					if($GLOBALS['termination_permission']['edit'] && $GLOBALS['current_user']->userrole != 8) {
+						$action .= '<a href="'.base_url().'admin/termination/setup/'.$post['id'].'"  title="Edit" class="btn btn-success"><i class="fa fa-pencil"></i></a>';
+					}
+					$action .= '<a href="'.base_url().'admin/termination/show/'.$post['id'].'" class="btn btn-primary" title="View Details" data-id="'.$post['id'].'"><i class="fa fa-eye"></i></a>';
+
+					$nestedData['action'] = $action;
 					$data[] = $nestedData;
 					$no++;
 				}
@@ -116,7 +135,7 @@ class Termination extends Admin_controller
 
 	public function setup($id=0)
 	{
-		if(!$GLOBALS['termination_permission']['create'] && !$GLOBALS['termination_permission']['edit']){
+		if(!$GLOBALS['termination_permission']['create'] || !$GLOBALS['termination_permission']['edit']){
 			access_denied('termination');
 		}
 
@@ -162,6 +181,10 @@ class Termination extends Admin_controller
 
 	public function show($id)
 	{
+		if(!$GLOBALS['termination_permission']['view']){
+			access_denied('termination');
+		}
+
 		if($id > 0) {
 			$data = array();
 			$data['data'] = $this->db

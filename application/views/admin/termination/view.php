@@ -52,11 +52,13 @@
                                     <i class="fa fa-tty"></i>
                                     <?php echo lang('page_details_termination');?>
                                 </div>
-                                <div class="actions">
-                                    <div class="btn-group btn-group-devided">
-                                        <a href="javascript:void(0);" class="btn sbold green btn-sm add-lead fresh" data-id="<?php echo $this->uri->segment(4);?>"> Lead erstellen</a>
+                                <?php if($GLOBALS['current_user']->userrole != 8) {?>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided">
+                                            <a href="javascript:void(0);" class="btn sbold green btn-sm add-lead fresh" data-id="<?php echo $this->uri->segment(4);?>"> Lead erstellen</a>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
 
                             </div>
                         </div>

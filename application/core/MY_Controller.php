@@ -82,7 +82,9 @@ class Admin_controller extends CI_Controller
 
         //$language = load_admin_language();
 	$GLOBALS['current_user'] = $currentUser;
-
+    // echo "<pre>";
+    // print_r($GLOBALS['current_user']);
+    // die();
 	//Default Currency
         $curow = $this->Currencies_model->get(false, " isdefault=1 ");
         $GLOBALS['currency_data']['currency_name'] = $curow[0]['name'];
@@ -654,25 +656,27 @@ class Admin_controller extends CI_Controller
 
 
         //Function Array for Hardwarebudget
-        $a_hardwarebudget_permission = array('view'=>has_permission('a_hardwarebudget','view'),
+        $hardwarebudget_permission = array('view'=>has_permission('a_hardwarebudget','view'),
             'view_own'=>has_permission('a_hardwarebudget','view_own'),
             'create'=>has_permission('a_hardwarebudget','create'),
             'edit'=>has_permission('a_hardwarebudget','edit'),
             'delete'=>has_permission('a_hardwarebudget','delete'),
             'import'=>has_permission('a_hardwarebudget','import'),
         );
-        $GLOBALS['hardwarebudget_permission'] = $a_hardwarebudget_permission;
+        $GLOBALS['hardwarebudget_permission'] = $hardwarebudget_permission;
 
         //Function Array for Termination
-        $termination_permission = array('view'=>has_permission('termination','view'),
-            'view_own'=>has_permission('termination','view_own'),
-            'create'=>has_permission('termination','create'),
-            'edit'=>has_permission('termination','edit'),
-            'delete'=>has_permission('termination','delete'),
-            'import'=>has_permission('termination','import'),
+        $termination_permission = array('view'=>has_permission('a_termination','view'),
+            'view_own'=>has_permission('a_termination','view_own'),
+            'create'=>has_permission('a_termination','create'),
+            'edit'=>has_permission('a_termination','edit'),
+            'delete'=>has_permission('a_termination','delete'),
+            'import'=>has_permission('a_termination','import'),
         );
         $GLOBALS['termination_permission'] = $termination_permission;
-
+        // echo "<pre>";
+        // print_r($a_termination_permission);
+        // die();
         //Auto loaded vars for global
         $auto_loaded_vars = array(
             'current_user' => $currentUser,
@@ -713,7 +717,7 @@ class Admin_controller extends CI_Controller
             'profile_permission' => $profile_permission,
             'infodocument_permission' => $infodocument_permission,
             'history_permission' => $history_permission,
-            'hardwarebudget_permission' => $a_hardwarebudget_permission,
+            'hardwarebudget_permission' => $hardwarebudget_permission,
             'termination_permission' => $termination_permission
         );
 
