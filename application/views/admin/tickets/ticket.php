@@ -4,18 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php $this->load->view('admin/header.php'); ?>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-        
+
         <?php $this->load->view('admin/topnavigation.php'); ?>
-        
+
         <!-- BEGIN HEADER & CONTENT DIVIDER -->
         <div class="clearfix"> </div>
         <!-- END HEADER & CONTENT DIVIDER -->
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
-        
+
             <?php $this->load->view('admin/sidebar.php'); ?>
-        	
-            
+
+
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
@@ -31,8 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <li>
                                 <a href="<?php echo base_url('admin/tickets');?>"><?php echo lang('page_tickets');?></a>
                                 <i class="fa fa-circle"></i>
-                            </li> 
-                            
+                            </li>
+
                             <li>
                                 <span>
                                     <?php
@@ -41,23 +41,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     }
                                     else
                                     {
-                                        echo lang('page_create_ticket');                                
-                                    }    
+                                        echo lang('page_create_ticket');
+                                    }
                                     ?>
                                 </span>
                             </li>
-                            
+
                         </ul>
-                        
+
                     </div>
                     <!-- END PAGE BAR -->
-                    
+
                     <!-- BEGIN PAGE MESSAGE-->
                     <?php $this->load->view('admin/alerts'); ?>
                     <!-- BEGIN PAGE MESSAGE-->
-                    
+
                     <!-- BEGIN PAGE TITLE-->
-                    <h3 class="page-title"> 
+                    <h3 class="page-title">
 
                         <?php
                         if(isset($ticket['ticketnr']) && $ticket['ticketnr']>0){
@@ -71,28 +71,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             ?>
                             <i class="fa fa-plus"></i>
                             <?php
-                            echo lang('page_create_ticket');                                
-                        }    
+                            echo lang('page_create_ticket');
+                        }
                         ?>
-                        
+
                     </h3>
                     <!-- END PAGE TITLE-->
                     <!-- END PAGE HEADER-->
-                    
-                    
+
+
                     <?php
-                    //Only Editable 
+                    //Only Editable
                     $tab_document = '';
                     if(empty($ticket['ticketnr'])){
                        $tab_document = 'none';
-                    }					
+                    }
                     ?>
-                    
-                    
+
+
                     <div class="row">
-                        
-                        
-                        
+
+
+
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#tab_profile" data-toggle="tab"><?php echo lang('page_lb_profile');?></a>
@@ -101,58 +101,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <a href="#tab_document" data-toggle="tab"><?php echo lang('page_lb_document');?></a>
                             </li>
                         </ul>
-                        
-                        
+
+
                         <div class="tab-content">
-                            
+
                             <div class="tab-pane active" id="tab_profile">
-                                <?php echo form_open($this->uri->uri_string(), array('enctype' => "multipart/form-data", 'id' => 'form_ticket') );?>        
+                                <?php echo form_open($this->uri->uri_string(), array('enctype' => "multipart/form-data", 'id' => 'form_ticket') );?>
                                 <div class="col-md-6">
-                            
-                            
+
+
                                     <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light bordered">                                
+                                    <div class="portlet light bordered">
                                         <div class="portlet-body form">
-                                    
+
                                             <div class="form-body">
-                                                
+
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_tickettitle');?> <span class="required"> * </span></label>
                                                     <?php echo form_input('tickettitle', isset($ticket['tickettitle'])?$ticket['tickettitle']:'', 'class="form-control"');?>
                                                 </div>
-                                                
+
                                                 <!--<div class="form-group">
                                                     <label><?php echo lang('page_fl_company');?> <span class="required"> * </span></label>
                                                     <?php echo form_input('company', isset($ticket['company'])?$ticket['company']:'', 'class="form-control"');?>
                                                 </div>-->
-                                                
+
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_ticketstatus');?> <span class="required"> * </span></label>
                                                     <?php echo form_dropdown('ticketstatus', $ticketstatus, isset($ticket['ticketstatus'])?$ticket['ticketstatus']:'', 'class="form-control"');?>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_ticketdesc');?> <span class="required"> * </span></label>
                                                     <?php echo form_textarea('ticketdesc', isset($ticket['ticketdesc'])?$ticket['ticketdesc']:'', 'class="form-control"');?>
                                                 </div>
 
                                             </div>
-                                        
+
                                         </div>
                                     </div>
                                     <!-- END SAMPLE FORM PORTLET-->
-                           
+
                                 </div>
-                                
-                                
+
+
                                 <div class="col-md-6">
 
                                     <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light bordered">                                
+                                    <div class="portlet light bordered">
                                         <div class="portlet-body form">
 
                                             <div class="form-body">
-                                                
+
                                                 <?php
                                                 if(get_user_role()=='customer'){
                                                     ?>
@@ -162,8 +162,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 else{
                                                     if(isset($ticket['userrole']) && $ticket['userrole']=='customer'){
                                                         ?>
-                                                        <div class="form-group">                                            
-                                                            <label><?php echo lang('page_fl_customer');?>: </label>                                                            
+                                                        <div class="form-group">
+                                                            <label><?php echo lang('page_fl_customer');?>: </label>
                                                             <?php echo isset($ticket['customername'])?$ticket['customername']:'';?>
                                                             <input type="hidden" name="customer" id="customer" value="<?php echo get_user_id();?>">
                                                         </div>
@@ -171,10 +171,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     }
                                                     else{
                                                         ?>
-                                                        <div class="form-group">                                            
-                                                            <label><?php echo lang('page_fl_customer');?></label>
-                                                            <?php echo form_dropdown('customer', $customers, isset($ticket['customer'])?$ticket['customer']:'', 'class="form-control" id="customer" ');?>
-                                                        </div>
+                                                            <?php if(isset($GLOBALS['current_user']->userrole) && $GLOBALS['current_user']->userrole==8){ ?> <!--AGENT -->
+                                                                <input type="hidden" name="customer" id="customer" value="<?php echo get_user_id();?>">
+                                                            <?php } else { ?>
+                                                                <div class="form-group">
+                                                                    <label><?php echo lang('page_fl_customer');?></label>
+                                                                    <?php echo form_dropdown('customer', $customers, isset($ticket['customer'])?$ticket['customer']:'', 'class="form-control" id="customer" disabled');?>
+                                                                </div>
+                                                            <?php } ?>
                                                         <?php
                                                     }
                                                 }
@@ -207,23 +211,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <?php
                                                     }
                                                     ?>
-                                                    </select>    
+                                                    </select>
                                                 </div>
-                                                
+
                                             </div>
-                                            
+
                                         </div>
-                                    </div>    
+                                    </div>
                                     <!-- END SAMPLE FORM PORTLET-->
-                           
-                                </div>    
-                                
-                                
-                                                
+
+                                </div>
+
+
+
                                 <div class="clearfix"></div>
                                 <div class="col-md-6">
                                     <!-- BEGIN SAMPLE FORM PORTLET-->
-                                    <div class="portlet light">                                
+                                    <div class="portlet light">
                                         <div class="portlet-body">
                                             <div class="form-body">
                                                 <div class="form-actions">
@@ -234,54 +238,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                     <!-- END SAMPLE FORM PORTLET-->
-                                </div>    
-                                
+                                </div>
+
                                 <?php echo form_close();?>
                             </div>
-                            
+
                             <div class="tab-pane" id="tab_document" style="display:<?php echo $tab_document;?>">
-                                
-                                <?php 
+
+                                <?php
                                 if(isset($ticket['ticketnr']) && $ticket['ticketnr']>0){
-                                    $this->load->view('admin/tickets/tab-document', array('ticket'=>$ticket)); 
+                                    $this->load->view('admin/tickets/tab-document', array('ticket'=>$ticket));
                                 }
                                 ?>
-                                
-                            </div>
-                            
-                        </div>        
-                        
-                        
-                                    
 
-                        
-                        
+                            </div>
+
+                        </div>
+
+
+
+
+
+
                     </div>
-                    
-                    
+
+
                 </div>
                 <!-- END CONTENT BODY -->
             </div>
             <!-- END CONTENT -->
-                        
-            
+
+
         </div>
         <!-- END CONTAINER -->
-               
+
 <script>
-    var form_id = 'form_ticket'; 
+    var form_id = 'form_ticket';
     var func_FormValidation = 'FormCustomValidation';
-    
+
     function after_func_FormValidation(form1, error1, success1){
-      
+
         form1.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
 
-            rules: { 
-                tickettitle: {  
+            rules: {
+                tickettitle: {
                     minlength: 2,
                     required: true
                 },
@@ -289,13 +293,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     minlength: 2,
                     required: true
                 },
-                ticketstatus: {                        
+                ticketstatus: {
                     required: true
                 },
-                /*customer: {                      
+                /*customer: {
                     required: true
                 },*/
-                responsible: {                      
+                responsible: {
                     required: true
                 },
                 /*teamwork: {
@@ -304,10 +308,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 ticketdesc: {
                     maxlength: 255,
                     required: true
-                },	
+                },
             },
 
-            invalidHandler: function (event, validator) { //display error alert on form submit              
+            invalidHandler: function (event, validator) { //display error alert on form submit
                     success1.hide();
                     error1.show();
                     App.scrollTo(error1, -200);
@@ -335,8 +339,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     return true;
             }
 	});
-    }    
+    }
 </script>
 
-<?php $this->load->view('admin/footer.php'); ?>        
+<?php $this->load->view('admin/footer.php'); ?>
 <?php $this->load->view('admin/tickets/ticketjs',array('ticket'=>isset($ticket)?$ticket:''));?>
