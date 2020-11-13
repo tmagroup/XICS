@@ -39,7 +39,7 @@
 			}
 		}
 		//- On the Dashboard he should only see Tickets which belongs to the User who is logged in. (Salesman and Supporter and POS)
-		else if(get_user_role()=='user' && isset($GLOBALS['current_user']->userrole) && ($GLOBALS['current_user']->userrole==3 || $GLOBALS['current_user']->userrole==5 || $GLOBALS['current_user']->userrole==6)){
+		else if(get_user_role()=='user' && isset($GLOBALS['current_user']->userrole) && ($GLOBALS['current_user']->userrole==3 || $GLOBALS['current_user']->userrole==5 || $GLOBALS['current_user']->userrole==6 || $GLOBALS['current_user']->userrole==8)){
 			array_push($where,"AND ((tbltickets.userid='".get_user_id()."' OR tbltickets.responsible='".get_user_id()."') AND tbltickets.userrole='user') OR ((tbltickets.userid='".get_user_id()."' OR tbltickets.responsible='".get_user_id()."') AND tbltickets.userrole='customer') ");
 		}
 

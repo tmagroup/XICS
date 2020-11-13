@@ -44,9 +44,12 @@ class Termination extends Admin_controller
 			$order = $columns[$this->input->post('order')[0]['column']];
 			$dir = $this->input->post('order')[0]['dir'];
 
-			$totalFiltered = $this->countAllRecord($this->table);
-
 			$param  = array();
+			// echo $GLOBALS['current_user']->userid; die();
+			if($GLOBALS['current_user']->userid != 1) {
+				$param['where'] = array('created_by' => $GLOBALS['current_user']->userid);
+			}
+			$totalFiltered = count($this->select_record($this->table,'*',$param));
 
 			$field = 'tbltermination.*,ls.name as leadStatus,color,p.name as providerName,CONCAT(u.surname," ", u.name) as responsiUser,CONCAT(us.surname," ", us.name) as createdUsers';
 			$param['limit'] = array($limit,$start);
