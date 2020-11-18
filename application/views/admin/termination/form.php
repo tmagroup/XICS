@@ -26,7 +26,7 @@
                                 <i class="fa fa-circle"></i>
                             </li>
                             <li>
-                                <a href="<?php echo base_url('admin/leads');?>"><?php echo lang('page_leads');?></a>
+                                <a href="<?php echo base_url('admin/termination');?>"><?php echo lang('page_termination');?></a>
                                 <i class="fa fa-circle"></i>
                             </li>
 

@@ -42,7 +42,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<i class="fa fa-circle"></i>
 							</li>
 							<li>
-								<span><?php echo lang('page_termination');?></span>
+								<a href="<?php echo base_url('admin/termination');?>"><?php echo lang('page_termination');?></a>
+								<!-- <span><?php //echo lang('page_termination');?></span> -->
 							</li>
 						</ul>
 						<?php
