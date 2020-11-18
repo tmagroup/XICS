@@ -2181,6 +2181,8 @@ function get_customertermination_merge_fields($data)
     $fields['{logo_image_url}'] = $data['logo_image_url'];
     $fields['{data_type}'] = $data['data_type'];
     $fields['{appoiment_date}'] = $data['appoiment_date'];
+    $fields['{appoiment_time}'] = $data['appoiment_time'];
+    $fields['{webmeeting_link}'] = $data['webmeeting_link'];
     $fields['{accept_url}'] = $data['accept_url'];
     $fields['{cancel_url}'] = $data['cancel_url'];
 

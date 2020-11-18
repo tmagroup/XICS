@@ -179,18 +179,19 @@ $lang['page_comments'] = 'Kommentare';
 $lang['page_create_comment'] = 'Kommentar Anlegen';
 $lang['page_edit_comment'] = 'Kommentar Bearbeiten';
 
+$lang['page_termination'] = 'Terminierung';
 $lang['page_details_termination'] = 'Details Kündigung';
-$lang['page_create_termination'] = 'Kündigung erstellen';
-$lang['page_import_termination'] = 'Kündigung importieren';
-$lang['page_manage_termination'] = 'Kündigung verwalten';
+$lang['page_create_termination'] = 'Termin hinzufügen';
+$lang['page_import_termination'] = 'Termine importieren';
+$lang['page_manage_termination'] = 'Termine verwalten';
 $lang['page_export_excel'] = 'Excel exportieren';
 $lang['page_filter_export_excel'] = 'Filter Excel exportieren';
-$lang['page_select_month'] = 'Wählen Sie einen Monat';
+$lang['page_select_month'] = 'Monat auswählen';
 $lang['page_select_year'] = 'Jahr auswählen';
-$lang['page_select_lead_status'] = 'Wählen Sie Lead Status';
+$lang['page_select_lead_status'] = 'Leadstatus auswählen';
 $lang['page_added_by'] = 'Hinzugefügt von';
 
-$lang['page_fl_leadstatus'] = 'Lead-Status';
+$lang['page_fl_tem_lead_status'] = 'Jahr auswählen';
 $lang['appointment_type'] = 'Terminart';
 $lang['page_fl_salutation'] = 'Anrede';
 $lang['page_fl_company'] = 'Name der Firma';
@@ -206,8 +207,7 @@ $lang['page_fl_employment'] = 'Beschäftigung';
 $lang['page_fl_provider'] = 'Anbieterin';
 $lang['page_fl_cards'] = 'Karten';
 $lang['page_fl_date'] = 'Datum';
-$lang['page_fl_responsive_user'] = 'Responsive User';
-$lang['page_fl_responsive_user'] = 'Responsive User';
+$lang['page_fl_responsive_user'] = 'Zuständig';
 
 // termination accept and cancel
 $lang['lead_add_message'] = 'Lead wurde hinzugefügt';

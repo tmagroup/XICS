@@ -252,9 +252,7 @@ class Calendars extends Admin_controller
 					. " OR "
 					. "(DATE_FORMAT(`end`, '%Y-%m-%d')>='".$_GET['start']."' AND DATE_FORMAT(`end`, '%Y-%m-%d')<='".$_GET['end']."')) "
 					. " AND (public=1 OR userid='".get_user_id()."') AND calendarId IN('".$filter_googleCalendarIDs."') AND eventid IN(".$crm_event_ids.")  "); //hisself event and public event
-		}
-		else{
-
+		}else{
 			$events = $this->Event_model->get('',"tblevents.*, DATE_FORMAT(`start`, '%Y-%m-%d') as sdate, DATE_FORMAT(`end`, '%Y-%m-%d') as edate ",array()," "
 					. "((DATE_FORMAT(`start`, '%Y-%m-%d')>='".$_GET['start']."' AND DATE_FORMAT(`start`, '%Y-%m-%d')<='".$_GET['end']."') "
 					. " OR "

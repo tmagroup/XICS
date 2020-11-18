@@ -194,7 +194,7 @@ $lang['page_added_by'] = 'Added by';
 
 
 $lang['appointment_type'] = 'Appointment type';
-$lang['page_fl_leadstatus'] = 'Lead Status';
+$lang['page_fl_tem_lead_status'] = 'Lead Status';
 $lang['page_fl_salutation'] = 'Salutation';
 $lang['page_fl_company'] = 'Company Name';
 $lang['page_fl_name'] = 'Name';

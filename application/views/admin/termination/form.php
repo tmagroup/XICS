@@ -81,7 +81,7 @@
                                         <div class="portlet-body form">
                                             <div class="form-body">
                                                 <div class="form-group">
-                                                    <label><?php echo lang('page_fl_leadstatus');?> <span class="required"> * </span></label>
+                                                    <label><?php echo lang('page_fl_tem_lead_status');?> <span class="required"> * </span></label>
                                                     <select name="lead_status" class="form-control">
                                                         <option value="">Select Lead Status</option>
                                                         <?php if(!empty($leadStatusData)) { ?>
@@ -92,6 +92,14 @@
                                                             <?php } ?>
                                                         <?php } ?>
                                                     </select>
+                                                </div>
+                                                <div class="webmeeting-link">
+                                                    <?php if(isset($terminationData) && $terminationData['id'] > 0) { ?>
+                                                        <div class="form-group">
+                                                            <label>Webmeeting Link <span class="required"> * </span></label>
+                                                            <input type="text" name="webmeeting_link" class="form-control" value="<?php echo isset($terminationData) ? $terminationData['webmeeting_link'] :'';?>" placeholder="Webmeeting link">
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_provider');?> <span class="required"> * </span></label>
@@ -246,6 +254,17 @@
 <?php $this->load->view('admin/footer.php'); ?>
 
 <script>
+    $(document).on('change', 'select[name="appointment_type"]', function(event) {
+        event.preventDefault();
+        var html ='';
+        if($(this).val() == '2' && $('.webmeeting-link').html() == ''){ //Webmeeting
+            html +='<div class="form-group">\
+                <label>Webmeeting Link<span class="required"> * </span></label>\
+                <input type="text" name="webmeeting_link" class="form-control" placeholder="Webmeeting link">\
+            </div>';
+        }
+        $('.webmeeting-link').html(html);
+    });
 
     jQuery(".form_datetime").datetimepicker({
         autoclose: true,
@@ -310,6 +329,9 @@
         appointment_type: {
           required: true
         },
+        webmeeting_link :{
+          required : true
+        }
       },
       messages: {
         lead_status: {
@@ -365,6 +387,9 @@
         },
         appointment_type: {
           required: "Please select Terminart",
+        },
+        webmeeting_link :{
+            required: "Please enter Webmeeting link",
         }
       }
     });

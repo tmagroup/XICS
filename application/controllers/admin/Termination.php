@@ -138,7 +138,7 @@ class Termination extends Admin_controller
 
 	public function setup($id=0)
 	{
-		if(!$GLOBALS['termination_permission']['create'] || !$GLOBALS['termination_permission']['edit']){
+		if(!$GLOBALS['termination_permission']['create'] && !$GLOBALS['termination_permission']['edit']){
 			access_denied('termination');
 		}
 
@@ -161,6 +161,7 @@ class Termination extends Admin_controller
 			$post = $this->input->post();
 
 			$post['date'] = to_sql_date($post['date'], true);
+
 			if($id > 0) {
 				$post['updated_at'] = $GLOBALS['current_datetime'];
 				$post['updated_by'] = $GLOBALS['current_user']->userid;
@@ -260,6 +261,12 @@ class Termination extends Admin_controller
 			$mer_data['logo_image_url'] = $logo_image_url;
 			$mer_data['data_type'] = $data['eventType'];
 			$mer_data['appoiment_date'] = date('d.m.Y',strtotime($data['date']));
+			$mer_data['appoiment_time'] = str_replace(array('AM', 'PM'), array('bin', 'Uhr'), date('H:i A',strtotime($data['date'])));
+			$mer_data['webmeeting_link'] = '';
+			if(isset($data['webmeeting_link']) && !empty($data['webmeeting_link'])) {
+				$mer_data['webmeeting_link'] = '<p><b>Bitte nutzen Sie diesen Link für das Webmeeting:</b> '.$data['webmeeting_link'].'</p><p> Für das Webmeeting wäre eine Webcam und ein Headset empfehlenswert, jedoch nicht zwingend erforderlich.</p>';
+			}
+
 			$mer_data['accept_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/accept/';
 			$mer_data['cancel_url'] = base_url().'cronjobs/terminationAcceptCancel/'.md5($id).'/cancel/';
 

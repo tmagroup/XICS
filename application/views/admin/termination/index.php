@@ -148,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<tr role="row" class="heading">
 													<th> No. </th>
 													<th> <?php echo lang('page_fl_company');?> </th>
-													<th> <?php echo lang('page_fl_leadstatus');?> </th>
+													<th> <?php echo lang('page_fl_tem_lead_status');?> </th>
 													<th> <?php echo lang('page_fl_provider');?></th>
 													<th> <?php echo lang('page_fl_cards');?> </th>
 													<th> <?php echo lang('page_fl_responsive_user');?> </th>
@@ -237,6 +237,9 @@ function show_datatable() {
 	"pageLength" : 10,
 	"serverSide": true,
 	"bDestroy": true,
+	"language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+            },
 	"ajax":{
 		 "url": "<?php echo base_url('admin/termination/index') ?>",
 		 "dataType": "json",
