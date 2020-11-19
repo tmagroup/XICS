@@ -257,7 +257,7 @@
     $(document).on('change', 'select[name="appointment_type"]', function(event) {
         event.preventDefault();
         var html ='';
-        if($(this).val() == '2' && $('.webmeeting-link').html() == ''){ //Webmeeting
+        if($(this).val() == '2' && $('.webmeeting-link').find('input[name="webmeeting-link"]').length == 0){ //Webmeeting
             html +='<div class="form-group">\
                 <label>Webmeeting Link<span class="required"> * </span></label>\
                 <input type="text" name="webmeeting_link" class="form-control" placeholder="Webmeeting link">\

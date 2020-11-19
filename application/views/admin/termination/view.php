@@ -131,6 +131,12 @@
                                                     <label><?php echo lang('appointment_type');?> :</label>
                                                     <?php echo $data['appointmentName'];?>
                                                 </div>
+                                                <?php if($data['webmeeting_link'] != '') { ?>
+                                                    <div class="form-group">
+                                                        <label>Webmeeting link :</label>
+                                                        <?php echo $data['webmeeting_link'];?>
+                                                    </div>
+                                                <?php } ?>
                                                 <div class="form-group">
                                                     <label><?php echo lang('page_fl_salutation');?> :</label>
                                                     <?php echo $data['salutation'] == '1' ? 'Herr' :'Frau';?>
